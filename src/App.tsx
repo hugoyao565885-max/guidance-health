@@ -1,8 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import "./index.css";
-import caiPhoto from "./cai-qichun.jpg";
-import huangPhoto from "./huang-huiqiang.jpg";
+
 
 type PageKey =
   | "home"
@@ -314,10 +313,10 @@ export default function App() {
       {/* Dr. Cai */}
       <div className="photo-card">
        <img
-  src={caiPhoto}
-  alt="Dr. Cai Qichun"
-  className="photo-real"
-/>
+        src="/cai-qichun.jpg"
+        alt="Dr. Cai Qichun"
+        className="photo-real"
+     />
         <div className="photo-content">
           <h3>Dr. Cai Qichun</h3>
           <div className="subtle">
@@ -351,10 +350,10 @@ export default function App() {
       {/* Prof. Huang */}
       <div className="photo-card">
         <img
-  src={huangPhoto}
-  alt="Professor Huang Huiqiang"
-  className="photo-real"
-/>
+         src="/huang-huiqiang.jpg"
+         alt="Professor Huang Huiqiang"
+         className="photo-real"
+        />
         <div className="photo-content">
           <h3>Professor Huang Huiqiang</h3>
           <div className="subtle">
