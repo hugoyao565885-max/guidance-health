@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from "react";
 import "./index.css";
 
+import caiPhoto from "./cai-qichun.jpg";
+import huangPhoto from "./huang-huiqiang.jpg";
+
 type PageKey =
   | "home"
   | "about"
@@ -302,79 +305,98 @@ export default function App() {
   );
 
   const experts = (
-    <SectionShell
-      eyebrow="Experts"
-      title="Led by lymphoma specialists with complementary expertise"
-      description="Our core expert structure combines deep lymphoma treatment experience, immunotherapy expertise, stem cell transplantation capability, and wider multidisciplinary collaboration."
-    >
-      <div className="card-grid two">
-        <div className="photo-card">
-          <img
-  src="/src/cai-qichun.jpg"
-  alt="Dr. Cai Qichun"
-  className="h-48 w-full object-cover"
-/>
-          <div className="photo-content">
-            <h3>Dr. Cai Qichun</h3>
-            <div className="subtle">
-              Chief Physician · Director of Oncology Center, Clifford Hospital · Master&apos;s Supervisor, Jinan
-              University
-            </div>
-            <p>
-              Dr. Cai is a senior oncologist with over 30 years of clinical experience in lymphoma and
-              immunotherapy-based cancer treatment. She completed her undergraduate, master&apos;s, and doctoral training
-              at Sun Yat-sen University.
-            </p>
-            <p>
-              She established a precision immunotherapy ward focused on efficacy, low toxicity, and individualized care.
-              Her work spans cellular therapy, targeted drug translation, and tumor immunoregulation.
-            </p>
-            <p>
-              The P-GEMOX regimen for NK/T-cell lymphoma, which she helped promote, has been incorporated into the NCCN
-              guidelines as a first-line treatment. She has published more than 40 papers in journals including Nature
-              Medicine, Science China Life Sciences, and National Science Review.
-            </p>
+    const experts = (
+  <SectionShell
+    eyebrow="Experts"
+    title="Led by lymphoma specialists with complementary expertise"
+    description="Our core expert structure combines deep lymphoma treatment experience, immunotherapy expertise, stem cell transplantation capability, and wider multidisciplinary collaboration."
+  >
+    <div className="card-grid two">
+      {/* Dr. Cai */}
+      <div className="photo-card">
+        <img
+          src={caiPhoto}
+          alt="Dr. Cai Qichun"
+          className="h-48 w-full object-cover"
+        />
+        <div className="photo-content">
+          <h3>Dr. Cai Qichun</h3>
+          <div className="subtle">
+            Chief Physician · Director of Oncology Center, Clifford Hospital · Master&apos;s Supervisor, Jinan University
           </div>
-        </div>
 
-        <div className="photo-card">
-          <img
-  src="/src/huang-huiqiang.jpg"
-  alt="Professor Huang Huiqiang"
-  className="h-48 w-full object-cover"
-/>
-          <div className="photo-content">
-            <h3>Professor Huang Huiqiang</h3>
-            <div className="subtle">
-              Deputy Director of Internal Medicine · Director of Stem Cell Transplant Ward · Chief Physician, Professor,
-              PhD Supervisor
-            </div>
-            <p>
-              Professor Huang is a leading expert in hematologic malignancies and lymphoma at Sun Yat-sen University
-              Cancer Center, with decades of clinical experience and special expertise in NK/T-cell lymphoma.
-            </p>
-            <p>
-              He is highly experienced in malignant lymphoma management, autologous hematopoietic stem cell
-              transplantation, and systemic therapy for complex oncology cases.
-            </p>
-            <p>
-              He pioneered the P-GEMOX regimen, which significantly improved outcomes in NK/T-cell lymphoma, and has
-              contributed to major immunotherapy and translational oncology work.
-            </p>
-          </div>
+          <p>
+            Dr. Cai Qichun is a senior oncologist with over 30 years of clinical experience in lymphoma and
+            immunotherapy-based cancer treatment. She completed her undergraduate, master&apos;s, and doctoral training
+            at Sun Yat-sen University.
+          </p>
+
+          <p>
+            Her clinical work focuses on precision immunotherapy, low-toxicity treatment strategies, and individualized
+            cancer care. She established a dedicated immunotherapy ward and has been actively involved in the clinical
+            translation of cellular therapies, targeted therapies, and tumor immunoregulation approaches.
+          </p>
+
+          <p>
+            Dr. Cai has made significant contributions to the development of the P-GEMOX regimen for NK/T-cell lymphoma,
+            which has been incorporated into the NCCN guidelines as a first-line treatment.
+          </p>
+
+          <p>
+            Her research output includes more than 40 peer-reviewed publications in journals such as Nature Medicine,
+            Science China Life Sciences, and National Science Review.
+          </p>
         </div>
       </div>
 
-      <div className="soft-banner">
-        <h3>Broader specialist collaboration</h3>
-        <p>
-          Beyond the core team, patients may benefit from collaboration with senior oncology professors and
-          multidisciplinary specialists across Guangdong Province, creating more flexible pathways for complex or
-          advanced cases.
-        </p>
+      {/* Prof. Huang */}
+      <div className="photo-card">
+        <img
+          src={huangPhoto}
+          alt="Professor Huang Huiqiang"
+          className="h-48 w-full object-cover"
+        />
+        <div className="photo-content">
+          <h3>Professor Huang Huiqiang</h3>
+          <div className="subtle">
+            Deputy Director of Internal Medicine · Director of Stem Cell Transplant Unit · Chief Physician · Professor · PhD Supervisor · Sun Yat-sen University Cancer Center
+          </div>
+
+          <p>
+            Professor Huang Huiqiang is a leading expert in hematologic malignancies and lymphoma, with decades of
+            clinical experience at one of China&apos;s top oncology centers. His work focuses particularly on NK/T-cell
+            lymphoma and complex, treatment-resistant cases.
+          </p>
+
+          <p>
+            He has extensive experience in malignant lymphoma management, autologous hematopoietic stem cell
+            transplantation, and integrated systemic therapy for advanced cancers.
+          </p>
+
+          <p>
+            Professor Huang led the development of the P-GEMOX regimen, which significantly improved outcomes for
+            patients with NK/T-cell lymphoma and has been widely recognized in international lymphoma research and
+            clinical practice.
+          </p>
+
+          <p>
+            He is also actively involved in clinical trials exploring immunotherapy, including PD-1-based treatment
+            strategies, and the application of molecular diagnostics in treatment monitoring.
+          </p>
+        </div>
       </div>
-    </SectionShell>
-  );
+    </div>
+
+    <div className="soft-banner">
+      <h3>Broader specialist collaboration</h3>
+      <p>
+        Beyond the core team, patients may benefit from collaboration with senior oncology professors and
+        multidisciplinary specialists across Guangdong Province, creating more flexible pathways for complex or
+        advanced cases.
+      </p>
+    </div>
+  </SectionShell>
+);
 
   const hospitals = (
     <SectionShell
