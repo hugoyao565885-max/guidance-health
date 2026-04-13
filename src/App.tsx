@@ -1,7 +1,6 @@
 
 import React, { useEffect, useState } from "react";
 import "./index.css";
-
 import caiPhoto from "./cai-qichun.jpg";
 import huangPhoto from "./huang-huiqiang.jpg";
 
@@ -314,11 +313,11 @@ export default function App() {
     <div className="card-grid two">
       {/* Dr. Cai */}
       <div className="photo-card">
-        <img
-          src={caiPhoto}
-          alt="Dr. Cai Qichun"
-          className="h-48 w-full object-cover"
-        />
+       <img
+  src={caiPhoto}
+  alt="Dr. Cai Qichun"
+  className="photo-real"
+/>
         <div className="photo-content">
           <h3>Dr. Cai Qichun</h3>
           <div className="subtle">
@@ -352,10 +351,10 @@ export default function App() {
       {/* Prof. Huang */}
       <div className="photo-card">
         <img
-          src={huangPhoto}
-          alt="Professor Huang Huiqiang"
-          className="h-48 w-full object-cover"
-        />
+  src={huangPhoto}
+  alt="Professor Huang Huiqiang"
+  className="photo-real"
+/>
         <div className="photo-content">
           <h3>Professor Huang Huiqiang</h3>
           <div className="subtle">
