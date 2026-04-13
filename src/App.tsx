@@ -309,7 +309,11 @@ export default function App() {
     >
       <div className="card-grid two">
         <div className="photo-card">
-          <div className="photo-slot">Doctor Photo</div>
+          <img
+  src="/src/cai-qichun.jpg"
+  alt="Dr. Cai Qichun"
+  className="h-48 w-full object-cover"
+/>
           <div className="photo-content">
             <h3>Dr. Cai Qichun</h3>
             <div className="subtle">
@@ -334,7 +338,11 @@ export default function App() {
         </div>
 
         <div className="photo-card">
-          <div className="photo-slot">Doctor Photo</div>
+          <img
+  src="/src/huang-huiqiang.jpg"
+  alt="Professor Huang Huiqiang"
+  className="h-48 w-full object-cover"
+/>
           <div className="photo-content">
             <h3>Professor Huang Huiqiang</h3>
             <div className="subtle">
