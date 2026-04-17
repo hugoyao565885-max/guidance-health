@@ -52,6 +52,7 @@ function SectionShell({
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageKey>("home");
+  const [openOutcome, setOpenOutcome] = useState<string | null>(null);
 
   useEffect(() => {
     const syncFromHash = () => setCurrentPage(getPageFromHash());
@@ -308,35 +309,27 @@ export default function App() {
     >
       <div className="card-grid two">
         <div className="photo-card">
-          <img
-            src="/cai-qichun.jpg"
-            alt="Dr. Cai Qichun"
-            className="photo-real"
-          />
+          <img src="/cai-qichun.jpg" alt="Dr. Cai Qichun" className="photo-real" />
           <div className="photo-content">
             <h3>Dr. Cai Qichun</h3>
             <div className="subtle">
               Chief Physician · Director of Oncology Center, Clifford Hospital · Master&apos;s Supervisor, Jinan
               University
             </div>
-
             <p>
               Dr. Cai Qichun is a senior oncologist with over 30 years of clinical experience in lymphoma and
               immunotherapy-based cancer treatment. She completed her undergraduate, master&apos;s, and doctoral training
               at Sun Yat-sen University.
             </p>
-
             <p>
               Her clinical work focuses on precision immunotherapy, low-toxicity treatment strategies, and individualized
               cancer care. She established a dedicated immunotherapy ward and has been actively involved in the clinical
               translation of cellular therapies, targeted therapies, and tumor immunoregulation approaches.
             </p>
-
             <p>
               Dr. Cai has made significant contributions to the development of the P-GEMOX regimen for NK/T-cell lymphoma,
               which has been incorporated into the NCCN guidelines as a first-line treatment.
             </p>
-
             <p>
               Her research output includes more than 40 peer-reviewed publications in journals such as Nature Medicine,
               Science China Life Sciences, and National Science Review.
@@ -345,34 +338,27 @@ export default function App() {
         </div>
 
         <div className="photo-card">
-          <img
-            src="/huang-huiqiang.jpg"
-            alt="Professor Huang Huiqiang"
-            className="photo-real"
-          />
+          <img src="/huang-huiqiang.jpg" alt="Professor Huang Huiqiang" className="photo-real" />
           <div className="photo-content">
             <h3>Professor Huang Huiqiang</h3>
             <div className="subtle">
-              Deputy Director of Internal Medicine · Director of Stem Cell Transplant Unit · Chief Physician · Professor · PhD Supervisor · Sun Yat-sen University Cancer Center
+              Deputy Director of Internal Medicine · Director of Stem Cell Transplant Unit · Chief Physician · Professor
+              · PhD Supervisor · Sun Yat-sen University Cancer Center
             </div>
-
             <p>
               Professor Huang Huiqiang is a leading expert in hematologic malignancies and lymphoma, with decades of
               clinical experience at one of China&apos;s top oncology centers. His work focuses particularly on NK/T-cell
               lymphoma and complex, treatment-resistant cases.
             </p>
-
             <p>
               He has extensive experience in malignant lymphoma management, autologous hematopoietic stem cell
               transplantation, and integrated systemic therapy for advanced cancers.
             </p>
-
             <p>
               Professor Huang led the development of the P-GEMOX regimen, which significantly improved outcomes for
               patients with NK/T-cell lymphoma and has been widely recognized in international lymphoma research and
               clinical practice.
             </p>
-
             <p>
               He is also actively involved in clinical trials exploring immunotherapy, including PD-1-based treatment
               strategies, and the application of molecular diagnostics in treatment monitoring.
@@ -389,6 +375,102 @@ export default function App() {
           advanced cases.
         </p>
       </div>
+    </SectionShell>
+  );
+
+  const outcomes = (
+    <SectionShell
+      eyebrow="Outcomes"
+      title="Real patient outcomes"
+      description="These examples reflect real-world clinical experience in lymphoma and advanced cancer care. Outcomes differ by diagnosis, disease stage, prior therapy, and overall health status."
+    >
+      <div className="card-grid three">
+        <div className="photo-card">
+          <button
+            type="button"
+            onClick={() => setOpenOutcome(openOutcome === "relapsed-dlbcl" ? null : "relapsed-dlbcl")}
+            className="outcome-toggle"
+          >
+            <div className="photo-content">
+              <h3>Relapsed DLBCL</h3>
+              <p>
+                A patient with multiple relapses after prior chemotherapy achieved complete remission following CAR-T
+                therapy, with ongoing disease control during follow-up.
+              </p>
+              <div className="tiny-note">Click to view sequential imaging results</div>
+            </div>
+          </button>
+
+          {openOutcome === "relapsed-dlbcl" && (
+            <div className="outcome-gallery">
+              <div className="outcome-image-block">
+                <img
+                  src="/relapsed-dlbcl-before.jpg"
+                  alt="Relapsed DLBCL before CAR-T infusion"
+                  className="outcome-image"
+                />
+                <div className="outcome-label">Before CAR-T infusion</div>
+              </div>
+
+              <div className="outcome-image-block">
+                <img
+                  src="/relapsed-dlbcl-1month.jpg"
+                  alt="Relapsed DLBCL 1 month after CAR-T infusion"
+                  className="outcome-image"
+                />
+                <div className="outcome-label">1 month after infusion</div>
+              </div>
+
+              <div className="outcome-image-block">
+                <img
+                  src="/relapsed-dlbcl-3months.jpg"
+                  alt="Relapsed DLBCL 3 months after CAR-T infusion"
+                  className="outcome-image"
+                />
+                <div className="outcome-label">3 months after infusion</div>
+              </div>
+
+              <div className="outcome-image-block">
+                <img
+                  src="/relapsed-dlbcl-6months.jpg"
+                  alt="Relapsed DLBCL 6 months after CAR-T infusion"
+                  className="outcome-image"
+                />
+                <div className="outcome-label">6 months after infusion</div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="photo-card">
+          <div className="photo-slot small">Medical Image Placeholder</div>
+          <div className="photo-content">
+            <h3>Elderly CNS Lymphoma</h3>
+            <p>
+              An elderly patient not suitable for intensive therapy showed significant tumor reduction and neurological
+              improvement after integrated immunotherapy-based treatment.
+            </p>
+            <div className="tiny-note">Outcome observed during clinical follow-up</div>
+          </div>
+        </div>
+
+        <div className="photo-card">
+          <div className="photo-slot small">Medical Image Placeholder</div>
+          <div className="photo-content">
+            <h3>Refractory Lymphoma</h3>
+            <p>
+              A refractory lymphoma patient who failed multiple prior treatments achieved meaningful response after
+              combination cellular therapy and targeted strategies.
+            </p>
+            <div className="tiny-note">Outcome observed during clinical follow-up</div>
+          </div>
+        </div>
+      </div>
+
+      <p className="fine-print">
+        These cases are representative clinical observations and are not guarantees of outcome. Treatment decisions must
+        always be made by qualified physicians.
+      </p>
     </SectionShell>
   );
 
@@ -447,44 +529,6 @@ export default function App() {
           <p>The pathway is designed to support patients traveling from Europe, North America, and Southeast Asia.</p>
         </div>
       </div>
-    </SectionShell>
-  );
-
-  const outcomes = (
-    <SectionShell
-      eyebrow="Outcomes"
-      title="Real patient outcomes"
-      description="These examples reflect real-world clinical experience in lymphoma and advanced cancer care. Outcomes differ by diagnosis, disease stage, prior therapy, and overall health status."
-    >
-      <div className="card-grid three">
-        {[
-          {
-            title: "Relapsed DLBCL",
-            desc: "A patient with multiple relapses after prior chemotherapy achieved complete remission following CAR-T therapy, with ongoing disease control during follow-up.",
-          },
-          {
-            title: "Elderly CNS Lymphoma",
-            desc: "An elderly patient not suitable for intensive therapy showed significant tumor reduction and neurological improvement after integrated immunotherapy-based treatment.",
-          },
-          {
-            title: "Refractory Lymphoma",
-            desc: "A refractory lymphoma patient who failed multiple prior treatments achieved meaningful response after combination cellular therapy and targeted strategies.",
-          },
-        ].map((item) => (
-          <div key={item.title} className="photo-card">
-            <div className="photo-slot small">Medical Image Placeholder</div>
-            <div className="photo-content">
-              <h3>{item.title}</h3>
-              <p>{item.desc}</p>
-              <div className="tiny-note">Outcome observed during clinical follow-up</div>
-            </div>
-          </div>
-        ))}
-      </div>
-      <p className="fine-print">
-        These cases are representative clinical observations and are not guarantees of outcome. Treatment decisions must
-        always be made by qualified physicians.
-      </p>
     </SectionShell>
   );
 
