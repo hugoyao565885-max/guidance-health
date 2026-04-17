@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import "./index.css";
 
-
 type PageKey =
   | "home"
   | "about"
