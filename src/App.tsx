@@ -316,20 +316,24 @@ export default function App() {
               Chief Physician · Director of Oncology Center, Clifford Hospital · Master&apos;s Supervisor, Jinan
               University
             </div>
+
             <p>
               Dr. Cai Qichun is a senior oncologist with over 30 years of clinical experience in lymphoma and
               immunotherapy-based cancer treatment. She completed her undergraduate, master&apos;s, and doctoral training
               at Sun Yat-sen University.
             </p>
+
             <p>
               Her clinical work focuses on precision immunotherapy, low-toxicity treatment strategies, and individualized
               cancer care. She established a dedicated immunotherapy ward and has been actively involved in the clinical
               translation of cellular therapies, targeted therapies, and tumor immunoregulation approaches.
             </p>
+
             <p>
               Dr. Cai has made significant contributions to the development of the P-GEMOX regimen for NK/T-cell lymphoma,
               which has been incorporated into the NCCN guidelines as a first-line treatment.
             </p>
+
             <p>
               Her research output includes more than 40 peer-reviewed publications in journals such as Nature Medicine,
               Science China Life Sciences, and National Science Review.
@@ -345,20 +349,24 @@ export default function App() {
               Deputy Director of Internal Medicine · Director of Stem Cell Transplant Unit · Chief Physician · Professor
               · PhD Supervisor · Sun Yat-sen University Cancer Center
             </div>
+
             <p>
               Professor Huang Huiqiang is a leading expert in hematologic malignancies and lymphoma, with decades of
               clinical experience at one of China&apos;s top oncology centers. His work focuses particularly on NK/T-cell
               lymphoma and complex, treatment-resistant cases.
             </p>
+
             <p>
               He has extensive experience in malignant lymphoma management, autologous hematopoietic stem cell
               transplantation, and integrated systemic therapy for advanced cancers.
             </p>
+
             <p>
               Professor Huang led the development of the P-GEMOX regimen, which significantly improved outcomes for
               patients with NK/T-cell lymphoma and has been widely recognized in international lymphoma research and
               clinical practice.
             </p>
+
             <p>
               He is also actively involved in clinical trials exploring immunotherapy, including PD-1-based treatment
               strategies, and the application of molecular diagnostics in treatment monitoring.
@@ -443,15 +451,53 @@ export default function App() {
         </div>
 
         <div className="photo-card">
-          <div className="photo-slot small">Medical Image Placeholder</div>
-          <div className="photo-content">
-            <h3>Elderly CNS Lymphoma</h3>
-            <p>
-              An elderly patient not suitable for intensive therapy showed significant tumor reduction and neurological
-              improvement after integrated immunotherapy-based treatment.
-            </p>
-            <div className="tiny-note">Outcome observed during clinical follow-up</div>
-          </div>
+          <button
+            type="button"
+            onClick={() =>
+              setOpenOutcome(openOutcome === "elderly-cns-lymphoma" ? null : "elderly-cns-lymphoma")
+            }
+            className="outcome-toggle"
+          >
+            <div className="photo-content">
+              <h3>Elderly CNS Lymphoma</h3>
+              <p>
+                An elderly patient not suitable for intensive therapy showed significant tumor reduction and neurological
+                improvement after integrated immunotherapy-based treatment.
+              </p>
+              <div className="tiny-note">Click to view sequential imaging results</div>
+            </div>
+          </button>
+
+          {openOutcome === "elderly-cns-lymphoma" && (
+            <div className="outcome-gallery">
+              <div className="outcome-image-block">
+                <img
+                  src="/elderly-cns-lymphoma-1.jpg"
+                  alt="Elderly CNS lymphoma image 1"
+                  className="outcome-image"
+                />
+                <div className="outcome-label">Image 1</div>
+              </div>
+
+              <div className="outcome-image-block">
+                <img
+                  src="/elderly-cns-lymphoma-2.jpg"
+                  alt="Elderly CNS lymphoma image 2"
+                  className="outcome-image"
+                />
+                <div className="outcome-label">Image 2</div>
+              </div>
+
+              <div className="outcome-image-block">
+                <img
+                  src="/elderly-cns-lymphoma-3.jpg"
+                  alt="Elderly CNS lymphoma image 3"
+                  className="outcome-image"
+                />
+                <div className="outcome-label">Image 3</div>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="photo-card">
