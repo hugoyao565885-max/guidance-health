@@ -1,13 +1,33 @@
-# Guidance Health Vercel Package
+# Guidance Health
 
-## Deploy to Vercel
-1. Unzip this folder.
-2. Go to Vercel and create a new project.
-3. Import this folder or upload it through GitHub.
-4. Framework preset: Vite
-5. Build command: npm run build
-6. Output directory: dist
+Multilingual oncology lead-generation site for international patients considering lymphoma care and selected immunotherapy pathways in Guangzhou.
+
+## Routes
+
+- `/en/`
+- `/zh-hant/`
+- `/ru/`
+- `/ar/`
+- `/id/`
+- `/ms/`
+- `/{locale}/treatments/`
+- `/{locale}/experts/`
+- `/{locale}/hospitals/`
+- `/{locale}/cases/`
+- `/{locale}/journey/`
+- `/{locale}/contact/`
 
 ## Local run
-npm install
-npm run dev
+
+```bash
+pnpm install
+pnpm dev
+```
+
+## Vercel
+
+- Framework preset: Next.js
+- Build command: `npm run build`
+- Output: Next.js default
+
+When a production custom domain is ready, update `siteUrl` in `lib/site.ts` and configure the `vercel.app` deployment URL to redirect to the canonical domain.
