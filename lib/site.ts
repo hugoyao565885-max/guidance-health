@@ -1,5 +1,12 @@
 export const siteUrl = "https://guidance-health.vercel.app";
 
+export const brand = {
+  name: "H&C Care",
+  legalName: "H&C Care Advisory Limited",
+  zhLegalName: "H&C 健康顧問有限公司",
+  descriptor: "International oncology case management",
+};
+
 export const contact = {
   name: "Hugo Yao",
   email: "hugoyao565885@gmail.com",

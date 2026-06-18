@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 import { locales, localePath, siteUrl } from "../lib/site";
-
-const sections = ["treatments", "experts", "hospitals", "cases", "journey", "contact"] as const;
+import { sectionKeys } from "../lib/content";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -13,7 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly" as const,
       priority: locale === "en" ? 1 : 0.9,
     },
-    ...sections.map((section) => ({
+    ...sectionKeys.map((section) => ({
       url: `${siteUrl}${localePath(locale)}${section}/`,
       lastModified: now,
       changeFrequency: "monthly" as const,
