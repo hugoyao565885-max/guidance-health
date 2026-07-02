@@ -239,6 +239,13 @@ export default async function LocalePage({ params }: PageProps) {
 
         <section className="section light-band">
           <div className="container">
+            <SectionHeader {...copy.sections.pain} />
+            <CardGrid cards={copy.sections.pain.cards} />
+          </div>
+        </section>
+
+        <section className="section">
+          <div className="container">
             <SectionHeader {...copy.sections.focus} />
             <CardGrid cards={copy.sections.focus.cards} />
           </div>
@@ -278,7 +285,15 @@ export default async function LocalePage({ params }: PageProps) {
           </div>
         </section>
 
-        <section className="section light-band" id="experts">
+        <section className="section light-band" id="clinical-team">
+          <div className="container">
+            <SectionHeader {...copy.sections.clinicalTeam} />
+            <CardGrid cards={copy.sections.clinicalTeam.cards} />
+            <div className="note-card">{copy.sections.clinicalTeam.note}</div>
+          </div>
+        </section>
+
+        <section className="section" id="experts">
           <div className="container">
             <SectionHeader {...copy.sections.experts} />
             <ExpertGrid people={copy.sections.experts.people} />
@@ -320,6 +335,14 @@ export default async function LocalePage({ params }: PageProps) {
                 ))}
               </ul>
             </div>
+          </div>
+        </section>
+
+        <section className="section" id="ethics">
+          <div className="container">
+            <SectionHeader {...copy.sections.ethics} />
+            <CardGrid cards={copy.sections.ethics.cards} />
+            <div className="note-card">{copy.sections.ethics.note}</div>
           </div>
         </section>
 
