@@ -161,14 +161,14 @@ export const content: Record<Locale, SiteContent> = {
           "For eligible patients, we can help prepare records and coordinate communication around advanced oncology options. Eligibility and treatment direction must always be assessed by licensed physicians and receiving institutions.",
         cards: [
           { title: "Immunotherapy and targeted therapy review", text: "We help prepare prior treatment history, biomarker results, response information, and questions for specialist discussion." },
-          { title: "CLDN18.2 CAR-T pathway communication", text: "For eligible CLDN18.2-positive gastric cancer patients, we can help coordinate communication with experienced clinical teams in China and support evaluation preparation." },
+          { title: "CLDN18.2-positive gastric cancer CAR-T pathway", text: "CLDN18.2 is an emerging biomarker in gastric and gastroesophageal junction cancers. Public reports describe satri-cel/CT041 as the first solid-tumor CAR-T candidate to reach NDA review in China. For patients with confirmed CLDN18.2 positivity, we help organize pathology, biomarker, imaging, and treatment-history records for qualified team communication." },
           { title: "Cellular therapy discussion", text: "Where clinically relevant, we help families prepare questions about cellular therapy pathways, eligibility, safety, timing, and hospital requirements." },
           { title: "Clinical trial opportunity exploration", text: "For eligible patients, we can help explore potential clinical research opportunities, prepare documents, understand eligibility requirements, and coordinate communication." },
           { title: "Surgery-after-reassessment coordination", text: "When reassessment suggests surgery may be discussed, we help coordinate communication with appropriate surgical teams." },
           { title: "Family-facing pathway clarity", text: "We turn complex hospital steps into a practical timeline without replacing medical advice." },
         ],
         note:
-          "We do not provide treatment, determine eligibility, promise clinical trial enrollment, or promise access to any therapy. We help patients prepare, coordinate, and communicate.",
+          "We do not provide CAR-T or other treatments, determine eligibility, promise access to NDA-stage or clinical research pathways, promise clinical trial enrollment, or promise outcomes. We help patients prepare, coordinate, and communicate.",
       },
       mdt: {
         eyebrow: "Guangdong oncology specialists",
@@ -419,13 +419,13 @@ export const content: Record<Locale, SiteContent> = {
         body: "對部分符合條件的患者，我們可協助準備資料並圍繞前沿腫瘤路徑進行溝通協調。是否適合及治療方向必須由持牌醫生和接診機構評估。",
         cards: [
           { title: "免疫與靶向治療評估", text: "協助整理既往治療、標誌物結果、療效反應和需要專家討論的問題。" },
-          { title: "CLDN18.2 CAR-T 路徑溝通", text: "對部分符合條件的 CLDN18.2 陽性胃癌患者，可協助對接中國有經驗的臨床團隊，支持前沿治療路徑評估準備。" },
+          { title: "CLDN18.2 陽性胃癌 CAR-T 路徑溝通", text: "CLDN18.2 是胃癌及胃食管交界癌的重要新興標誌物。公開資料顯示，相關 CAR-T 候選產品 satri-cel/CT041 已進入中國上市申請審評階段，被稱為全球首個進入 NDA 階段的實體瘤 CAR-T 產品。對已確認 CLDN18.2 陽性的患者，我們可協助整理病理、標誌物、影像及既往治療資料，並協調合資格團隊進行個案可行性溝通。" },
           { title: "細胞治療問題準備", text: "在臨床相關時，協助家屬準備關於細胞治療路徑、適應條件、安全性、時間安排和醫院要求的問題。" },
           { title: "臨床研究機會探索", text: "對符合條件的腫瘤患者，可協助了解中國潛在臨床研究機會、準備醫療文件、理解入選條件並協調溝通。" },
           { title: "復評後手術路徑協調", text: "當復評提示可討論手術時，協助與合適手術團隊進行溝通準備。" },
           { title: "面向家屬的路徑梳理", text: "把複雜醫院流程整理成家屬可理解的時間線，但不替代醫生建議。" },
         ],
-        note: "我們不提供治療、不判定入選資格、不保證臨床研究入組，也不承諾任何療法可及性。我們協助患者準備、協調和溝通。",
+        note: "我們不提供 CAR-T 或其他治療、不判定入選資格、不保證獲得審評中或臨床研究路徑、不保證臨床研究入組，也不承諾療效或結果。我們協助患者準備、協調和溝通。",
       },
       mdt: {
         eyebrow: "廣東腫瘤專家資源",
@@ -630,13 +630,13 @@ export const content: Record<Locale, SiteContent> = {
         body: "Для подходящих пациентов мы помогаем подготовить документы и координировать коммуникацию по передовым онкологическим опциям. Решения принимают врачи и учреждения.",
         cards: [
           { title: "Иммуно- и таргетная терапия", text: "Подготовка истории лечения, биомаркеров, ответа на терапию и вопросов для специалиста." },
-          { title: "CLDN18.2 CAR-T", text: "Для подходящих CLDN18.2-позитивных пациентов с раком желудка мы помогаем с коммуникацией и подготовкой к оценке." },
+          { title: "CLDN18.2-позитивный рак желудка и CAR-T", text: "CLDN18.2 является развивающимся биомаркером при раке желудка и гастроэзофагеального перехода. В открытых источниках satri-cel/CT041 описывается как первый CAR-T кандидат для солидных опухолей, дошедший до NDA review в Китае. Для пациентов с подтвержденной CLDN18.2-позитивностью мы помогаем организовать патологию, биомаркеры, визуализацию и историю лечения для общения с квалифицированной командой." },
           { title: "Клеточная терапия", text: "Подготовка вопросов о маршрутах, критериях, безопасности, сроках и требованиях больницы." },
           { title: "Клинические исследования", text: "Помогаем изучить потенциальные исследования, документы, критерии и коммуникацию с командами." },
           { title: "Хирургия после переоценки", text: "Когда это уместно, координируем коммуникацию с хирургическими командами." },
           { title: "Ясность для семьи", text: "Переводим сложные шаги в понятную временную линию, не заменяя советы врача." },
         ],
-        note: "Мы не лечим, не определяем право на терапию, не гарантируем включение в исследование и не обещаем доступ к лечению.",
+        note: "Мы не предоставляем CAR-T или другое лечение, не определяем право на терапию, не гарантируем доступ к маршрутам NDA-stage или клиническим исследованиям, включение в исследование или результаты.",
       },
       mdt: {
         eyebrow: "Онкологи Гуандуна",
@@ -835,13 +835,13 @@ export const content: Record<Locale, SiteContent> = {
         body: "للمرضى المؤهلين، نساعد في تحضير السجلات وتنسيق التواصل حول خيارات أورام متقدمة. الأهلية والقرار الطبي للطبيب والمؤسسة.",
         cards: [
           { title: "العلاج المناعي والموجه", text: "تحضير تاريخ العلاج والواسمات الحيوية والاستجابة والأسئلة للنقاش." },
-          { title: "مسار CLDN18.2 CAR-T", text: "للمرضى المناسبين بسرطان معدة CLDN18.2-positive، نساعد في التواصل والتحضير للتقييم." },
+          { title: "سرطان المعدة CLDN18.2-positive ومسار CAR-T", text: "CLDN18.2 واسم حيوي ناشئ في سرطان المعدة وسرطان موصل المعدة والمريء. تشير المصادر العامة إلى أن satri-cel/CT041 مرشح CAR-T للأورام الصلبة وصل إلى مرحلة NDA review في الصين. للمرضى الذين لديهم إثبات CLDN18.2-positive، نساعد في تنظيم تقارير الباثولوجيا والواسمات الحيوية والتصوير وتاريخ العلاج للتواصل مع فريق مؤهل." },
           { title: "نقاش العلاج الخلوي", text: "تحضير أسئلة حول المسارات والأهلية والسلامة والتوقيت ومتطلبات المستشفى." },
           { title: "استكشاف التجارب السريرية", text: "مساعدة في فهم فرص البحث المحتملة والوثائق وشروط الأهلية والتواصل." },
           { title: "تنسيق الجراحة بعد إعادة التقييم", text: "عندما يكون ذلك مناسبا، ننسق التواصل مع فرق الجراحة." },
           { title: "وضوح للعائلة", text: "تحويل الخطوات المعقدة إلى جدول عملي دون استبدال نصيحة الطبيب." },
         ],
-        note: "لا نقدم علاجا، ولا نحدد الأهلية، ولا نضمن دخول تجربة سريرية، ولا نعد بإتاحة أي علاج.",
+        note: "لا نقدم CAR-T أو أي علاج آخر، ولا نحدد الأهلية، ولا نضمن الوصول إلى مسارات قيد المراجعة التنظيمية أو البحث السريري، ولا نضمن دخول تجربة سريرية أو أي نتيجة علاجية.",
       },
       mdt: {
         eyebrow: "متخصصو أورام غوانغدونغ",
@@ -1040,13 +1040,13 @@ export const content: Record<Locale, SiteContent> = {
         body: "Untuk pasien yang memenuhi syarat, kami membantu menyiapkan rekam medis dan koordinasi komunikasi seputar opsi onkologi lanjutan. Kelayakan dan arah terapi ditentukan dokter dan institusi.",
         cards: [
           { title: "Imunoterapi dan terapi target", text: "Persiapan riwayat terapi, biomarker, respons, dan pertanyaan untuk spesialis." },
-          { title: "Komunikasi jalur CLDN18.2 CAR-T", text: "Untuk pasien kanker lambung CLDN18.2-positive yang sesuai, kami membantu komunikasi dan persiapan evaluasi di China." },
+          { title: "Kanker lambung CLDN18.2-positive dan jalur CAR-T", text: "CLDN18.2 adalah biomarker yang berkembang pada kanker lambung dan gastroesophageal junction. Laporan publik menyebut satri-cel/CT041 sebagai kandidat CAR-T tumor solid pertama yang mencapai NDA review di China. Untuk pasien dengan CLDN18.2-positive yang terkonfirmasi, kami membantu mengatur laporan patologi, biomarker, imaging, dan riwayat terapi untuk komunikasi dengan tim yang memenuhi syarat." },
           { title: "Diskusi terapi sel", text: "Persiapan pertanyaan tentang jalur, kelayakan, keamanan, waktu, dan persyaratan rumah sakit." },
           { title: "Eksplorasi clinical trial", text: "Membantu memahami peluang riset, dokumen, syarat kelayakan, dan komunikasi dengan tim terkait." },
           { title: "Koordinasi bedah setelah evaluasi ulang", text: "Bila sesuai, kami membantu komunikasi dengan tim bedah." },
           { title: "Kejelasan jalur untuk keluarga", text: "Mengubah langkah rumah sakit yang kompleks menjadi timeline praktis tanpa mengganti nasihat dokter." },
         ],
-        note: "Kami tidak memberi terapi, menentukan kelayakan, menjamin masuk clinical trial, atau menjanjikan akses terhadap terapi apa pun.",
+        note: "Kami tidak memberi CAR-T atau terapi lain, menentukan kelayakan, menjamin akses ke jalur NDA-stage atau riset klinis, menjamin masuk clinical trial, atau menjanjikan hasil.",
       },
       mdt: {
         eyebrow: "Spesialis onkologi Guangdong",
@@ -1245,13 +1245,13 @@ export const content: Record<Locale, SiteContent> = {
         body: "Untuk pesakit yang layak, kami membantu menyediakan rekod dan koordinasi komunikasi sekitar pilihan onkologi lanjutan. Kelayakan dan arah rawatan ditentukan doktor dan institusi.",
         cards: [
           { title: "Imunoterapi dan terapi sasaran", text: "Persediaan sejarah rawatan, biomarker, respons dan soalan untuk pakar." },
-          { title: "Komunikasi laluan CLDN18.2 CAR-T", text: "Untuk pesakit kanser gastrik CLDN18.2-positive yang sesuai, kami membantu komunikasi dan persediaan penilaian di China." },
+          { title: "Kanser gastrik CLDN18.2-positive dan laluan CAR-T", text: "CLDN18.2 ialah biomarker yang semakin penting dalam kanser gastrik dan gastroesophageal junction. Laporan awam menyebut satri-cel/CT041 sebagai calon CAR-T tumor pepejal pertama yang mencapai NDA review di China. Untuk pesakit dengan CLDN18.2-positive yang disahkan, kami membantu menyusun laporan patologi, biomarker, imaging dan sejarah rawatan untuk komunikasi dengan pasukan yang layak." },
           { title: "Perbincangan terapi sel", text: "Persediaan soalan tentang laluan, kelayakan, keselamatan, masa dan keperluan hospital." },
           { title: "Eksplorasi clinical trial", text: "Membantu memahami peluang penyelidikan, dokumen, syarat kelayakan dan komunikasi pasukan berkaitan." },
           { title: "Koordinasi bedah selepas penilaian semula", text: "Jika sesuai, kami membantu komunikasi dengan pasukan bedah." },
           { title: "Kejelasan laluan untuk keluarga", text: "Menukar langkah hospital kompleks menjadi garis masa praktikal tanpa mengganti nasihat doktor." },
         ],
-        note: "Kami tidak memberi rawatan, menentukan kelayakan, menjamin kemasukan clinical trial, atau menjanjikan akses kepada mana-mana terapi.",
+        note: "Kami tidak memberi CAR-T atau rawatan lain, menentukan kelayakan, menjamin akses kepada laluan NDA-stage atau penyelidikan klinikal, menjamin kemasukan clinical trial, atau menjanjikan hasil.",
       },
       mdt: {
         eyebrow: "Pakar onkologi Guangdong",
