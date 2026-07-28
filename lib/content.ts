@@ -284,7 +284,7 @@ export const content: Record<Locale, SiteContent> = {
         body:
           `Contact ${contact.name} by WhatsApp or email. Please include the patient's diagnosis, country or region, current status, and the main coordination question. Do not send emergency requests through this website.`,
         email: "Email H&C Care",
-        whatsapp: "WhatsApp Hugo",
+        whatsapp: "WhatsApp H&C Care",
         privacy:
           "Medical information sent by email or WhatsApp is used to understand the case and arrange coordination. It may be shared with relevant medical teams outside Hong Kong only for case preparation and review.",
       },
@@ -514,7 +514,7 @@ export const content: Record<Locale, SiteContent> = {
         title: "申請會員諮詢",
         body: `請通過 WhatsApp 或電郵聯絡 ${contact.name}。請說明患者診斷、所在國家或地區、目前狀況和主要協調問題。緊急情況請勿通過本網站處理。`,
         email: "電郵 H&C Care",
-        whatsapp: "WhatsApp 聯絡 Hugo",
+        whatsapp: "WhatsApp 聯絡 H&C Care",
         privacy: "通過電郵或 WhatsApp 發送的醫療資料將用於了解個案及安排協調，並可能僅為個案準備及評估目的分享予香港以外相關醫療團隊。",
       },
       privacy: {
@@ -719,7 +719,7 @@ export const content: Record<Locale, SiteContent> = {
         title: "Запросить консультацию по членству",
         body: `Свяжитесь с ${contact.name} по WhatsApp или email. Укажите диагноз, регион, текущее состояние и главный вопрос.`,
         email: "Email H&C Care",
-        whatsapp: "WhatsApp Hugo",
+        whatsapp: "WhatsApp H&C Care",
         privacy: "Медицинская информация используется для понимания случая и координации; она может передаваться релевантным медицинским командам за пределами Гонконга.",
       },
       privacy: {
@@ -924,7 +924,7 @@ export const content: Record<Locale, SiteContent> = {
         title: "طلب استشارة عضوية",
         body: `تواصل مع ${contact.name} عبر WhatsApp أو البريد. أرسل التشخيص والمنطقة والحالة الحالية والسؤال الرئيسي.`,
         email: "Email H&C Care",
-        whatsapp: "WhatsApp Hugo",
+        whatsapp: "WhatsApp H&C Care",
         privacy: "تستخدم المعلومات الطبية لفهم الحالة والتنسيق، وقد تشارك مع فرق طبية مناسبة خارج هونغ كونغ.",
       },
       privacy: {
@@ -1129,7 +1129,7 @@ export const content: Record<Locale, SiteContent> = {
         title: "Minta konsultasi keanggotaan",
         body: `Hubungi ${contact.name} via WhatsApp atau email. Sertakan diagnosis, wilayah, status saat ini, dan pertanyaan utama.`,
         email: "Email H&C Care",
-        whatsapp: "WhatsApp Hugo",
+        whatsapp: "WhatsApp H&C Care",
         privacy: "Informasi medis digunakan untuk memahami kasus dan koordinasi; dapat dibagikan dengan tim medis relevan di luar Hong Kong.",
       },
       privacy: {
@@ -1334,7 +1334,7 @@ export const content: Record<Locale, SiteContent> = {
         title: "Mohon konsultasi keahlian",
         body: `Hubungi ${contact.name} melalui WhatsApp atau email. Sertakan diagnosis, wilayah, status semasa dan soalan utama.`,
         email: "Email H&C Care",
-        whatsapp: "WhatsApp Hugo",
+        whatsapp: "WhatsApp H&C Care",
         privacy: "Maklumat perubatan digunakan untuk memahami kes dan koordinasi; boleh dikongsi dengan pasukan perubatan relevan di luar Hong Kong.",
       },
       privacy: {
