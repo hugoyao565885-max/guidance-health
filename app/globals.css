@@ -542,6 +542,17 @@ img {
   overflow-wrap: anywhere;
 }
 
+.contact-card a {
+  color: #073b4c;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+.contact-card a:hover {
+  text-decoration: underline;
+}
+
 .section-contact-grid {
   color: #172033;
 }

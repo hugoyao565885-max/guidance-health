@@ -284,7 +284,11 @@ export default async function SectionPage({ params }: PageProps) {
                 </div>
                 <aside className="contact-card">
                   <strong>{contact.name}</strong>
-                  <span>{contact.email}</span>
+                  {contact.emails.map((email) => (
+                    <a key={email} href={`mailto:${email}`}>
+                      {email}
+                    </a>
+                  ))}
                   <span>{contact.whatsapp}</span>
                   <p>{copy.sections.contact.privacy}</p>
                 </aside>

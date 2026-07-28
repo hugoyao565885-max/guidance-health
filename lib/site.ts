@@ -9,7 +9,8 @@ export const brand = {
 
 export const contact = {
   name: "Hugo Yao",
-  email: "hugoyao565885@gmail.com",
+  email: "info@hccareadvisory.com",
+  emails: ["info@hccareadvisory.com", "contact@hccareadvisory.com", "support@hccareadvisory.com"],
   whatsapp: "+852 9581 3961",
   whatsappUrl: "https://wa.me/85295813961",
 };
