@@ -56,8 +56,8 @@ function Header({ locale }: { locale: Locale }) {
             </Link>
           ))}
         </nav>
-        <Link className="button button-dark small" href={`${localePath(locale)}contact/`}>
-          {copy.nav.contact}
+        <Link className="button button-dark small" href={`${localePath(locale)}register/`}>
+          {copy.nav.register}
         </Link>
       </div>
     </header>
@@ -81,6 +81,7 @@ function Footer({ locale }: { locale: Locale }) {
               {copy.nav[section]}
             </Link>
           ))}
+          <Link href={`${localePath(locale)}register/`}>{copy.nav.register}</Link>
           <Link href={`${localePath(locale)}contact/`}>{copy.nav.contact}</Link>
         </nav>
       </div>
@@ -169,6 +170,55 @@ function LegalCards({ cards, note }: { cards: Array<{ title: string; text: strin
     <>
       <Cards cards={cards} />
       <div className="note-card">{note}</div>
+    </>
+  );
+}
+
+function RegisterIntake({ register }: { register: (typeof content)[Locale]["sections"]["register"] }) {
+  const mailHref = `mailto:${contact.email}?subject=${encodeURIComponent("H&C Care patient membership registration")}`;
+
+  return (
+    <>
+      <div className="register-layout">
+        <div>
+          <h2>{register.stepsTitle}</h2>
+          <Cards cards={register.steps} />
+          <div className="documents register-fields">
+            <h3>{register.fieldsTitle}</h3>
+            <ul>
+              {register.fields.map((field) => (
+                <li key={field}>{field}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <aside className="documents register-checklist">
+          <h3>{register.documentsTitle}</h3>
+          <ul>
+            {register.documents.map((document) => (
+              <li key={document}>{document}</li>
+            ))}
+          </ul>
+        </aside>
+      </div>
+
+      <div className="register-consent">
+        <div>
+          <h3>{register.consentTitle}</h3>
+          <p>{register.consent}</p>
+        </div>
+        <div className="cta-row">
+          <a href={mailHref} className="button button-dark">
+            {register.email}
+          </a>
+          <a href={contact.whatsappUrl} className="button button-light">
+            {register.whatsapp}
+          </a>
+        </div>
+      </div>
+
+      <div className="note-card">{register.note}</div>
     </>
   );
 }
@@ -268,6 +318,8 @@ export default async function SectionPage({ params }: PageProps) {
                 </div>
               </>
             ) : null}
+
+            {section === "register" ? <RegisterIntake register={copy.sections.register} /> : null}
 
             {section === "contact" ? (
               <div className="contact-grid section-contact-grid">

@@ -4,8 +4,24 @@ type Card = { title: string; text: string };
 type Step = { title: string; text: string };
 type Expert = { name: string; role: string; text: string; image: string };
 type MembershipPlan = { name: string; price: string; fit: string; items: string[] };
+type RegisterSection = {
+  eyebrow: string;
+  title: string;
+  body: string;
+  stepsTitle: string;
+  steps: Card[];
+  documentsTitle: string;
+  documents: string[];
+  fieldsTitle: string;
+  fields: string[];
+  consentTitle: string;
+  consent: string;
+  email: string;
+  whatsapp: string;
+  note: string;
+};
 
-export const mainSectionKeys = ["membership", "oncology", "mdt", "experts", "hospitals", "journey", "contact"] as const;
+export const mainSectionKeys = ["membership", "oncology", "mdt", "experts", "hospitals", "journey", "register", "contact"] as const;
 export const footerSectionKeys = ["privacy", "terms"] as const;
 export const sectionKeys = [...mainSectionKeys, ...footerSectionKeys] as const;
 
@@ -43,6 +59,7 @@ export type SiteContent = {
     experts: { eyebrow: string; title: string; body: string; people: Expert[]; note: string };
     hospitals: { eyebrow: string; title: string; body: string; cards: Card[]; note: string };
     journey: { eyebrow: string; title: string; body: string; steps: Step[]; documentsTitle: string; documents: string[] };
+    register: RegisterSection;
     clinicalTeam: { eyebrow: string; title: string; body: string; cards: Card[]; note: string };
     ethics: { eyebrow: string; title: string; body: string; cards: Card[]; note: string };
     contact: { eyebrow: string; title: string; body: string; email: string; whatsapp: string; privacy: string };
@@ -68,6 +85,7 @@ export const content: Record<Locale, SiteContent> = {
       experts: "Experts",
       hospitals: "Hospitals",
       journey: "Journey",
+      register: "Register",
       contact: "Contact",
       privacy: "Privacy Notice",
       terms: "Service Boundaries",
@@ -253,6 +271,42 @@ export const content: Record<Locale, SiteContent> = {
         documentsTitle: "Documents to prepare",
         documents: ["Current diagnosis and medical summary", "Pathology report", "Imaging reports and recent test results", "Genetic or molecular testing, if available", "Prior treatment history and medication list", "Current symptoms, performance status, and infection history"],
       },
+      register: {
+        eyebrow: "Member registration",
+        title: "Register interest and prepare medical records for case review",
+        body:
+          "Start here if the patient would like H&C Care to review whether membership or a coordination service is appropriate. Please do not upload emergency requests or urgent clinical instructions through this website.",
+        stepsTitle: "How submission works",
+        steps: [
+          { title: "Register interest", text: "Send the patient's basic situation, country or region, preferred language, cancer type, and the service tier being considered." },
+          { title: "Prepare the record package", text: "Use the checklist below to collect reports before case review. Clear PDFs, image links, and dated summaries are preferred." },
+          { title: "Submit through a confirmed channel", text: "After initial contact, we will confirm the appropriate email or WhatsApp route and whether a written service agreement is needed before paid coordination begins." },
+        ],
+        documentsTitle: "Medical records checklist",
+        documents: [
+          "Biopsy reports",
+          "PET/CT scan reports",
+          "Any pathology or immunohistochemistry (IHC) reports",
+          "Any genetic, molecular, or NGS test results",
+          "Blood test results from the past 2-4 weeks",
+          "A summary of all treatments received, including surgery, chemotherapy, radiotherapy, immunotherapy, targeted therapy, cellular therapy, or clinical trials",
+          "A list of current medications, supplements, allergies, and major adverse reactions",
+          "A brief description of current symptoms, daily activity level, appetite, weight change, fever, pain, and overall condition",
+          "Recent CT, MRI, ultrasound, endoscopy, or other imaging reports, plus DICOM files or image-sharing links if available",
+          "Hospital discharge summaries, diagnosis letters, surgery notes, endoscopy reports, or procedure records if available",
+          "Important medical history such as heart, kidney, liver, infection, autoimmune disease, hepatitis, tuberculosis, or other major conditions",
+          "Patient passport or identity page, contact person details, and authorization if a family member is communicating on behalf of the patient",
+        ],
+        fieldsTitle: "Information to include in the first message",
+        fields: ["Patient initials or name", "Age and sex", "Country or region", "Diagnosis and stage, if known", "Current treatment status", "Main question for coordination", "Preferred language", "Preferred service tier"],
+        consentTitle: "Privacy and consent",
+        consent:
+          "Medical records contain sensitive personal data. Please send documents only if the patient or authorized family member agrees that H&C Care may use them for case preparation and coordination communication.",
+        email: "Email registration materials",
+        whatsapp: "Ask before sending files on WhatsApp",
+        note:
+          "This registration page is an intake and preparation guide. It is not an emergency channel, medical consultation platform, diagnosis service, treatment recommendation, or guarantee that any hospital, doctor, treatment, surgery, or clinical research pathway will accept the case.",
+      },
       clinicalTeam: {
         eyebrow: "Clinically led coordination",
         title: "Led by healthcare professionals, not general travel agents",
@@ -336,6 +390,7 @@ export const content: Record<Locale, SiteContent> = {
       experts: "專家背景",
       hospitals: "醫院資源",
       journey: "服務流程",
+      register: "會員登記",
       contact: "聯絡",
       privacy: "私隱聲明",
       terms: "服務邊界",
@@ -491,6 +546,39 @@ export const content: Record<Locale, SiteContent> = {
         documentsTitle: "建議準備資料",
         documents: ["目前診斷與病情摘要", "病理報告", "影像報告和近期檢查結果", "基因或分子檢測，如有", "既往治療史和用藥清單", "目前症狀、體能狀態和感染史"],
       },
+      register: {
+        eyebrow: "會員登記",
+        title: "登記會員意向並準備病歷資料供個案評估",
+        body: "如果患者希望由 H&C Care 評估是否適合會員或協調服務，可先從此頁開始。請勿通過本網站提交急症請求或高度緊急的臨床指示。",
+        stepsTitle: "提交流程",
+        steps: [
+          { title: "登記服務意向", text: "先說明患者基本情況、所在國家或地區、偏好語言、癌種，以及正在考慮的服務檔次。" },
+          { title: "準備病歷資料包", text: "按以下清單整理報告。建議提供清晰 PDF、影像連結和帶日期的病情摘要。" },
+          { title: "經確認渠道提交", text: "初步聯絡後，我們會確認適合的電郵或 WhatsApp 提交方式；付費協調開始前需確認書面服務協議。" },
+        ],
+        documentsTitle: "病歷資料清單",
+        documents: [
+          "活檢報告",
+          "PET/CT 掃描報告",
+          "任何病理或免疫組化（IHC）報告",
+          "任何基因、分子或 NGS 檢測結果",
+          "過去2至4週的血液檢查結果",
+          "既往所有治療摘要，包括手術、化療、放療、免疫治療、靶向治療、細胞治療或臨床研究經歷",
+          "目前用藥、營養補充劑、過敏史和重要不良反應清單",
+          "目前症狀、日常活動能力、食慾、體重變化、發熱、疼痛及整體狀況簡述",
+          "近期 CT、MRI、超聲、內鏡或其他影像報告；如有，請提供 DICOM 文件或影像分享連結",
+          "出院小結、診斷證明、手術記錄、內鏡報告或操作記錄，如有",
+          "重要既往病史，例如心、腎、肝、感染、自身免疫病、肝炎、結核或其他重大疾病",
+          "患者護照或身份頁、聯絡人資料；如由家屬代為溝通，請提供患者授權",
+        ],
+        fieldsTitle: "首封信息建議包含",
+        fields: ["患者姓名或縮寫", "年齡和性別", "所在國家或地區", "診斷和分期，如已知", "目前治療狀態", "希望協調的主要問題", "偏好語言", "希望了解的服務檔次"],
+        consentTitle: "私隱與授權",
+        consent: "病歷屬於敏感個人資料。請僅在患者本人或獲授權家屬同意後發送，並確認 H&C Care 可將資料用於個案準備及協調溝通。",
+        email: "電郵提交登記資料",
+        whatsapp: "WhatsApp 先確認提交方式",
+        note: "此頁僅為登記與資料準備指引，不是急症渠道、醫療諮詢平台、診斷服務、治療建議，也不保證任何醫院、醫生、治療、手術或臨床研究路徑會接收個案。",
+      },
       clinicalTeam: {
         eyebrow: "醫療專業人員主導",
         title: "我們不是普通旅行陪診團隊",
@@ -563,6 +651,7 @@ export const content: Record<Locale, SiteContent> = {
       experts: "Эксперты",
       hospitals: "Больницы",
       journey: "Маршрут",
+      register: "Регистрация",
       contact: "Контакты",
       privacy: "Конфиденциальность",
       terms: "Границы услуг",
@@ -696,6 +785,39 @@ export const content: Record<Locale, SiteContent> = {
         documentsTitle: "Документы",
         documents: ["Диагноз и резюме", "Патология", "Визуализация и анализы", "Генетика/молекулярные тесты", "История лечения и лекарства", "Текущие симптомы и инфекции"],
       },
+      register: {
+        eyebrow: "Регистрация пациента",
+        title: "Регистрация интереса и подготовка медицинских документов",
+        body: "Начните здесь, если пациент хочет понять, подходит ли членство или координационная услуга H&C Care. Не отправляйте экстренные запросы или срочные клинические инструкции через сайт.",
+        stepsTitle: "Как отправляются материалы",
+        steps: [
+          { title: "Зарегистрировать интерес", text: "Укажите основную ситуацию пациента, страну или регион, предпочтительный язык, тип рака и интересующий уровень услуги." },
+          { title: "Подготовить пакет документов", text: "Используйте список ниже. Предпочтительны четкие PDF, ссылки на изображения и резюме с датами." },
+          { title: "Отправить через подтвержденный канал", text: "После первичного контакта мы подтвердим подходящий email или WhatsApp и необходимость письменного соглашения перед платной координацией." },
+        ],
+        documentsTitle: "Список медицинских документов",
+        documents: [
+          "Отчеты биопсии",
+          "Отчеты PET/CT",
+          "Любые патологоанатомические или IHC отчеты",
+          "Любые генетические, молекулярные или NGS результаты",
+          "Анализы крови за последние 2-4 недели",
+          "Краткая история всех полученных видов лечения: операция, химиотерапия, радиотерапия, иммунотерапия, таргетная терапия, клеточная терапия или клинические исследования",
+          "Список текущих лекарств, добавок, аллергий и серьезных нежелательных реакций",
+          "Краткое описание текущих симптомов, активности, аппетита, изменения веса, температуры, боли и общего состояния",
+          "Недавние CT, MRI, ultrasound, endoscopy или другие отчеты визуализации, а также DICOM-файлы или ссылки, если доступны",
+          "Выписки, диагностические письма, операционные записи, эндоскопические отчеты или процедурные записи, если доступны",
+          "Важный анамнез: сердце, почки, печень, инфекции, аутоиммунные болезни, гепатит, туберкулез или другие значимые заболевания",
+          "Паспорт или удостоверение пациента, данные контактного лица и разрешение, если семья общается от имени пациента",
+        ],
+        fieldsTitle: "Что указать в первом сообщении",
+        fields: ["Имя или инициалы пациента", "Возраст и пол", "Страна или регион", "Диагноз и стадия, если известны", "Текущий статус лечения", "Главный вопрос для координации", "Предпочтительный язык", "Интересующий уровень услуги"],
+        consentTitle: "Конфиденциальность и согласие",
+        consent: "Медицинские документы содержат чувствительные персональные данные. Отправляйте их только при согласии пациента или уполномоченного члена семьи на использование H&C Care для подготовки случая и координации.",
+        email: "Отправить материалы по email",
+        whatsapp: "Сначала уточнить в WhatsApp",
+        note: "Эта страница является руководством по регистрации и подготовке документов. Это не канал экстренной помощи, не медицинская консультация, не диагностика, не рекомендация лечения и не гарантия принятия больницей, врачом, лечением, операцией или клиническим исследованием.",
+      },
       clinicalTeam: {
         eyebrow: "Клиническое руководство",
         title: "Медицинские специалисты, а не обычные travel agents",
@@ -768,6 +890,7 @@ export const content: Record<Locale, SiteContent> = {
       experts: "الخبراء",
       hospitals: "المستشفيات",
       journey: "المسار",
+      register: "التسجيل",
       contact: "تواصل",
       privacy: "الخصوصية",
       terms: "حدود الخدمة",
@@ -901,6 +1024,39 @@ export const content: Record<Locale, SiteContent> = {
         documentsTitle: "وثائق للتحضير",
         documents: ["ملخص التشخيص", "تقرير الباثولوجيا", "تقارير التصوير والفحوصات", "اختبارات جينية أو جزيئية", "تاريخ العلاج والأدوية", "الأعراض الحالية وحالات العدوى"],
       },
+      register: {
+        eyebrow: "تسجيل العضوية",
+        title: "تسجيل الاهتمام وتحضير السجلات الطبية لمراجعة الحالة",
+        body: "ابدأ هنا إذا كان المريض يريد من H&C Care مراجعة ما إذا كانت العضوية أو خدمة التنسيق مناسبة. لا ترسل طلبات طارئة أو تعليمات سريرية عاجلة عبر هذا الموقع.",
+        stepsTitle: "كيف يتم الإرسال",
+        steps: [
+          { title: "تسجيل الاهتمام", text: "أرسل الوضع الأساسي للمريض، البلد أو المنطقة، اللغة المفضلة، نوع السرطان، ومستوى الخدمة المطلوب." },
+          { title: "تحضير ملف السجلات", text: "استخدم القائمة أدناه لجمع التقارير. يفضل إرسال PDF واضح وروابط صور وملخصات مؤرخة." },
+          { title: "الإرسال عبر قناة مؤكدة", text: "بعد التواصل الأولي، سنؤكد البريد أو WhatsApp المناسب وما إذا كان يلزم اتفاق خدمة مكتوب قبل بدء التنسيق المدفوع." },
+        ],
+        documentsTitle: "قائمة السجلات الطبية",
+        documents: [
+          "تقارير الخزعة",
+          "تقارير PET/CT",
+          "أي تقارير باثولوجيا أو IHC",
+          "أي نتائج جينية أو جزيئية أو NGS",
+          "نتائج فحوص الدم خلال آخر 2-4 أسابيع",
+          "ملخص لكل العلاجات السابقة، مثل الجراحة والكيميائي والإشعاعي والمناعي والموجه والعلاج الخلوي أو التجارب السريرية",
+          "قائمة الأدوية الحالية والمكملات والحساسيات والتفاعلات السلبية المهمة",
+          "وصف مختصر للأعراض الحالية، النشاط اليومي، الشهية، تغير الوزن، الحرارة، الألم، والحالة العامة",
+          "تقارير CT أو MRI أو ultrasound أو endoscopy أو أي تصوير حديث، مع ملفات DICOM أو روابط مشاركة الصور إن وجدت",
+          "ملخصات الخروج، خطابات التشخيص، ملاحظات الجراحة، تقارير المنظار أو سجلات الإجراءات إن وجدت",
+          "تاريخ مرضي مهم مثل القلب، الكلى، الكبد، العدوى، أمراض المناعة الذاتية، التهاب الكبد، السل أو أمراض رئيسية أخرى",
+          "صفحة جواز أو هوية المريض، بيانات الشخص المسؤول، وتفويض إذا كان أحد أفراد العائلة يتواصل نيابة عن المريض",
+        ],
+        fieldsTitle: "ما يجب تضمينه في الرسالة الأولى",
+        fields: ["اسم المريض أو الأحرف الأولى", "العمر والجنس", "البلد أو المنطقة", "التشخيص والمرحلة إن عرفت", "حالة العلاج الحالية", "السؤال الرئيسي للتنسيق", "اللغة المفضلة", "مستوى الخدمة المطلوب"],
+        consentTitle: "الخصوصية والموافقة",
+        consent: "السجلات الطبية تحتوي على بيانات شخصية حساسة. يرجى إرسالها فقط إذا وافق المريض أو فرد العائلة المخول على استخدامها من H&C Care لتحضير الحالة والتنسيق.",
+        email: "إرسال مواد التسجيل بالبريد",
+        whatsapp: "اسأل عبر WhatsApp قبل إرسال الملفات",
+        note: "هذه الصفحة دليل تسجيل وتحضير مواد فقط. ليست قناة طوارئ أو منصة استشارة طبية أو خدمة تشخيص أو توصية علاجية، ولا تضمن قبول أي مستشفى أو طبيب أو علاج أو جراحة أو مسار بحث سريري للحالة.",
+      },
       clinicalTeam: {
         eyebrow: "تنسيق بقيادة طبية",
         title: "يقوده متخصصون صحيون، لا وكلاء سفر عامون",
@@ -973,6 +1129,7 @@ export const content: Record<Locale, SiteContent> = {
       experts: "Dokter",
       hospitals: "Rumah sakit",
       journey: "Alur",
+      register: "Registrasi",
       contact: "Kontak",
       privacy: "Privasi",
       terms: "Batas Layanan",
@@ -1106,6 +1263,39 @@ export const content: Record<Locale, SiteContent> = {
         documentsTitle: "Dokumen",
         documents: ["Diagnosis dan ringkasan", "Patologi", "Imaging dan hasil tes", "Tes genetik/molekuler", "Riwayat terapi dan obat", "Gejala dan infeksi saat ini"],
       },
+      register: {
+        eyebrow: "Registrasi anggota",
+        title: "Daftar minat dan siapkan rekam medis untuk review kasus",
+        body: "Mulai di sini bila pasien ingin H&C Care menilai apakah keanggotaan atau layanan koordinasi sesuai. Jangan kirim permintaan darurat atau instruksi klinis mendesak melalui situs ini.",
+        stepsTitle: "Cara pengiriman",
+        steps: [
+          { title: "Daftar minat", text: "Kirim situasi dasar pasien, negara atau wilayah, bahasa pilihan, jenis kanker, dan tingkat layanan yang dipertimbangkan." },
+          { title: "Siapkan paket rekam medis", text: "Gunakan checklist di bawah untuk mengumpulkan laporan. PDF jelas, tautan gambar, dan ringkasan bertanggal lebih disukai." },
+          { title: "Kirim melalui kanal yang dikonfirmasi", text: "Setelah kontak awal, kami akan mengonfirmasi email atau WhatsApp yang sesuai dan apakah perjanjian layanan tertulis diperlukan sebelum koordinasi berbayar dimulai." },
+        ],
+        documentsTitle: "Checklist rekam medis",
+        documents: [
+          "Laporan biopsi",
+          "Laporan PET/CT",
+          "Laporan patologi atau immunohistochemistry (IHC), bila ada",
+          "Hasil tes genetik, molekuler, atau NGS, bila ada",
+          "Hasil tes darah dalam 2-4 minggu terakhir",
+          "Ringkasan semua terapi yang pernah diterima, termasuk operasi, kemoterapi, radioterapi, imunoterapi, terapi target, terapi sel, atau clinical trial",
+          "Daftar obat saat ini, suplemen, alergi, dan reaksi merugikan penting",
+          "Deskripsi singkat gejala saat ini, aktivitas harian, nafsu makan, perubahan berat badan, demam, nyeri, dan kondisi umum",
+          "Laporan CT, MRI, ultrasound, endoscopy, atau imaging terbaru lain, plus file DICOM atau tautan berbagi gambar bila tersedia",
+          "Ringkasan pulang rumah sakit, surat diagnosis, catatan operasi, laporan endoscopy, atau catatan prosedur bila tersedia",
+          "Riwayat medis penting seperti jantung, ginjal, hati, infeksi, penyakit autoimun, hepatitis, tuberkulosis, atau kondisi besar lainnya",
+          "Paspor atau halaman identitas pasien, detail kontak keluarga, dan otorisasi bila keluarga berkomunikasi atas nama pasien",
+        ],
+        fieldsTitle: "Informasi untuk pesan pertama",
+        fields: ["Nama atau inisial pasien", "Usia dan jenis kelamin", "Negara atau wilayah", "Diagnosis dan stadium bila diketahui", "Status terapi saat ini", "Pertanyaan utama untuk koordinasi", "Bahasa pilihan", "Tingkat layanan yang diminati"],
+        consentTitle: "Privasi dan persetujuan",
+        consent: "Rekam medis berisi data pribadi sensitif. Kirim dokumen hanya jika pasien atau keluarga yang berwenang setuju H&C Care menggunakannya untuk persiapan kasus dan komunikasi koordinasi.",
+        email: "Kirim materi registrasi via email",
+        whatsapp: "Tanya dulu sebelum kirim file di WhatsApp",
+        note: "Halaman ini adalah panduan registrasi dan persiapan dokumen. Ini bukan kanal darurat, platform konsultasi medis, layanan diagnosis, rekomendasi terapi, atau jaminan bahwa rumah sakit, dokter, terapi, operasi, atau jalur riset klinis akan menerima kasus.",
+      },
       clinicalTeam: {
         eyebrow: "Dipimpin tenaga kesehatan",
         title: "Dipimpin profesional kesehatan, bukan agen perjalanan umum",
@@ -1178,6 +1368,7 @@ export const content: Record<Locale, SiteContent> = {
       experts: "Pakar",
       hospitals: "Hospital",
       journey: "Laluan",
+      register: "Pendaftaran",
       contact: "Hubungi",
       privacy: "Privasi",
       terms: "Sempadan Servis",
@@ -1310,6 +1501,39 @@ export const content: Record<Locale, SiteContent> = {
         ],
         documentsTitle: "Dokumen",
         documents: ["Diagnosis dan ringkasan", "Patologi", "Imej dan keputusan ujian", "Ujian genetik/molekul", "Sejarah rawatan dan ubat", "Simptom dan jangkitan semasa"],
+      },
+      register: {
+        eyebrow: "Pendaftaran ahli",
+        title: "Daftar minat dan sediakan rekod perubatan untuk semakan kes",
+        body: "Mulakan di sini jika pesakit mahu H&C Care menilai sama ada keahlian atau servis koordinasi sesuai. Jangan hantar permintaan kecemasan atau arahan klinikal mendesak melalui laman ini.",
+        stepsTitle: "Cara penghantaran",
+        steps: [
+          { title: "Daftar minat", text: "Hantar situasi asas pesakit, negara atau wilayah, bahasa pilihan, jenis kanser dan tahap servis yang dipertimbangkan." },
+          { title: "Sediakan pakej rekod", text: "Gunakan senarai semak di bawah untuk mengumpul laporan. PDF jelas, pautan imej dan ringkasan bertarikh lebih baik." },
+          { title: "Hantar melalui saluran disahkan", text: "Selepas kontak awal, kami akan mengesahkan email atau WhatsApp yang sesuai dan sama ada perjanjian servis bertulis diperlukan sebelum koordinasi berbayar bermula." },
+        ],
+        documentsTitle: "Senarai semak rekod perubatan",
+        documents: [
+          "Laporan biopsi",
+          "Laporan PET/CT",
+          "Sebarang laporan patologi atau immunohistochemistry (IHC)",
+          "Sebarang keputusan ujian genetik, molekul atau NGS",
+          "Keputusan ujian darah dalam 2-4 minggu terakhir",
+          "Ringkasan semua rawatan yang pernah diterima, termasuk pembedahan, kemoterapi, radioterapi, imunoterapi, terapi sasaran, terapi sel atau clinical trial",
+          "Senarai ubat semasa, suplemen, alergi dan reaksi buruk penting",
+          "Penerangan ringkas simptom semasa, aktiviti harian, selera makan, perubahan berat badan, demam, sakit dan keadaan umum",
+          "Laporan CT, MRI, ultrasound, endoscopy atau imej terbaru lain, serta fail DICOM atau pautan perkongsian imej jika ada",
+          "Ringkasan keluar hospital, surat diagnosis, nota pembedahan, laporan endoscopy atau rekod prosedur jika ada",
+          "Sejarah perubatan penting seperti jantung, buah pinggang, hati, jangkitan, penyakit autoimun, hepatitis, tuberkulosis atau keadaan utama lain",
+          "Pasport atau halaman identiti pesakit, butiran orang hubungan dan kebenaran jika keluarga berkomunikasi bagi pihak pesakit",
+        ],
+        fieldsTitle: "Maklumat untuk mesej pertama",
+        fields: ["Nama atau inisial pesakit", "Umur dan jantina", "Negara atau wilayah", "Diagnosis dan peringkat jika diketahui", "Status rawatan semasa", "Soalan utama untuk koordinasi", "Bahasa pilihan", "Tahap servis yang diminati"],
+        consentTitle: "Privasi dan persetujuan",
+        consent: "Rekod perubatan mengandungi data peribadi sensitif. Hantar dokumen hanya jika pesakit atau keluarga yang diberi kuasa bersetuju H&C Care menggunakannya untuk persediaan kes dan komunikasi koordinasi.",
+        email: "Hantar bahan pendaftaran melalui email",
+        whatsapp: "Tanya dahulu sebelum hantar fail di WhatsApp",
+        note: "Halaman ini ialah panduan pendaftaran dan persediaan dokumen. Ia bukan saluran kecemasan, platform konsultasi perubatan, servis diagnosis, cadangan rawatan atau jaminan bahawa hospital, doktor, rawatan, pembedahan atau laluan penyelidikan klinikal akan menerima kes.",
       },
       clinicalTeam: {
         eyebrow: "Dipimpin profesional kesihatan",

@@ -60,8 +60,8 @@ function Header({ locale }: { locale: Locale }) {
             </Link>
           ))}
         </nav>
-        <Link className="button button-dark small" href={`${localePath(locale)}contact/`}>
-          {copy.nav.contact}
+        <Link className="button button-dark small" href={`${localePath(locale)}register/`}>
+          {copy.nav.register}
         </Link>
       </div>
     </header>
@@ -186,6 +186,7 @@ function Footer({ locale }: { locale: Locale }) {
               {copy.nav[section]}
             </Link>
           ))}
+          <Link href={`${localePath(locale)}register/`}>{copy.nav.register}</Link>
           <Link href={`${localePath(locale)}contact/`}>{copy.nav.contact}</Link>
         </nav>
       </div>
@@ -218,7 +219,7 @@ export default async function LocalePage({ params }: PageProps) {
               </h1>
               <p>{copy.hero.body}</p>
               <div className="cta-row">
-                <Link href={`${localePath(locale)}contact/`} className="button button-dark">
+                <Link href={`${localePath(locale)}register/`} className="button button-dark">
                   {copy.hero.primary}
                 </Link>
                 <Link href={`${localePath(locale)}journey/`} className="button button-light">

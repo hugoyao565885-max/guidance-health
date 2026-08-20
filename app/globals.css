@@ -429,6 +429,52 @@ img {
   margin: 12px 0 0;
 }
 
+.register-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  gap: 24px;
+  align-items: start;
+}
+
+.register-layout h2 {
+  margin: 0 0 18px;
+  color: #073b4c;
+  font-size: 1.45rem;
+}
+
+.register-fields {
+  margin-top: 18px;
+}
+
+.register-checklist ul,
+.register-fields ul {
+  grid-template-columns: 1fr;
+}
+
+.register-consent {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: center;
+  margin-top: 24px;
+  padding: 24px;
+  border: 1px solid rgba(8, 127, 140, 0.18);
+  border-radius: 8px;
+  background: #f2fbfb;
+}
+
+.register-consent h3 {
+  margin: 0;
+  color: #073b4c;
+  font-size: 1.18rem;
+}
+
+.register-consent p {
+  margin: 8px 0 0;
+  color: #475467;
+  line-height: 1.75;
+}
+
 .mdt-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 380px;
@@ -631,7 +677,8 @@ img {
   .hero-content,
   .hospital-layout,
   .contact-grid,
-  .mdt-layout {
+  .mdt-layout,
+  .register-layout {
     grid-template-columns: 1fr;
   }
 
@@ -729,5 +776,9 @@ img {
   .expert-card img {
     width: 100%;
     height: 280px;
+  }
+
+  .register-consent {
+    display: grid;
   }
 }
