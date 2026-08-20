@@ -91,12 +91,13 @@ function CardGrid({ cards }: { cards: Array<{ title: string; text: string }> }) 
   );
 }
 
-function MembershipPlans({ plans }: { plans: Array<{ name: string; fit: string; items: string[] }> }) {
+function MembershipPlans({ plans }: { plans: Array<{ name: string; price: string; fit: string; items: string[] }> }) {
   return (
     <div className="membership-grid">
       {plans.map((plan) => (
         <article className="membership-card" key={plan.name}>
           <span>{plan.name}</span>
+          <p className="membership-price">{plan.price}</p>
           <h3>{plan.fit}</h3>
           <ul>
             {plan.items.map((item) => (

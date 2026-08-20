@@ -3,7 +3,7 @@ import { brand, contact, type Locale } from "./site";
 type Card = { title: string; text: string };
 type Step = { title: string; text: string };
 type Expert = { name: string; role: string; text: string; image: string };
-type MembershipPlan = { name: string; fit: string; items: string[] };
+type MembershipPlan = { name: string; price: string; fit: string; items: string[] };
 
 export const mainSectionKeys = ["membership", "oncology", "mdt", "experts", "hospitals", "journey", "contact"] as const;
 export const footerSectionKeys = ["privacy", "terms"] as const;
@@ -122,25 +122,28 @@ export const content: Record<Locale, SiteContent> = {
         ],
       },
       membership: {
-        eyebrow: "Membership services",
-        title: "Annual case management for international oncology patients",
+        eyebrow: "Patient service fees",
+        title: "Three coordination service levels for international oncology patients",
         body:
-          "Membership fees cover case management, coordination, and advisory support. Hospital fees, physician fees, tests, medicines, treatment, surgery, and travel costs are separate.",
+          "The fees below are H&C Care coordination service fees only. Hospital fees, physician fees, tests, medicines, treatment, surgery, travel, accommodation, insurance, vehicles, and other third-party costs are separate.",
         plans: [
           {
-            name: "Care Navigation Membership",
-            fit: "For patients who need records organized and a clear first pathway.",
-            items: ["Medical record checklist", "Case file organization", "Appointment and communication coordination", "Follow-up reminders"],
+            name: "Basic Pathway Consultation",
+            price: "Free",
+            fit: "For patients who are first exploring whether China oncology care may be relevant.",
+            items: ["Initial needs screening", "General China oncology pathway explanation", "Medical record and travel-preparation checklist", "One online explanation or basic text consultation"],
           },
           {
-            name: "Oncology Coordination Membership",
-            fit: "For complex oncology cases that need specialist review questions and treatment-stage coordination.",
-            items: ["MDT and specialist question preparation", "Treatment reassessment timeline", "Clinical team communication coordination", "Case summary and next-step tracking"],
+            name: "Single-Cycle Coordination",
+            price: "USD 300 / patient / service cycle",
+            fit: "For one focused medical-record preparation, specialist communication, consultation, or admission coordination cycle.",
+            items: ["Medical record collection and case timeline", "Specialist or hospital communication preparation", "Appointment, remote consultation, or admission coordination", "Pre-travel checklist and one post-discharge follow-up"],
           },
           {
-            name: "Concierge Case Management",
-            fit: "For families who need long-term coordination across treatment stages.",
-            items: ["Dedicated case manager", "Cross-stage care timeline", "Admission, discharge, and review reminders", "Family communication support"],
+            name: "Annual Patient Coordination",
+            price: "USD 980 / patient / 12 months",
+            fit: "For patients who may need repeated China treatment visits and continuous case management within one year.",
+            items: ["Annual electronic case file maintenance", "Follow-up and document update reminders", "Up to 4 hospital coordination cycles", "Up to 2 specialist or pathway reassessment coordination rounds"],
           },
         ],
         modulesTitle: "Special support modules",
@@ -152,7 +155,7 @@ export const content: Record<Locale, SiteContent> = {
         modulesNote:
           "Support modules are coordination and advisory services, not medical packages or treatment commitments. Any clinical decision must be made by licensed physicians and receiving institutions.",
         note:
-          "Membership is not insurance, a medical package, or a prepaid treatment plan. Acceptance, diagnosis, treatment eligibility, surgery, cost, and outcomes are determined by hospitals and licensed physicians.",
+          "Fees are charged per patient and are not transferable. Basic free consultation is normally limited to one use per patient. These services are not insurance, medical packages, or prepaid treatment plans; acceptance, diagnosis, treatment eligibility, surgery, cost, and outcomes are determined by hospitals and licensed physicians. Final service scope should be confirmed in a written agreement before payment.",
       },
       oncology: {
         eyebrow: "Advanced oncology pathways",
@@ -384,24 +387,27 @@ export const content: Record<Locale, SiteContent> = {
         ],
       },
       membership: {
-        eyebrow: "會員服務",
-        title: "面向境外腫瘤患者的年度個案管理",
-        body: "會員費用僅覆蓋個案管理、協調與諮詢支持。醫院費、醫生費、檢查、藥物、治療、手術和出行費用均另行計算。",
+        eyebrow: "患者服務收費",
+        title: "境外腫瘤患者三檔協調服務",
+        body: "以下費用僅為 H&C Care 的協調服務費。醫院費、醫生費、檢查、藥物、治療、手術、出行、住宿、保險、車輛及其他第三方費用均另行計算。",
         plans: [
           {
-            name: "Care Navigation Membership",
-            fit: "適合需要病歷整理和第一步就醫路徑的患者。",
-            items: ["病歷資料清單", "個案檔案整理", "預約及溝通協調", "復查和隨訪提醒"],
+            name: "基礎路徑諮詢",
+            price: "免費",
+            fit: "適合正在初步了解中國腫瘤就醫可行性的患者。",
+            items: ["初步需求篩選", "中國腫瘤就醫一般流程說明", "病歷資料及赴華準備清單", "一次線上說明或基礎文字諮詢"],
           },
           {
-            name: "Oncology Coordination Membership",
-            fit: "適合需要專家評估問題準備與治療階段協調的複雜腫瘤個案。",
-            items: ["MDT 及專家問題準備", "治療復評節奏整理", "臨床團隊溝通協調", "個案摘要及下一步追蹤"],
+            name: "單次協調服務",
+            price: "USD 300 / 患者 / 服務周期",
+            fit: "適合一次完整病歷整理、專家溝通、遠程諮詢或入院協調周期。",
+            items: ["病歷收集及病情時間線整理", "專家或醫院溝通資料準備", "門診、遠程諮詢或住院申請協調", "赴華前清單及一次出院後隨訪協調"],
           },
           {
-            name: "Concierge Case Management",
-            fit: "適合需要跨治療階段長期協調的家庭。",
-            items: ["專屬個案管理人員", "跨階段個案時間線", "入院、出院及復查提醒", "家屬溝通支持"],
+            name: "年度患者協調",
+            price: "USD 980 / 患者 / 連續12個月",
+            fit: "適合一年內可能多次來華治療、需要持續病例管理和協調的患者。",
+            items: ["年度電子病歷檔案維護", "復診及資料更新提醒", "年度內最多4次住院協調周期", "年度內最多2次專家或治療資源重新評估協調"],
           },
         ],
         modulesTitle: "專項支持模組",
@@ -411,7 +417,7 @@ export const content: Record<Locale, SiteContent> = {
           { title: "Surgical Pathway Coordination", text: "在復評結果提示可討論手術路徑時，協助與合適團隊進行溝通準備。" },
         ],
         modulesNote: "專項模組屬於協調與諮詢支持，不是醫療套餐或治療承諾。任何臨床決策均由持牌醫生及接診機構判斷。",
-        note: "會員服務不是保險、醫療套餐或預付治療計劃。是否接收、診斷、治療資格、手術、費用和結果均由醫院及持牌醫生決定。",
+        note: "以上費用按每名患者計算，不可轉讓。免費基礎諮詢通常每名患者限一次。服務不是保險、醫療套餐或預付治療計劃；是否接收、診斷、治療資格、手術、費用和結果均由醫院及持牌醫生決定。正式服務範圍應在付款前以書面協議確認。",
       },
       oncology: {
         eyebrow: "前沿腫瘤治療路徑",
@@ -607,13 +613,13 @@ export const content: Record<Locale, SiteContent> = {
         ],
       },
       membership: {
-        eyebrow: "Членские услуги",
-        title: "Годовое управление случаем для онкологических пациентов",
-        body: "Членский сбор покрывает управление случаем, координацию и консультационную поддержку. Медицинские, больничные, лекарственные, хирургические и дорожные расходы оплачиваются отдельно.",
+        eyebrow: "Стоимость услуг для пациентов",
+        title: "Три уровня координационных услуг для международных онкологических пациентов",
+        body: "Указанные сборы являются только платой за координационные услуги H&C Care. Больничные, врачебные, анализы, лекарства, лечение, операция, поездка, проживание, страховка, транспорт и другие расходы третьих сторон оплачиваются отдельно.",
         plans: [
-          { name: "Care Navigation Membership", fit: "Для первого маршрута и организации документов.", items: ["Список документов", "Организация дела", "Координация записи и связи", "Напоминания о повторных шагах"] },
-          { name: "Oncology Coordination Membership", fit: "Для сложных случаев, которым нужна подготовка вопросов и координация этапов.", items: ["Подготовка вопросов MDT и специалистам", "График повторной оценки", "Координация клинических команд", "Резюме случая и отслеживание шагов"] },
-          { name: "Concierge Case Management", fit: "Для длительной координации через разные этапы.", items: ["Персональный case manager", "Межэтапная временная линия", "Напоминания о госпитализации и контроле", "Коммуникация с семьей"] },
+          { name: "Первичная консультация по маршруту", price: "Бесплатно", fit: "Для пациентов, которые впервые изучают возможность онкологической помощи в Китае.", items: ["Первичный скрининг потребностей", "Общее объяснение маршрута лечения в Китае", "Список медицинских документов и подготовки к поездке", "Одно онлайн-объяснение или базовая текстовая консультация"] },
+          { name: "Координация одного цикла", price: "USD 300 / пациент / цикл услуги", fit: "Для одного цикла подготовки документов, связи со специалистом, консультации или госпитализации.", items: ["Сбор документов и временная линия случая", "Подготовка коммуникации со специалистом или больницей", "Координация записи, онлайн-консультации или госпитализации", "Список подготовки к поездке и один follow-up после выписки"] },
+          { name: "Годовая координация пациента", price: "USD 980 / пациент / 12 месяцев", fit: "Для пациентов, которым в течение года могут понадобиться повторные поездки в Китай и постоянное управление случаем.", items: ["Ведение годового электронного файла случая", "Напоминания о follow-up и обновлении документов", "До 4 циклов координации госпитализации в год", "До 2 раундов координации повторной оценки специалиста или маршрута"] },
         ],
         modulesTitle: "Специальные модули поддержки",
         modules: [
@@ -622,7 +628,7 @@ export const content: Record<Locale, SiteContent> = {
           { title: "Surgical Pathway Coordination", text: "Поддержка коммуникации, когда повторная оценка позволяет обсуждать хирургический маршрут." },
         ],
         modulesNote: "Модули являются координационной и консультационной поддержкой, а не медицинскими пакетами или обещанием лечения.",
-        note: "Членство не является страховкой или медицинским пакетом. Принятие, лечение, операция, стоимость и результат определяются больницами и врачами.",
+        note: "Сборы указаны на одного пациента и не передаются другим лицам. Бесплатная первичная консультация обычно ограничена одним разом для пациента. Услуги не являются страховкой, медицинским пакетом или предоплаченным лечением; принятие случая, диагноз, право на лечение, операция, стоимость и результат определяются больницами и врачами. Окончательный объем услуг должен быть подтвержден письменным соглашением до оплаты.",
       },
       oncology: {
         eyebrow: "Передовые онкологические маршруты",
@@ -812,13 +818,13 @@ export const content: Record<Locale, SiteContent> = {
         ],
       },
       membership: {
-        eyebrow: "خدمات العضوية",
-        title: "إدارة سنوية لحالات الأورام الدولية",
-        body: "تغطي رسوم العضوية إدارة الحالة والتنسيق والدعم الاستشاري فقط. الرسوم الطبية والمستشفى والأدوية والجراحة والسفر منفصلة.",
+        eyebrow: "رسوم خدمات المرضى",
+        title: "ثلاثة مستويات من خدمات التنسيق لمرضى الأورام الدوليين",
+        body: "الرسوم أدناه هي رسوم تنسيق H&C Care فقط. رسوم المستشفى والأطباء والفحوصات والأدوية والعلاج والجراحة والسفر والإقامة والتأمين والمركبات وأي تكاليف طرف ثالث منفصلة.",
         plans: [
-          { name: "Care Navigation Membership", fit: "لمن يحتاجون تنظيما أوليا للملف والمسار.", items: ["قائمة السجلات", "تنظيم الملف", "تنسيق المواعيد والتواصل", "تذكيرات المتابعة"] },
-          { name: "Oncology Coordination Membership", fit: "للحالات المعقدة التي تحتاج تحضير أسئلة وتنسيق مراحل العلاج.", items: ["تحضير أسئلة MDT والمتخصصين", "تنظيم جدول إعادة التقييم", "تنسيق التواصل مع الفرق السريرية", "ملخص الحالة وتتبع الخطوات"] },
-          { name: "Concierge Case Management", fit: "للعائلات التي تحتاج تنسيقا طويل الأمد.", items: ["مدير حالة مخصص", "جدول زمني عبر المراحل", "تذكيرات الدخول والخروج والمراجعة", "دعم التواصل العائلي"] },
+          { name: "استشارة المسار الأساسية", price: "مجانا", fit: "للمرضى الذين يستكشفون لأول مرة إمكانية رعاية الأورام في الصين.", items: ["فرز أولي للاحتياجات", "شرح عام لمسار الأورام في الصين", "قائمة السجلات الطبية والتحضير للسفر", "شرح واحد عبر الإنترنت أو استشارة نصية أساسية"] },
+          { name: "تنسيق دورة واحدة", price: "USD 300 / مريض / دورة خدمة", fit: "لدورة واحدة من تحضير السجلات أو تواصل متخصص أو استشارة أو تنسيق دخول المستشفى.", items: ["جمع السجلات وجدول الحالة", "تحضير التواصل مع المتخصص أو المستشفى", "تنسيق الموعد أو الاستشارة عن بعد أو طلب الدخول", "قائمة ما قبل السفر ومتابعة واحدة بعد الخروج"] },
+          { name: "تنسيق سنوي للمريض", price: "USD 980 / مريض / 12 شهرا", fit: "للمرضى الذين قد يحتاجون زيارات علاجية متكررة إلى الصين وإدارة مستمرة للحالة خلال عام.", items: ["صيانة ملف الحالة الإلكتروني السنوي", "تذكيرات المتابعة وتحديث الوثائق", "حتى 4 دورات تنسيق دخول المستشفى سنويا", "حتى جولتين من إعادة تقييم المتخصص أو المسار"] },
         ],
         modulesTitle: "وحدات دعم خاصة",
         modules: [
@@ -827,7 +833,7 @@ export const content: Record<Locale, SiteContent> = {
           { title: "Surgical Pathway Coordination", text: "دعم التواصل عندما تشير إعادة التقييم إلى إمكانية مناقشة المسار الجراحي." },
         ],
         modulesNote: "هذه الوحدات هي دعم تنسيقي واستشاري وليست حزمة طبية أو وعدا بالعلاج.",
-        note: "العضوية ليست تأمينا أو حزمة علاجية. القبول والعلاج والجراحة والتكلفة والنتائج تحددها المستشفيات والأطباء.",
+        note: "تحتسب الرسوم لكل مريض ولا يمكن نقلها إلى شخص آخر. الاستشارة الأساسية المجانية عادة مرة واحدة لكل مريض. هذه الخدمات ليست تأمينا أو حزمة طبية أو خطة علاج مسبقة الدفع؛ القبول والتشخيص وأهلية العلاج والجراحة والتكلفة والنتائج تحددها المستشفيات والأطباء. يجب تأكيد نطاق الخدمة النهائي في اتفاق مكتوب قبل الدفع.",
       },
       oncology: {
         eyebrow: "مسارات أورام متقدمة",
@@ -1017,13 +1023,13 @@ export const content: Record<Locale, SiteContent> = {
         ],
       },
       membership: {
-        eyebrow: "Layanan keanggotaan",
-        title: "Manajemen kasus tahunan untuk pasien onkologi internasional",
-        body: "Biaya keanggotaan mencakup manajemen kasus, koordinasi, dan dukungan konsultasi. Biaya rumah sakit, dokter, tes, obat, terapi, operasi, dan perjalanan terpisah.",
+        eyebrow: "Biaya layanan pasien",
+        title: "Tiga tingkat layanan koordinasi untuk pasien onkologi internasional",
+        body: "Biaya di bawah ini hanya biaya layanan koordinasi H&C Care. Biaya rumah sakit, dokter, tes, obat, terapi, operasi, perjalanan, akomodasi, asuransi, kendaraan, dan biaya pihak ketiga lainnya terpisah.",
         plans: [
-          { name: "Care Navigation Membership", fit: "Untuk jalur pertama dan organisasi rekam medis.", items: ["Daftar dokumen", "Organisasi file kasus", "Koordinasi janji dan komunikasi", "Pengingat follow-up"] },
-          { name: "Oncology Coordination Membership", fit: "Untuk kasus kompleks yang perlu persiapan pertanyaan dan koordinasi tahap terapi.", items: ["Persiapan pertanyaan MDT dan spesialis", "Timeline evaluasi ulang", "Koordinasi komunikasi tim klinis", "Ringkasan kasus dan pelacakan langkah"] },
-          { name: "Concierge Case Management", fit: "Untuk koordinasi jangka panjang lintas tahap.", items: ["Case manager khusus", "Timeline lintas tahap", "Pengingat masuk, pulang, dan kontrol", "Dukungan komunikasi keluarga"] },
+          { name: "Konsultasi Jalur Dasar", price: "Gratis", fit: "Untuk pasien yang pertama kali menilai apakah layanan onkologi di China relevan.", items: ["Skrining kebutuhan awal", "Penjelasan umum jalur onkologi di China", "Checklist rekam medis dan persiapan perjalanan", "Satu penjelasan online atau konsultasi teks dasar"] },
+          { name: "Koordinasi Satu Siklus", price: "USD 300 / pasien / siklus layanan", fit: "Untuk satu siklus persiapan rekam medis, komunikasi spesialis, konsultasi, atau koordinasi masuk rumah sakit.", items: ["Pengumpulan rekam medis dan timeline kasus", "Persiapan komunikasi spesialis atau rumah sakit", "Koordinasi janji, konsultasi jarak jauh, atau permohonan rawat inap", "Checklist sebelum perjalanan dan satu follow-up setelah pulang"] },
+          { name: "Koordinasi Pasien Tahunan", price: "USD 980 / pasien / 12 bulan", fit: "Untuk pasien yang mungkin perlu beberapa kunjungan terapi ke China dan manajemen kasus berkelanjutan dalam satu tahun.", items: ["Pemeliharaan file kasus elektronik tahunan", "Pengingat follow-up dan pembaruan dokumen", "Hingga 4 siklus koordinasi rawat inap per tahun", "Hingga 2 putaran koordinasi evaluasi ulang spesialis atau jalur"] },
         ],
         modulesTitle: "Modul dukungan khusus",
         modules: [
@@ -1032,7 +1038,7 @@ export const content: Record<Locale, SiteContent> = {
           { title: "Surgical Pathway Coordination", text: "Dukungan komunikasi bila evaluasi ulang menunjukkan jalur bedah dapat didiskusikan." },
         ],
         modulesNote: "Modul ini adalah dukungan koordinasi dan konsultasi, bukan paket medis atau janji terapi.",
-        note: "Keanggotaan bukan asuransi atau paket medis. Penerimaan, terapi, operasi, biaya, dan hasil ditentukan rumah sakit dan dokter.",
+        note: "Biaya dihitung per pasien dan tidak dapat dialihkan. Konsultasi dasar gratis biasanya dibatasi satu kali per pasien. Layanan ini bukan asuransi, paket medis, atau rencana terapi prabayar; penerimaan, diagnosis, kelayakan terapi, operasi, biaya, dan hasil ditentukan rumah sakit dan dokter. Ruang lingkup akhir harus dikonfirmasi dalam perjanjian tertulis sebelum pembayaran.",
       },
       oncology: {
         eyebrow: "Jalur onkologi lanjutan",
@@ -1222,13 +1228,13 @@ export const content: Record<Locale, SiteContent> = {
         ],
       },
       membership: {
-        eyebrow: "Servis keahlian",
-        title: "Pengurusan kes tahunan untuk pesakit onkologi antarabangsa",
-        body: "Yuran keahlian meliputi pengurusan kes, koordinasi dan sokongan konsultasi. Kos hospital, doktor, ujian, ubat, rawatan, pembedahan dan perjalanan adalah berasingan.",
+        eyebrow: "Yuran servis pesakit",
+        title: "Tiga tahap servis koordinasi untuk pesakit onkologi antarabangsa",
+        body: "Yuran di bawah hanyalah yuran servis koordinasi H&C Care. Kos hospital, doktor, ujian, ubat, rawatan, pembedahan, perjalanan, penginapan, insurans, kenderaan dan kos pihak ketiga lain adalah berasingan.",
         plans: [
-          { name: "Care Navigation Membership", fit: "Untuk laluan pertama dan organisasi rekod.", items: ["Senarai dokumen", "Organisasi fail kes", "Koordinasi temu janji dan komunikasi", "Peringatan susulan"] },
-          { name: "Oncology Coordination Membership", fit: "Untuk kes kompleks yang perlu persediaan soalan dan koordinasi peringkat rawatan.", items: ["Persediaan soalan MDT dan pakar", "Garis masa penilaian semula", "Koordinasi komunikasi pasukan klinikal", "Ringkasan kes dan penjejakan langkah"] },
-          { name: "Concierge Case Management", fit: "Untuk koordinasi jangka panjang merentas peringkat.", items: ["Case manager khusus", "Garis masa merentas peringkat", "Peringatan masuk, keluar dan semakan", "Sokongan komunikasi keluarga"] },
+          { name: "Konsultasi Laluan Asas", price: "Percuma", fit: "Untuk pesakit yang pertama kali menilai sama ada rawatan onkologi di China relevan.", items: ["Saringan keperluan awal", "Penjelasan umum laluan onkologi di China", "Senarai semak rekod perubatan dan persediaan perjalanan", "Satu penjelasan dalam talian atau konsultasi teks asas"] },
+          { name: "Koordinasi Satu Kitaran", price: "USD 300 / pesakit / kitaran servis", fit: "Untuk satu kitaran penyediaan rekod, komunikasi pakar, konsultasi atau koordinasi kemasukan hospital.", items: ["Pengumpulan rekod dan garis masa kes", "Persediaan komunikasi pakar atau hospital", "Koordinasi temu janji, konsultasi jauh atau permohonan rawat inap", "Senarai semak sebelum perjalanan dan satu susulan selepas keluar"] },
+          { name: "Koordinasi Pesakit Tahunan", price: "USD 980 / pesakit / 12 bulan", fit: "Untuk pesakit yang mungkin memerlukan lawatan rawatan berulang ke China dan pengurusan kes berterusan dalam setahun.", items: ["Penyelenggaraan fail kes elektronik tahunan", "Peringatan susulan dan kemas kini dokumen", "Sehingga 4 kitaran koordinasi rawat inap setahun", "Sehingga 2 pusingan koordinasi penilaian semula pakar atau laluan"] },
         ],
         modulesTitle: "Modul sokongan khusus",
         modules: [
@@ -1237,7 +1243,7 @@ export const content: Record<Locale, SiteContent> = {
           { title: "Surgical Pathway Coordination", text: "Sokongan komunikasi apabila penilaian semula menunjukkan laluan bedah boleh dibincangkan." },
         ],
         modulesNote: "Modul ini ialah sokongan koordinasi dan konsultasi, bukan pakej perubatan atau janji rawatan.",
-        note: "Keahlian bukan insurans atau pakej perubatan. Penerimaan, rawatan, pembedahan, kos dan hasil ditentukan hospital dan doktor.",
+        note: "Yuran dikira bagi setiap pesakit dan tidak boleh dipindahkan. Konsultasi asas percuma biasanya terhad kepada satu kali bagi setiap pesakit. Servis ini bukan insurans, pakej perubatan atau pelan rawatan prabayar; penerimaan, diagnosis, kelayakan rawatan, pembedahan, kos dan hasil ditentukan hospital dan doktor. Skop akhir perlu disahkan dalam perjanjian bertulis sebelum pembayaran.",
       },
       oncology: {
         eyebrow: "Laluan onkologi lanjutan",

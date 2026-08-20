@@ -389,6 +389,14 @@ img {
   line-height: 1.2;
 }
 
+.membership-price {
+  margin: -4px 0 0;
+  color: #073b4c;
+  font-size: 1.55rem;
+  font-weight: 900;
+  line-height: 1.18;
+}
+
 .membership-card ul,
 .questions-panel ul {
   display: grid;
