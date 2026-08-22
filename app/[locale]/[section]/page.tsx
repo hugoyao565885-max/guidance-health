@@ -179,6 +179,30 @@ function RegisterIntake({ register }: { register: (typeof content)[Locale]["sect
 
   return (
     <>
+      <div className="portal-entry">
+        <div>
+          <p className="eyebrow">{register.eyebrow}</p>
+          <h2>{register.portalTitle}</h2>
+          <p>{register.portalText}</p>
+          <div className="cta-row">
+            <a href={mailHref} className="button button-dark">
+              {register.email}
+            </a>
+            <a href={contact.whatsappUrl} className="button button-light">
+              {register.whatsapp}
+            </a>
+          </div>
+        </div>
+        <div className="portal-card-grid">
+          {register.portalCards.map((card) => (
+            <article className="portal-card" key={card.title}>
+              <h3>{card.title}</h3>
+              <p>{card.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+
       <div className="register-layout">
         <div>
           <h2>{register.stepsTitle}</h2>
@@ -201,6 +225,15 @@ function RegisterIntake({ register }: { register: (typeof content)[Locale]["sect
             ))}
           </ul>
         </aside>
+      </div>
+
+      <div className="secure-portal-note">
+        <h3>{register.secureTitle}</h3>
+        <ul>
+          {register.secureItems.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
       </div>
 
       <div className="register-consent">

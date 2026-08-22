@@ -8,12 +8,17 @@ type RegisterSection = {
   eyebrow: string;
   title: string;
   body: string;
+  portalTitle: string;
+  portalText: string;
+  portalCards: Card[];
   stepsTitle: string;
   steps: Card[];
   documentsTitle: string;
   documents: string[];
   fieldsTitle: string;
   fields: string[];
+  secureTitle: string;
+  secureItems: string[];
   consentTitle: string;
   consent: string;
   email: string;
@@ -276,6 +281,14 @@ export const content: Record<Locale, SiteContent> = {
         title: "Register interest and prepare medical records for case review",
         body:
           "Start here if the patient would like H&C Care to review whether membership or a coordination service is appropriate. Please do not upload emergency requests or urgent clinical instructions through this website.",
+        portalTitle: "Patient member file entry",
+        portalText:
+          "The first online step is to register interest and create a structured case file. Before sensitive records are transferred, we confirm the service scope, consent, and the safest submission channel for the patient or authorized family member.",
+        portalCards: [
+          { title: "Create a member file", text: "We collect only the minimum basic information needed to understand the patient, language, cancer type, and coordination need." },
+          { title: "Confirm consent and service scope", text: "Paid coordination starts only after the patient or authorized family member understands the service boundary and confirms the written arrangement." },
+          { title: "Prepare secure record submission", text: "Medical documents are sent only through a confirmed channel. A full account-based upload portal should be added only with authentication, encrypted storage, and access logs." },
+        ],
         stepsTitle: "How submission works",
         steps: [
           { title: "Register interest", text: "Send the patient's basic situation, country or region, preferred language, cancer type, and the service tier being considered." },
@@ -299,6 +312,13 @@ export const content: Record<Locale, SiteContent> = {
         ],
         fieldsTitle: "Information to include in the first message",
         fields: ["Patient initials or name", "Age and sex", "Country or region", "Diagnosis and stage, if known", "Current treatment status", "Main question for coordination", "Preferred language", "Preferred service tier"],
+        secureTitle: "For a future secure member portal",
+        secureItems: [
+          "Patient login and authorized family access",
+          "Encrypted document storage and controlled access logs",
+          "Upload status, missing-document reminders, and case-manager notes",
+          "Clear consent, retention, deletion, and emergency-use boundaries",
+        ],
         consentTitle: "Privacy and consent",
         consent:
           "Medical records contain sensitive personal data. Please send documents only if the patient or authorized family member agrees that H&C Care may use them for case preparation and coordination communication.",
@@ -550,6 +570,13 @@ export const content: Record<Locale, SiteContent> = {
         eyebrow: "會員登記",
         title: "登記會員意向並準備病歷資料供個案評估",
         body: "如果患者希望由 H&C Care 評估是否適合會員或協調服務，可先從此頁開始。請勿通過本網站提交急症請求或高度緊急的臨床指示。",
+        portalTitle: "患者會員個案檔案入口",
+        portalText: "線上第一步是登記服務意向並建立結構化個案檔案。在轉交敏感病歷前，我們會先確認服務範圍、患者授權，以及對患者或獲授權家屬最合適的提交渠道。",
+        portalCards: [
+          { title: "建立會員檔案", text: "只收集理解患者、語言、癌種和協調需求所需的最少基本資料。" },
+          { title: "確認授權與服務範圍", text: "付費協調只會在患者或獲授權家屬理解服務邊界並確認書面安排後開始。" },
+          { title: "準備安全資料提交", text: "病歷只通過確認渠道傳送。完整帳戶式資料上傳系統，應在身份驗證、加密儲存和存取記錄配置完成後再加入。" },
+        ],
         stepsTitle: "提交流程",
         steps: [
           { title: "登記服務意向", text: "先說明患者基本情況、所在國家或地區、偏好語言、癌種，以及正在考慮的服務檔次。" },
@@ -573,6 +600,13 @@ export const content: Record<Locale, SiteContent> = {
         ],
         fieldsTitle: "首封信息建議包含",
         fields: ["患者姓名或縮寫", "年齡和性別", "所在國家或地區", "診斷和分期，如已知", "目前治療狀態", "希望協調的主要問題", "偏好語言", "希望了解的服務檔次"],
+        secureTitle: "後續安全會員系統應包含",
+        secureItems: [
+          "患者登入和獲授權家屬訪問",
+          "加密病歷儲存和受控存取記錄",
+          "資料提交狀態、缺失文件提醒和個案經理備註",
+          "清晰的同意、保存、刪除和急症使用邊界",
+        ],
         consentTitle: "私隱與授權",
         consent: "病歷屬於敏感個人資料。請僅在患者本人或獲授權家屬同意後發送，並確認 H&C Care 可將資料用於個案準備及協調溝通。",
         email: "電郵提交登記資料",
@@ -789,6 +823,14 @@ export const content: Record<Locale, SiteContent> = {
         eyebrow: "Регистрация пациента",
         title: "Регистрация интереса и подготовка медицинских документов",
         body: "Начните здесь, если пациент хочет понять, подходит ли членство или координационная услуга H&C Care. Не отправляйте экстренные запросы или срочные клинические инструкции через сайт.",
+        portalTitle: "Вход для создания файла пациента",
+        portalText:
+          "Первый онлайн-шаг - регистрация интереса и создание структурированного файла случая. Перед передачей чувствительных медицинских документов мы подтверждаем объем услуги, согласие и самый безопасный канал отправки.",
+        portalCards: [
+          { title: "Создать файл пациента", text: "Мы собираем только минимальную базовую информацию о пациенте, языке, типе рака и потребности в координации." },
+          { title: "Подтвердить согласие и объем услуги", text: "Платная координация начинается только после понимания границ услуги и подтверждения письменного соглашения пациентом или уполномоченной семьей." },
+          { title: "Подготовить безопасную отправку", text: "Медицинские документы отправляются только через подтвержденный канал. Полный портал загрузки требует аутентификации, шифрованного хранения и журналов доступа." },
+        ],
         stepsTitle: "Как отправляются материалы",
         steps: [
           { title: "Зарегистрировать интерес", text: "Укажите основную ситуацию пациента, страну или регион, предпочтительный язык, тип рака и интересующий уровень услуги." },
@@ -812,6 +854,13 @@ export const content: Record<Locale, SiteContent> = {
         ],
         fieldsTitle: "Что указать в первом сообщении",
         fields: ["Имя или инициалы пациента", "Возраст и пол", "Страна или регион", "Диагноз и стадия, если известны", "Текущий статус лечения", "Главный вопрос для координации", "Предпочтительный язык", "Интересующий уровень услуги"],
+        secureTitle: "Для будущего безопасного портала",
+        secureItems: [
+          "Логин пациента и доступ уполномоченной семьи",
+          "Шифрованное хранение документов и журналы контролируемого доступа",
+          "Статус загрузки, напоминания о недостающих документах и заметки case manager",
+          "Ясные правила согласия, хранения, удаления и экстренного использования",
+        ],
         consentTitle: "Конфиденциальность и согласие",
         consent: "Медицинские документы содержат чувствительные персональные данные. Отправляйте их только при согласии пациента или уполномоченного члена семьи на использование H&C Care для подготовки случая и координации.",
         email: "Отправить материалы по email",
@@ -1028,6 +1077,14 @@ export const content: Record<Locale, SiteContent> = {
         eyebrow: "تسجيل العضوية",
         title: "تسجيل الاهتمام وتحضير السجلات الطبية لمراجعة الحالة",
         body: "ابدأ هنا إذا كان المريض يريد من H&C Care مراجعة ما إذا كانت العضوية أو خدمة التنسيق مناسبة. لا ترسل طلبات طارئة أو تعليمات سريرية عاجلة عبر هذا الموقع.",
+        portalTitle: "مدخل ملف عضو المريض",
+        portalText:
+          "الخطوة الأولى عبر الإنترنت هي تسجيل الاهتمام وإنشاء ملف حالة منظم. قبل نقل السجلات الطبية الحساسة، نؤكد نطاق الخدمة والموافقة وأأمن قناة إرسال للمريض أو فرد العائلة المخول.",
+        portalCards: [
+          { title: "إنشاء ملف عضو", text: "نجمع فقط الحد الأدنى من المعلومات الأساسية لفهم المريض واللغة ونوع السرطان واحتياج التنسيق." },
+          { title: "تأكيد الموافقة ونطاق الخدمة", text: "لا يبدأ التنسيق المدفوع إلا بعد أن يفهم المريض أو العائلة المخولة حدود الخدمة ويؤكد الترتيب المكتوب." },
+          { title: "تحضير إرسال آمن للسجلات", text: "ترسل الوثائق الطبية فقط عبر قناة مؤكدة. بوابة رفع كاملة بالحسابات تحتاج إلى تحقق هوية وتخزين مشفر وسجلات وصول." },
+        ],
         stepsTitle: "كيف يتم الإرسال",
         steps: [
           { title: "تسجيل الاهتمام", text: "أرسل الوضع الأساسي للمريض، البلد أو المنطقة، اللغة المفضلة، نوع السرطان، ومستوى الخدمة المطلوب." },
@@ -1051,6 +1108,13 @@ export const content: Record<Locale, SiteContent> = {
         ],
         fieldsTitle: "ما يجب تضمينه في الرسالة الأولى",
         fields: ["اسم المريض أو الأحرف الأولى", "العمر والجنس", "البلد أو المنطقة", "التشخيص والمرحلة إن عرفت", "حالة العلاج الحالية", "السؤال الرئيسي للتنسيق", "اللغة المفضلة", "مستوى الخدمة المطلوب"],
+        secureTitle: "للبوابة الآمنة المستقبلية",
+        secureItems: [
+          "تسجيل دخول المريض ووصول العائلة المخولة",
+          "تخزين وثائق مشفر وسجلات وصول مضبوطة",
+          "حالة الرفع، تذكيرات الوثائق الناقصة، وملاحظات مدير الحالة",
+          "حدود واضحة للموافقة والحفظ والحذف والاستخدام في الطوارئ",
+        ],
         consentTitle: "الخصوصية والموافقة",
         consent: "السجلات الطبية تحتوي على بيانات شخصية حساسة. يرجى إرسالها فقط إذا وافق المريض أو فرد العائلة المخول على استخدامها من H&C Care لتحضير الحالة والتنسيق.",
         email: "إرسال مواد التسجيل بالبريد",
@@ -1267,6 +1331,14 @@ export const content: Record<Locale, SiteContent> = {
         eyebrow: "Registrasi anggota",
         title: "Daftar minat dan siapkan rekam medis untuk review kasus",
         body: "Mulai di sini bila pasien ingin H&C Care menilai apakah keanggotaan atau layanan koordinasi sesuai. Jangan kirim permintaan darurat atau instruksi klinis mendesak melalui situs ini.",
+        portalTitle: "Pintu masuk file anggota pasien",
+        portalText:
+          "Langkah online pertama adalah mendaftarkan minat dan membuat file kasus yang terstruktur. Sebelum rekam medis sensitif dikirim, kami mengonfirmasi ruang lingkup layanan, persetujuan, dan kanal pengiriman paling aman bagi pasien atau keluarga yang berwenang.",
+        portalCards: [
+          { title: "Buat file anggota", text: "Kami hanya mengumpulkan informasi dasar minimum untuk memahami pasien, bahasa, jenis kanker, dan kebutuhan koordinasi." },
+          { title: "Konfirmasi persetujuan dan ruang lingkup", text: "Koordinasi berbayar dimulai hanya setelah pasien atau keluarga yang berwenang memahami batas layanan dan menyetujui pengaturan tertulis." },
+          { title: "Siapkan pengiriman rekam yang aman", text: "Dokumen medis dikirim hanya melalui kanal yang dikonfirmasi. Portal upload berbasis akun memerlukan autentikasi, penyimpanan terenkripsi, dan log akses." },
+        ],
         stepsTitle: "Cara pengiriman",
         steps: [
           { title: "Daftar minat", text: "Kirim situasi dasar pasien, negara atau wilayah, bahasa pilihan, jenis kanker, dan tingkat layanan yang dipertimbangkan." },
@@ -1290,6 +1362,13 @@ export const content: Record<Locale, SiteContent> = {
         ],
         fieldsTitle: "Informasi untuk pesan pertama",
         fields: ["Nama atau inisial pasien", "Usia dan jenis kelamin", "Negara atau wilayah", "Diagnosis dan stadium bila diketahui", "Status terapi saat ini", "Pertanyaan utama untuk koordinasi", "Bahasa pilihan", "Tingkat layanan yang diminati"],
+        secureTitle: "Untuk portal anggota aman di masa depan",
+        secureItems: [
+          "Login pasien dan akses keluarga yang berwenang",
+          "Penyimpanan dokumen terenkripsi dan log akses terkontrol",
+          "Status upload, pengingat dokumen yang kurang, dan catatan case manager",
+          "Batas yang jelas untuk persetujuan, retensi, penghapusan, dan penggunaan darurat",
+        ],
         consentTitle: "Privasi dan persetujuan",
         consent: "Rekam medis berisi data pribadi sensitif. Kirim dokumen hanya jika pasien atau keluarga yang berwenang setuju H&C Care menggunakannya untuk persiapan kasus dan komunikasi koordinasi.",
         email: "Kirim materi registrasi via email",
@@ -1506,6 +1585,14 @@ export const content: Record<Locale, SiteContent> = {
         eyebrow: "Pendaftaran ahli",
         title: "Daftar minat dan sediakan rekod perubatan untuk semakan kes",
         body: "Mulakan di sini jika pesakit mahu H&C Care menilai sama ada keahlian atau servis koordinasi sesuai. Jangan hantar permintaan kecemasan atau arahan klinikal mendesak melalui laman ini.",
+        portalTitle: "Pintu masuk fail ahli pesakit",
+        portalText:
+          "Langkah online pertama ialah mendaftarkan minat dan mencipta fail kes berstruktur. Sebelum rekod perubatan sensitif dipindahkan, kami mengesahkan skop servis, persetujuan dan saluran penghantaran paling selamat untuk pesakit atau keluarga yang diberi kuasa.",
+        portalCards: [
+          { title: "Cipta fail ahli", text: "Kami hanya mengumpul maklumat asas minimum untuk memahami pesakit, bahasa, jenis kanser dan keperluan koordinasi." },
+          { title: "Sahkan persetujuan dan skop servis", text: "Koordinasi berbayar bermula hanya selepas pesakit atau keluarga yang diberi kuasa memahami sempadan servis dan mengesahkan pengaturan bertulis." },
+          { title: "Sediakan penghantaran rekod selamat", text: "Dokumen perubatan dihantar hanya melalui saluran yang disahkan. Portal upload berasaskan akaun memerlukan autentikasi, storan tersulit dan log akses." },
+        ],
         stepsTitle: "Cara penghantaran",
         steps: [
           { title: "Daftar minat", text: "Hantar situasi asas pesakit, negara atau wilayah, bahasa pilihan, jenis kanser dan tahap servis yang dipertimbangkan." },
@@ -1529,6 +1616,13 @@ export const content: Record<Locale, SiteContent> = {
         ],
         fieldsTitle: "Maklumat untuk mesej pertama",
         fields: ["Nama atau inisial pesakit", "Umur dan jantina", "Negara atau wilayah", "Diagnosis dan peringkat jika diketahui", "Status rawatan semasa", "Soalan utama untuk koordinasi", "Bahasa pilihan", "Tahap servis yang diminati"],
+        secureTitle: "Untuk portal ahli selamat akan datang",
+        secureItems: [
+          "Login pesakit dan akses keluarga yang diberi kuasa",
+          "Storan dokumen tersulit dan log akses terkawal",
+          "Status upload, peringatan dokumen yang kurang dan nota case manager",
+          "Sempadan jelas untuk persetujuan, penyimpanan, pemadaman dan penggunaan kecemasan",
+        ],
         consentTitle: "Privasi dan persetujuan",
         consent: "Rekod perubatan mengandungi data peribadi sensitif. Hantar dokumen hanya jika pesakit atau keluarga yang diberi kuasa bersetuju H&C Care menggunakannya untuk persediaan kes dan komunikasi koordinasi.",
         email: "Hantar bahan pendaftaran melalui email",
