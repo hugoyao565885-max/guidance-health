@@ -3,30 +3,16 @@ import { brand, contact, type Locale } from "./site";
 type Card = { title: string; text: string };
 type Step = { title: string; text: string };
 type Expert = { name: string; role: string; text: string; image: string };
-type MembershipPlan = { name: string; price: string; fit: string; items: string[] };
+type MembershipPlan = { name: string; fit: string; items: string[] };
 type RegisterSection = {
   eyebrow: string;
   title: string;
   body: string;
-  portalTitle: string;
-  portalText: string;
-  portalCards: Card[];
-  stepsTitle: string;
-  steps: Card[];
   documentsTitle: string;
   documents: string[];
-  fieldsTitle: string;
-  fields: string[];
-  secureTitle: string;
-  secureItems: string[];
-  consentTitle: string;
-  consent: string;
-  email: string;
-  whatsapp: string;
-  note: string;
 };
 
-export const mainSectionKeys = ["membership", "oncology", "mdt", "experts", "hospitals", "journey", "register", "contact"] as const;
+export const mainSectionKeys = ["membership", "oncology", "mdt", "experts", "hospitals", "journey", "register", "contact", "car-t"] as const;
 export const footerSectionKeys = ["privacy", "terms"] as const;
 export const sectionKeys = [...mainSectionKeys, ...footerSectionKeys] as const;
 
@@ -60,6 +46,7 @@ export type SiteContent = {
       note: string;
     };
     oncology: { eyebrow: string; title: string; body: string; cards: Card[]; note: string };
+    "car-t": { eyebrow: string; title: string; body: string; cards: Card[]; note: string };
     mdt: { eyebrow: string; title: string; body: string; cards: Card[]; questionsTitle: string; questions: string[]; note: string };
     experts: { eyebrow: string; title: string; body: string; people: Expert[]; note: string };
     hospitals: { eyebrow: string; title: string; body: string; cards: Card[]; note: string };
@@ -83,17 +70,18 @@ const experts = {
 export const content: Record<Locale, SiteContent> = {
   en: {
     nav: {
-      home: "Home",
-      membership: "Membership",
-      oncology: "Oncology Coordination",
-      mdt: "MDT Resources",
-      experts: "Experts",
-      hospitals: "Hospitals",
-      journey: "Journey",
-      register: "Register",
-      contact: "Contact",
-      privacy: "Privacy Notice",
-      terms: "Service Boundaries",
+      "home": "Home",
+      "membership": "Services",
+      "oncology": "Oncology Coordination",
+      "mdt": "MDT Resources",
+      "experts": "Experts",
+      "hospitals": "Hospitals",
+      "journey": "Journey",
+      "register": "Start an enquiry",
+      "contact": "Contact",
+      "privacy": "Privacy Notice",
+      "terms": "Service Boundaries",
+      "car-t": "CLDN18.2 CAR-T"
     },
     seo: {
       title: `${brand.name} | Oncology Medical Coordination in China`,
@@ -101,18 +89,26 @@ export const content: Record<Locale, SiteContent> = {
         "Helping international cancer patients prepare records, connect with suitable oncology specialists, explore treatment pathways, and navigate hospital care in China.",
     },
     hero: {
-      eyebrow: "Oncology-focused medical coordination in China",
-      title: "Helping international cancer patients",
-      highlight: "access trusted oncology care in China",
-      body:
-        `${brand.name} helps international cancer patients prepare medical records, connect with experienced oncology specialists, explore advanced treatment pathways, and navigate hospital care in China.`,
-      primary: "Send records for review",
-      secondary: "View the patient journey",
-      trust: [
-        { title: "Oncology-focused coordination", text: "We are not a general medical travel agency. Our public service line is focused on cancer care pathways." },
-        { title: "Guangdong specialist access", text: "We help match each case with suitable oncology, lymphoma, MDT, or surgical resources in Guangdong and Guangzhou." },
-        { title: "Clear service boundaries", text: "We help patients understand, prepare, coordinate, and communicate. We do not diagnose or treat patients." },
-      ],
+      "eyebrow": "H&C Care · International patient support",
+      "title": "Cancer care coordination in China",
+      "highlight": "",
+      "body": "Healthcare-professional-led support for international patients, with a focus on lymphoma and solid tumor care in Guangzhou. We help you prepare records, communicate with specialists, and plan the next step.",
+      "primary": "Start an enquiry",
+      "secondary": "WhatsApp",
+      "trust": [
+        {
+          "title": "Oncology-focused",
+          "text": ""
+        },
+        {
+          "title": "Clinical experience",
+          "text": ""
+        },
+        {
+          "title": "Guangzhou, China",
+          "text": ""
+        }
+      ]
     },
     sections: {
       pain: {
@@ -145,78 +141,119 @@ export const content: Record<Locale, SiteContent> = {
         ],
       },
       membership: {
-        eyebrow: "Patient service fees",
-        title: "Three coordination service levels for international oncology patients",
-        body:
-          "The fees below are H&C Care coordination service fees only. Hospital fees, physician fees, tests, medicines, treatment, surgery, travel, accommodation, insurance, vehicles, and other third-party costs are separate.",
-        plans: [
+        "eyebrow": "Services & support",
+        "title": "Choose support that fits your situation",
+        "body": "Start with an initial enquiry, a focused coordination task, or ongoing annual case support. We confirm the scope and quote with you before paid services begin.",
+        "plans": [
           {
-            name: "Basic Pathway Consultation",
-            price: "Free",
-            fit: "For patients who are first exploring whether China oncology care may be relevant.",
-            items: ["Initial needs screening", "General China oncology pathway explanation", "Medical record and travel-preparation checklist", "One online explanation or basic text consultation"],
+            "name": "Initial pathway enquiry",
+            "fit": "For patients and families exploring care in China.",
+            "items": [
+              "Discuss your coordination needs",
+              "Understand the preparation process",
+              "Receive a record checklist"
+            ]
           },
           {
-            name: "Single-Cycle Coordination",
-            price: "USD 300 / patient / service cycle",
-            fit: "For one focused medical-record preparation, specialist communication, consultation, or admission coordination cycle.",
-            items: ["Medical record collection and case timeline", "Specialist or hospital communication preparation", "Appointment, remote consultation, or admission coordination", "Pre-travel checklist and one post-discharge follow-up"],
+            "name": "Focused coordination",
+            "fit": "For a defined specialist or hospital coordination task.",
+            "items": [
+              "Prepare the case and treatment timeline",
+              "Coordinate agreed appointments or communication",
+              "Clarify the next practical steps"
+            ]
           },
           {
-            name: "Annual Patient Coordination",
-            price: "USD 980 / patient / 12 months",
-            fit: "For patients who may need repeated China treatment visits and continuous case management within one year.",
-            items: ["Annual electronic case file maintenance", "Follow-up and document update reminders", "Up to 4 hospital coordination cycles", "Up to 2 specialist or pathway reassessment coordination rounds"],
-          },
+            "name": "Annual case support",
+            "fit": "For patients who need continuing coordination over time.",
+            "items": [
+              "Maintain and update the case file",
+              "Coordinate agreed reviews and follow-up",
+              "Support family communication across stages"
+            ]
+          }
         ],
-        modulesTitle: "Special support modules",
-        modules: [
-          { title: "Lymphoma MDT Coordination", text: "Focused preparation for lymphoma, relapsed or refractory disease, and Guangdong or Guangzhou specialist discussion." },
-          { title: "Immune Recovery Support", text: "Supportive immune-status record organization, physician advisory follow-up, nutrition and lifestyle coordination, and quarterly review for stable or recovery-stage patients." },
-          { title: "Surgical Pathway Coordination", text: "Communication support when reassessment suggests that a surgical pathway may be discussed with appropriate teams." },
+        "modulesTitle": "Special support modules",
+        "modules": [
+          {
+            "title": "Lymphoma MDT coordination",
+            "text": "Focused preparation for lymphoma, relapsed or refractory disease, and Guangdong or Guangzhou specialist discussion."
+          },
+          {
+            "title": "Recovery & follow-up support",
+            "text": "Appointment preparation, hospital steps, and reminders for the next communication or review."
+          },
+          {
+            "title": "Surgical pathway coordination",
+            "text": "Communication support when reassessment suggests that a surgical pathway may be discussed with appropriate teams."
+          }
         ],
-        modulesNote:
-          "Support modules are coordination and advisory services, not medical packages or treatment commitments. Any clinical decision must be made by licensed physicians and receiving institutions.",
-        note:
-          "Fees are charged per patient and are not transferable. Basic free consultation is normally limited to one use per patient. These services are not insurance, medical packages, or prepaid treatment plans; acceptance, diagnosis, treatment eligibility, surgery, cost, and outcomes are determined by hospitals and licensed physicians. Final service scope should be confirmed in a written agreement before payment.",
+        "modulesNote": "Support modules are coordination and advisory services, not medical packages or treatment commitments. Any clinical decision must be made by licensed physicians and receiving institutions.",
+        "note": "Coordination fees and medical expenses are separate. Hospital, physician, testing, treatment, travel, accommodation, and third-party interpreter fees are confirmed separately. The written proposal explains inclusions, timing, and cancellation arrangements."
       },
       oncology: {
-        eyebrow: "Advanced oncology pathways",
-        title: "Exploring appropriate treatment and research pathways in China",
-        body:
-          "For eligible patients, we can help prepare records and coordinate communication around advanced oncology options. Eligibility and treatment direction must always be assessed by licensed physicians and receiving institutions.",
-        cards: [
-          { title: "Immunotherapy and targeted therapy review", text: "We help prepare prior treatment history, biomarker results, response information, and questions for specialist discussion." },
-          { title: "CLDN18.2-positive gastric cancer CAR-T pathway", text: "CLDN18.2 is an important biomarker in gastric and gastroesophageal junction cancers. Company public information reports that satri-cel/CT041 has been approved in China as the first CAR-T cell product for a solid tumor indication, for adults with CLDN18.2-positive, HER2-negative advanced gastric or gastroesophageal junction adenocarcinoma after at least two prior lines of therapy. We help organize pathology, biomarker, imaging, and treatment-history records for qualified team communication." },
-          { title: "Cellular therapy discussion", text: "Where clinically relevant, we help families prepare questions about cellular therapy pathways, eligibility, safety, timing, and hospital requirements." },
-          { title: "Clinical trial opportunity exploration", text: "For eligible patients, we can help explore potential clinical research opportunities, prepare documents, understand eligibility requirements, and coordinate communication." },
-          { title: "Surgery-after-reassessment coordination", text: "When reassessment suggests surgery may be discussed, we help coordinate communication with appropriate surgical teams." },
-          { title: "Family-facing pathway clarity", text: "We turn complex hospital steps into a practical timeline without replacing medical advice." },
+        "eyebrow": "Advanced oncology pathways",
+        "title": "Exploring appropriate treatment and research pathways in China",
+        "body": "For eligible patients, we can help prepare records and coordinate communication around advanced oncology options. Eligibility and treatment direction must always be assessed by licensed physicians and receiving institutions.",
+        "cards": [
+          {
+            "title": "Immunotherapy and targeted therapy review",
+            "text": "We help prepare prior treatment history, biomarker results, response information, and questions for specialist discussion."
+          },
+          {
+            "title": "CLDN18.2-positive gastric cancer CAR-T pathway",
+            "text": "On 22 June 2026, CARsgen announced Chinese approval of satricabtagene autoleucel (satri-cel/CT041), described as the world's first approved CAR-T product for solid tumors. The announced indication is CLDN18.2-positive, HER2-negative advanced gastric or gastroesophageal junction adenocarcinoma after failure of at least two prior treatment lines."
+          },
+          {
+            "title": "Cellular therapy discussion",
+            "text": "Where clinically relevant, we help families prepare questions about cellular therapy pathways, eligibility, safety, timing, and hospital requirements."
+          },
+          {
+            "title": "Clinical trial opportunity exploration",
+            "text": "For eligible patients, we can help explore potential clinical research opportunities, prepare documents, understand eligibility requirements, and coordinate communication."
+          },
+          {
+            "title": "Surgery-after-reassessment coordination",
+            "text": "When reassessment suggests surgery may be discussed, we help coordinate communication with appropriate surgical teams."
+          },
+          {
+            "title": "Family-facing pathway clarity",
+            "text": "We turn complex hospital steps into a practical timeline without replacing medical advice."
+          }
         ],
-        note:
-          "We do not provide CAR-T or other treatments, determine eligibility, promise access to approved treatment or clinical research pathways, promise clinical trial enrollment, or promise outcomes. We help patients prepare, coordinate, and communicate.",
+        "note": "We do not provide CAR-T or other treatments, determine eligibility, promise access to approved treatment or clinical research pathways, promise clinical trial enrollment, or promise outcomes. We help patients prepare, coordinate, and communicate."
       },
       mdt: {
-        eyebrow: "Guangdong oncology specialists",
-        title: "Access to leading oncology specialists in Guangdong",
-        body:
-          "We help match each patient with suitable oncology resources based on cancer type, stage, treatment history, current condition, and clinical needs. The emphasis is suitability, not simply famous names.",
-        cards: [
-          { title: "Lymphoma MDT strength", text: "Our strongest resource layer is lymphoma and complex hematologic oncology coordination across Guangdong and Guangzhou." },
-          { title: "Solid tumor specialist matching", text: "For solid tumors, we help prepare the case for appropriate medical oncology, surgical, radiation, or integrated pathway discussion." },
-          { title: "Second opinion and MDT preparation", text: "We organize documents and questions so specialist or multidisciplinary discussions can be more focused." },
-          { title: "Suitable pathway over reputation alone", text: "The right path depends on diagnosis, stage, prior therapy, patient condition, and realistic hospital availability." },
+        "eyebrow": "Guangdong oncology specialists",
+        "title": "Lymphoma & multidisciplinary review",
+        "body": "We help match each patient with suitable oncology resources based on cancer type, stage, treatment history, current condition, and clinical needs. The emphasis is suitability, not simply famous names.",
+        "cards": [
+          {
+            "title": "Lymphoma MDT strength",
+            "text": "Our strongest resource layer is lymphoma and complex hematologic oncology coordination across Guangdong and Guangzhou."
+          },
+          {
+            "title": "Solid tumor specialist matching",
+            "text": "For solid tumors, we help prepare the case for appropriate medical oncology, surgical, radiation, or integrated pathway discussion."
+          },
+          {
+            "title": "Second opinion and MDT preparation",
+            "text": "We organize documents and questions so specialist or multidisciplinary discussions can be more focused."
+          },
+          {
+            "title": "Suitable pathway over reputation alone",
+            "text": "The right path depends on diagnosis, stage, prior therapy, patient condition, and realistic hospital availability."
+          }
         ],
-        questionsTitle: "Case management questions we help prepare",
-        questions: [
+        "questionsTitle": "Case management questions we help prepare",
+        "questions": [
           "Is the pathology and imaging package complete enough for a meaningful specialist review?",
           "Does a relapsed or refractory lymphoma case need MDT discussion before travel?",
           "After immunotherapy, what reassessment information is needed before discussing surgery?",
           "Which documents should be translated or organized before approaching a hospital team?",
-          "What follow-up schedule should the family prepare for after discharge or online review?",
+          "What follow-up schedule should the family prepare for after discharge or online review?"
         ],
-        note:
-          "MDT coordination means administrative and communication support. It does not guarantee that a specific doctor, hospital, treatment, or surgery will accept the case.",
+        "note": "MDT coordination means administrative and communication support. It does not guarantee that a specific doctor, hospital, treatment, or surgery will accept the case."
       },
       experts: {
         eyebrow: "Clinical background",
@@ -260,43 +297,55 @@ export const content: Record<Locale, SiteContent> = {
           `${brand.name} is operated by ${brand.legalName}. This website is not the official website of any hospital unless expressly stated.`,
       },
       journey: {
-        eyebrow: "Patient journey",
-        title: "How the process works",
-        body:
-          "The first step is not to promise treatment. It is to understand the case, organize records, and decide what information is needed for a meaningful specialist or hospital discussion.",
-        steps: [
-          { title: "Submit medical records", text: "Share diagnosis, country or region, current status, prior treatment, and the main question the family needs answered." },
-          { title: "Initial coordination assessment", text: "We assess whether coordination is realistic and what information is missing before specialist communication." },
-          { title: "Specialist pathway matching", text: "We identify suitable oncology, MDT, research, or surgical communication pathways based on the case." },
-          { title: "Appointment or consultation arrangement", text: "We coordinate appointment preparation, document flow, questions, and practical communication." },
-          { title: "Travel and hospital preparation", text: "We help families understand travel timing, admission context, payment preparation, accommodation, and daily-life needs." },
-          { title: "In-hospital translation and coordination", text: "When needed, we support medical communication and practical coordination during hospital visits." },
-          { title: "Follow-up communication support", text: "After discharge or return home, we help track follow-up questions, repeat review timing, and family communication." },
+        "eyebrow": "Patient journey",
+        "title": "How the process works",
+        "body": "You can begin from home. We confirm the coordination scope before paid work or travel arrangements.",
+        "steps": [
+          {
+            "title": "Tell us what you need",
+            "text": "Contact us with your country, preferred language, and whether you are the patient or a family member."
+          },
+          {
+            "title": "Initial coordination assessment",
+            "text": "We assess whether coordination is realistic and what information is missing before specialist communication."
+          },
+          {
+            "title": "Specialist pathway matching",
+            "text": "We identify suitable oncology, MDT, research, or surgical communication pathways based on the case."
+          },
+          {
+            "title": "Appointment or consultation arrangement",
+            "text": "We coordinate appointment preparation, document flow, questions, and practical communication."
+          },
+          {
+            "title": "Travel and hospital preparation",
+            "text": "We help families understand travel timing, admission context, payment preparation, accommodation, and daily-life needs."
+          },
+          {
+            "title": "In-hospital translation and coordination",
+            "text": "When needed, we support medical communication and practical coordination during hospital visits."
+          },
+          {
+            "title": "Follow-up communication support",
+            "text": "After discharge or return home, we help track follow-up questions, repeat review timing, and family communication."
+          }
         ],
-        documentsTitle: "Documents to prepare",
-        documents: ["Current diagnosis and medical summary", "Pathology report", "Imaging reports and recent test results", "Genetic or molecular testing, if available", "Prior treatment history and medication list", "Current symptoms, performance status, and infection history"],
+        "documentsTitle": "Documents to prepare",
+        "documents": [
+          "Current diagnosis and medical summary",
+          "Pathology report",
+          "Imaging reports and recent test results",
+          "Genetic or molecular testing, if available",
+          "Prior treatment history and medication list",
+          "Current symptoms, performance status, and infection history"
+        ]
       },
       register: {
-        eyebrow: "Member registration",
-        title: "Register interest and prepare medical records for case review",
-        body:
-          "Start here if the patient would like H&C Care to review whether membership or a coordination service is appropriate. Please do not upload emergency requests or urgent clinical instructions through this website.",
-        portalTitle: "Patient member file entry",
-        portalText:
-          "The first online step is to register interest and create a structured case file. Before sensitive records are transferred, we confirm the service scope, consent, and the safest submission channel for the patient or authorized family member.",
-        portalCards: [
-          { title: "Create a member file", text: "We collect only the minimum basic information needed to understand the patient, language, cancer type, and coordination need." },
-          { title: "Confirm consent and service scope", text: "Paid coordination starts only after the patient or authorized family member understands the service boundary and confirms the written arrangement." },
-          { title: "Prepare secure record submission", text: "Medical documents are sent only through a confirmed channel. A full account-based upload portal should be added only with authentication, encrypted storage, and access logs." },
-        ],
-        stepsTitle: "How submission works",
-        steps: [
-          { title: "Register interest", text: "Send the patient's basic situation, country or region, preferred language, cancer type, and the service tier being considered." },
-          { title: "Prepare the record package", text: "Use the checklist below to collect reports before case review. Clear PDFs, image links, and dated summaries are preferred." },
-          { title: "Submit through a confirmed channel", text: "After initial contact, we will confirm the appropriate email or WhatsApp route and whether a written service agreement is needed before paid coordination begins." },
-        ],
-        documentsTitle: "Medical records checklist",
-        documents: [
+        "eyebrow": "Patient enquiry",
+        "title": "Start your care coordination enquiry",
+        "body": "A few basic details are enough to begin. You do not need to have every report ready or choose a service level yet.",
+        "documentsTitle": "Medical records checklist",
+        "documents": [
           "Biopsy reports",
           "PET/CT scan reports",
           "Any pathology or immunohistochemistry (IHC) reports",
@@ -307,38 +356,28 @@ export const content: Record<Locale, SiteContent> = {
           "A brief description of current symptoms, daily activity level, appetite, weight change, fever, pain, and overall condition",
           "Recent CT, MRI, ultrasound, endoscopy, or other imaging reports, plus DICOM files or image-sharing links if available",
           "Hospital discharge summaries, diagnosis letters, surgery notes, endoscopy reports, or procedure records if available",
-          "Important medical history such as heart, kidney, liver, infection, autoimmune disease, hepatitis, tuberculosis, or other major conditions",
-          "Patient passport or identity page, contact person details, and authorization if a family member is communicating on behalf of the patient",
-        ],
-        fieldsTitle: "Information to include in the first message",
-        fields: ["Patient initials or name", "Age and sex", "Country or region", "Diagnosis and stage, if known", "Current treatment status", "Main question for coordination", "Preferred language", "Preferred service tier"],
-        secureTitle: "For a future secure member portal",
-        secureItems: [
-          "Patient login and authorized family access",
-          "Encrypted document storage and controlled access logs",
-          "Upload status, missing-document reminders, and case-manager notes",
-          "Clear consent, retention, deletion, and emergency-use boundaries",
-        ],
-        consentTitle: "Privacy and consent",
-        consent:
-          "Medical records contain sensitive personal data. Please send documents only if the patient or authorized family member agrees that H&C Care may use them for case preparation and coordination communication.",
-        email: "Email registration materials",
-        whatsapp: "Ask before sending files on WhatsApp",
-        note:
-          "This registration page is an intake and preparation guide. It is not an emergency channel, medical consultation platform, diagnosis service, treatment recommendation, or guarantee that any hospital, doctor, treatment, surgery, or clinical research pathway will accept the case.",
+          "Important medical history such as heart, kidney, liver, infection, autoimmune disease, hepatitis, tuberculosis, or other major conditions"
+        ]
       },
       clinicalTeam: {
-        eyebrow: "Clinically led coordination",
-        title: "Led by healthcare professionals, not general travel agents",
-        body:
-          "Medical coordination is different from ordinary travel support. Our team combines clinical literacy, case organization, and practical hospital navigation for oncology patients.",
-        cards: [
-          { title: "Healthcare professional leadership", text: "A core coordination member holds a UK Master's degree in Nursing, a New York State Registered Nurse license, a Chinese nursing license, and the title of Associate Chief Nurse in China." },
-          { title: "Oncology and hospital experience", text: "Clinical background includes years of experience in oncology, emergency care, and operating room settings, supporting safer communication and case preparation." },
-          { title: "Medical-language coordination", text: "We help families turn complex medical records, clinical questions, and hospital instructions into an organized pathway." },
+        "eyebrow": "People behind your care journey",
+        "title": "Clinical understanding. Personal coordination.",
+        "body": "Our coordinators bring healthcare experience to record preparation and hospital communication. The specialist profiles below describe clinical expertise relevant to Guangzhou oncology pathways. Availability is confirmed for each case.",
+        "cards": [
+          {
+            "title": "Healthcare professional leadership",
+            "text": "A core coordination member holds a UK Master's degree in Nursing, a New York State Registered Nurse license, a Chinese nursing license, and the title of Associate Chief Nurse in China."
+          },
+          {
+            "title": "Oncology and hospital experience",
+            "text": "Clinical background includes years of experience in oncology, emergency care, and operating room settings, supporting safer communication and case preparation."
+          },
+          {
+            "title": "Medical-language coordination",
+            "text": "We help families turn complex medical records, clinical questions, and hospital instructions into an organized pathway."
+          }
         ],
-        note:
-          "These credentials support case coordination and medical communication. They do not mean that H&C Care provides diagnosis, treatment, nursing services, or medical practice in Hong Kong.",
+        "note": "These credentials support case coordination and medical communication. They do not mean that H&C Care provides diagnosis, treatment, nursing services, or medical practice in Hong Kong."
       },
       ethics: {
         eyebrow: "Trust and compliance",
@@ -356,14 +395,12 @@ export const content: Record<Locale, SiteContent> = {
           "Formal service scope, fees, privacy handling, and responsibility boundaries should be confirmed in a written membership agreement before payment.",
       },
       contact: {
-        eyebrow: "Contact",
-        title: "Request a membership consultation",
-        body:
-          `Contact ${contact.name} by WhatsApp or email. Please include the patient's diagnosis, country or region, current status, and the main coordination question. Do not send emergency requests through this website.`,
-        email: "Email H&C Care",
-        whatsapp: "WhatsApp H&C Care",
-        privacy:
-          "Medical information sent by email or WhatsApp is used to understand the case and arrange coordination. It may be shared with relevant medical teams outside Hong Kong only for case preparation and review.",
+        "eyebrow": "Here for your next step",
+        "title": "Let's start with a conversation",
+        "body": "Tell us where you are and what support your family needs. We will discuss the appropriate records and contact channel with you before you send a full medical file.",
+        "email": "Email us",
+        "whatsapp": "WhatsApp",
+        "privacy": "Medical information sent by email or WhatsApp is used to understand the case and arrange coordination. It may be shared with relevant medical teams outside Hong Kong only for case preparation and review."
       },
       privacy: {
         eyebrow: "Privacy notice",
@@ -398,40 +435,70 @@ export const content: Record<Locale, SiteContent> = {
         body:
           `${brand.name} provides general information, membership-based case management, and coordination support. It does not replace diagnosis or treatment by licensed physicians. Eligibility, outcomes, and costs vary by individual case and cannot be guaranteed.`,
       },
+
+      "car-t": {
+        "eyebrow": "Patient information · Gastric cancer",
+        "title": "CLDN18.2 CAR-T: preparing for a specialist discussion",
+        "body": "Learn which records may be useful when discussing satri-cel (CT041) with a qualified oncology team in China.",
+        "cards": [
+          {
+            "title": "What is CLDN18.2?",
+            "text": "CLDN18.2 is a biomarker that can be assessed in tumor tissue. A specialist reviews the pathology, testing method, and results together with the patient's diagnosis and treatment history."
+          },
+          {
+            "title": "What approval has been announced?",
+            "text": "On 22 June 2026, CARsgen announced Chinese approval of satricabtagene autoleucel (satri-cel/CT041), described as the world's first approved CAR-T product for solid tumors. The announced indication is CLDN18.2-positive, HER2-negative advanced gastric or gastroesophageal junction adenocarcinoma after failure of at least two prior treatment lines."
+          },
+          {
+            "title": "What should you prepare?",
+            "text": "Available pathology and IHC reports, CLDN18.2 and HER2 results, recent imaging, a dated treatment history, blood tests, current medicines, and a summary of the patient's current condition. The receiving team confirms any additional testing and safety assessment."
+          }
+        ],
+        "note": "This is general information, not an assessment of treatment suitability. H&C Care coordinates records and communication. Receiving clinicians must confirm the current approved label, eligibility, risks, availability, and costs for the individual patient; access and outcomes are not guaranteed."
+      },
     },
   },
 
   "zh-hant": {
     nav: {
-      home: "首頁",
-      membership: "會員服務",
-      oncology: "腫瘤協調",
-      mdt: "MDT 資源",
-      experts: "專家背景",
-      hospitals: "醫院資源",
-      journey: "服務流程",
-      register: "會員登記",
-      contact: "聯絡",
-      privacy: "私隱聲明",
-      terms: "服務邊界",
+      "home": "首頁",
+      "membership": "服務方案",
+      "oncology": "腫瘤協調",
+      "mdt": "MDT 資源",
+      "experts": "專家背景",
+      "hospitals": "醫院資源",
+      "journey": "服務流程",
+      "register": "開始個案諮詢",
+      "contact": "聯絡",
+      "privacy": "私隱聲明",
+      "terms": "服務邊界",
+      "car-t": "CLDN18.2 CAR-T"
     },
     seo: {
       title: `${brand.name} | 國際腫瘤患者來華就醫協調`,
       description: "協助國際腫瘤患者整理病歷、對接合適的中國腫瘤專家、評估治療路徑，並協調在中國的醫院就醫流程。",
     },
     hero: {
-      eyebrow: "專注腫瘤的來華就醫協調",
-      title: "協助國際腫瘤患者",
-      highlight: "對接可信賴、合適、可落地的中國腫瘤醫療資源",
-      body:
-        `${brand.name} 協助國際腫瘤患者整理病歷、匹配有經驗的腫瘤專家、評估前沿治療路徑，並協調在中國就醫的實際流程。`,
-      primary: "提交病歷諮詢",
-      secondary: "查看服務流程",
-      trust: [
-        { title: "專注腫瘤協調", text: "我們不是普通醫療旅遊中介，公開服務主線聚焦腫瘤患者來華就醫路徑。" },
-        { title: "廣東腫瘤資源", text: "根據癌種、分期、既往治療和當前狀況，協助匹配廣東及廣州合適的腫瘤、MDT 或手術資源。" },
-        { title: "清晰服務邊界", text: "我們協助患者理解、準備、協調和溝通，不替代醫生診斷或治療。" },
-      ],
+      "eyebrow": "H&C Care · 國際患者支持",
+      "title": "中國腫瘤就醫協調",
+      "highlight": "",
+      "body": "由具臨床背景的醫療專業人員參與，專注淋巴瘤及實體瘤的廣州就醫協調。協助您整理病歷、溝通專家，並為下一步做好準備。",
+      "primary": "開始個案諮詢",
+      "secondary": "WhatsApp",
+      "trust": [
+        {
+          "title": "專注腫瘤",
+          "text": ""
+        },
+        {
+          "title": "臨床工作背景",
+          "text": ""
+        },
+        {
+          "title": "中國 · 廣州",
+          "text": ""
+        }
+      ]
     },
     sections: {
       pain: {
@@ -462,71 +529,119 @@ export const content: Record<Locale, SiteContent> = {
         ],
       },
       membership: {
-        eyebrow: "患者服務收費",
-        title: "境外腫瘤患者三檔協調服務",
-        body: "以下費用僅為 H&C Care 的協調服務費。醫院費、醫生費、檢查、藥物、治療、手術、出行、住宿、保險、車輛及其他第三方費用均另行計算。",
-        plans: [
+        "eyebrow": "服務與支持",
+        "title": "按您的情況選擇協調支持",
+        "body": "可從初步諮詢、專項協調或年度個案支持開始。付費服務開始前，我們會與您確認範圍及書面報價。",
+        "plans": [
           {
-            name: "基礎路徑諮詢",
-            price: "免費",
-            fit: "適合正在初步了解中國腫瘤就醫可行性的患者。",
-            items: ["初步需求篩選", "中國腫瘤就醫一般流程說明", "病歷資料及赴華準備清單", "一次線上說明或基礎文字諮詢"],
+            "name": "初步路徑諮詢",
+            "fit": "適合正在了解中國就醫的患者與家屬。",
+            "items": [
+              "溝通協調需求",
+              "了解資料準備流程",
+              "獲取病歷資料清單"
+            ]
           },
           {
-            name: "單次協調服務",
-            price: "USD 300 / 患者 / 服務周期",
-            fit: "適合一次完整病歷整理、專家溝通、遠程諮詢或入院協調周期。",
-            items: ["病歷收集及病情時間線整理", "專家或醫院溝通資料準備", "門診、遠程諮詢或住院申請協調", "赴華前清單及一次出院後隨訪協調"],
+            "name": "專項協調服務",
+            "fit": "適合有明確專家或醫院協調任務的患者。",
+            "items": [
+              "整理病情與治療時間線",
+              "協調約定的預約或溝通",
+              "釐清下一步實際安排"
+            ]
           },
           {
-            name: "年度患者協調",
-            price: "USD 980 / 患者 / 連續12個月",
-            fit: "適合一年內可能多次來華治療、需要持續病例管理和協調的患者。",
-            items: ["年度電子病歷檔案維護", "復診及資料更新提醒", "年度內最多4次住院協調周期", "年度內最多2次專家或治療資源重新評估協調"],
-          },
+            "name": "年度個案支持",
+            "fit": "適合需要持續跟進與跨階段協調的患者。",
+            "items": [
+              "維護與更新個案檔案",
+              "協調約定的復評與隨訪",
+              "支持不同階段的家屬溝通"
+            ]
+          }
         ],
-        modulesTitle: "專項支持模組",
-        modules: [
-          { title: "Lymphoma MDT Coordination", text: "針對淋巴瘤、復發難治或複雜個案，協助準備廣東及廣州專家討論資料。" },
-          { title: "Immune Recovery Support", text: "穩定期或康復期患者的免疫狀態資料整理、醫師支持性諮詢跟進、營養與生活管理建議協調、季度復盤。" },
-          { title: "Surgical Pathway Coordination", text: "在復評結果提示可討論手術路徑時，協助與合適團隊進行溝通準備。" },
+        "modulesTitle": "專項支持模組",
+        "modules": [
+          {
+            "title": "淋巴瘤 MDT 協調",
+            "text": "針對淋巴瘤、復發難治或複雜個案，協助準備廣東及廣州專家討論資料。"
+          },
+          {
+            "title": "康復與隨訪支持",
+            "text": "準備預約、入院步驟及下一次溝通或復查的提醒。"
+          },
+          {
+            "title": "手術路徑協調",
+            "text": "在復評結果提示可討論手術路徑時，協助與合適團隊進行溝通準備。"
+          }
         ],
-        modulesNote: "專項模組屬於協調與諮詢支持，不是醫療套餐或治療承諾。任何臨床決策均由持牌醫生及接診機構判斷。",
-        note: "以上費用按每名患者計算，不可轉讓。免費基礎諮詢通常每名患者限一次。服務不是保險、醫療套餐或預付治療計劃；是否接收、診斷、治療資格、手術、費用和結果均由醫院及持牌醫生決定。正式服務範圍應在付款前以書面協議確認。",
+        "modulesNote": "專項模組屬於協調與諮詢支持，不是醫療套餐或治療承諾。任何臨床決策均由持牌醫生及接診機構判斷。",
+        "note": "協調服務費與醫療費用分開。醫院、醫生、檢查、治療、出行、住宿及第三方翻譯費另行確認。書面方案會說明包含項目、時間安排及取消服務的處理方式。"
       },
       oncology: {
-        eyebrow: "前沿腫瘤治療路徑",
-        title: "協助評估中國的合適治療與臨床研究路徑",
-        body: "對部分符合條件的患者，我們可協助準備資料並圍繞前沿腫瘤路徑進行溝通協調。是否適合及治療方向必須由持牌醫生和接診機構評估。",
-        cards: [
-          { title: "免疫與靶向治療評估", text: "協助整理既往治療、標誌物結果、療效反應和需要專家討論的問題。" },
-          { title: "CLDN18.2 陽性胃癌 CAR-T 路徑溝通", text: "CLDN18.2 是胃癌及胃食管交界癌的重要標誌物。科濟藥業公開資訊顯示，satri-cel/CT041（恺力美®）已在中國獲批上市，被稱為全球首個用於實體瘤適應症的 CAR-T 細胞產品，適用於 CLDN18.2 陽性、HER2 陰性，且既往至少二線治療失敗的成人晚期胃或胃食管交界部腺癌患者。我們可協助整理病理、標誌物、影像及既往治療資料，並協調合資格團隊進行個案可行性溝通。" },
-          { title: "細胞治療問題準備", text: "在臨床相關時，協助家屬準備關於細胞治療路徑、適應條件、安全性、時間安排和醫院要求的問題。" },
-          { title: "臨床研究機會探索", text: "對符合條件的腫瘤患者，可協助了解中國潛在臨床研究機會、準備醫療文件、理解入選條件並協調溝通。" },
-          { title: "復評後手術路徑協調", text: "當復評提示可討論手術時，協助與合適手術團隊進行溝通準備。" },
-          { title: "面向家屬的路徑梳理", text: "把複雜醫院流程整理成家屬可理解的時間線，但不替代醫生建議。" },
+        "eyebrow": "前沿腫瘤治療路徑",
+        "title": "協助評估中國的合適治療與臨床研究路徑",
+        "body": "對部分符合條件的患者，我們可協助準備資料並圍繞前沿腫瘤路徑進行溝通協調。是否適合及治療方向必須由持牌醫生和接診機構評估。",
+        "cards": [
+          {
+            "title": "免疫與靶向治療評估",
+            "text": "協助整理既往治療、標誌物結果、療效反應和需要專家討論的問題。"
+          },
+          {
+            "title": "CLDN18.2 陽性胃癌 CAR-T 路徑溝通",
+            "text": "科濟藥業於2026年6月22日公告 satricabtagene autoleucel（satri-cel／CT041）在中國獲批，稱其為全球首個獲批用於實體瘤的 CAR-T 產品。公告適應證為 CLDN18.2 陽性、HER2 陰性，既往至少二線治療失敗的晚期胃或胃食管交界部腺癌。"
+          },
+          {
+            "title": "細胞治療問題準備",
+            "text": "在臨床相關時，協助家屬準備關於細胞治療路徑、適應條件、安全性、時間安排和醫院要求的問題。"
+          },
+          {
+            "title": "臨床研究機會探索",
+            "text": "對符合條件的腫瘤患者，可協助了解中國潛在臨床研究機會、準備醫療文件、理解入選條件並協調溝通。"
+          },
+          {
+            "title": "復評後手術路徑協調",
+            "text": "當復評提示可討論手術時，協助與合適手術團隊進行溝通準備。"
+          },
+          {
+            "title": "面向家屬的路徑梳理",
+            "text": "把複雜醫院流程整理成家屬可理解的時間線，但不替代醫生建議。"
+          }
         ],
-        note: "我們不提供 CAR-T 或其他治療、不判定治療資格、不保證獲得已上市治療或臨床研究路徑、不保證臨床研究入組，也不承諾療效或結果。我們協助患者準備、協調和溝通。",
+        "note": "我們不提供 CAR-T 或其他治療、不判定治療資格、不保證獲得已上市治療或臨床研究路徑、不保證臨床研究入組，也不承諾療效或結果。我們協助患者準備、協調和溝通。"
       },
       mdt: {
-        eyebrow: "廣東腫瘤專家資源",
-        title: "對接廣東領先腫瘤專家與合適臨床路徑",
-        body: "我們根據癌種、分期、既往治療、目前狀況和臨床需求協助匹配合適的腫瘤資源。重點是合適，而不是單純名氣大。",
-        cards: [
-          { title: "淋巴瘤 MDT 優勢", text: "我們最核心的資源層集中在廣東及廣州的淋巴瘤與複雜血液腫瘤協調。" },
-          { title: "實體瘤專家匹配", text: "對實體瘤患者，協助準備內科、手術、放療或綜合治療路徑討論所需資料。" },
-          { title: "第二意見與 MDT 準備", text: "協助整理資料和問題，讓專家或多學科討論更聚焦。" },
-          { title: "合適優先於名氣", text: "合適路徑取決於診斷、分期、既往治療、患者狀態和醫院實際接收可能。" },
+        "eyebrow": "廣東腫瘤專家資源",
+        "title": "淋巴瘤與多學科討論",
+        "body": "我們根據癌種、分期、既往治療、目前狀況和臨床需求協助匹配合適的腫瘤資源。重點是合適，而不是單純名氣大。",
+        "cards": [
+          {
+            "title": "淋巴瘤 MDT 優勢",
+            "text": "我們最核心的資源層集中在廣東及廣州的淋巴瘤與複雜血液腫瘤協調。"
+          },
+          {
+            "title": "實體瘤專家匹配",
+            "text": "對實體瘤患者，協助準備內科、手術、放療或綜合治療路徑討論所需資料。"
+          },
+          {
+            "title": "第二意見與 MDT 準備",
+            "text": "協助整理資料和問題，讓專家或多學科討論更聚焦。"
+          },
+          {
+            "title": "合適優先於名氣",
+            "text": "合適路徑取決於診斷、分期、既往治療、患者狀態和醫院實際接收可能。"
+          }
         ],
-        questionsTitle: "我們協助整理的個案管理問題",
-        questions: [
+        "questionsTitle": "我們協助整理的個案管理問題",
+        "questions": [
           "病理與影像資料是否足以進行有意義的專家評估？",
           "復發或難治淋巴瘤是否需要赴穗前進行 MDT 討論？",
           "免疫治療後，討論手術可能性前需要哪些復評資料？",
           "聯絡醫院團隊前，哪些資料需要翻譯或重新整理？",
-          "出院或線上評估後，家屬應準備怎樣的隨訪時間線？",
+          "出院或線上評估後，家屬應準備怎樣的隨訪時間線？"
         ],
-        note: "MDT 協調是行政與溝通支持，不保證指定醫生、醫院、治療或手術會接收個案。",
+        "note": "MDT 協調是行政與溝通支持，不保證指定醫生、醫院、治療或手術會接收個案。"
       },
       experts: {
         eyebrow: "臨床背景",
@@ -551,40 +666,55 @@ export const content: Record<Locale, SiteContent> = {
         note: `${brand.name} 由 ${brand.zhLegalName} 營運。本網站並非任何醫院的官方網站，除非另有明確說明。`,
       },
       journey: {
-        eyebrow: "服務流程",
-        title: "服務流程如何運作",
-        body: "第一步不是承諾治療，而是了解個案、整理病歷，並判斷哪些資訊足以支撐有意義的專家或醫院溝通。",
-        steps: [
-          { title: "提交病歷資料", text: "提供診斷、所在國家或地區、目前狀況、既往治療和家屬最想解決的問題。" },
-          { title: "初步協調評估", text: "評估協調是否可行，以及在聯絡專家前還缺少哪些關鍵資料。" },
-          { title: "匹配專家路徑", text: "根據個案匹配合適的腫瘤、MDT、臨床研究或手術溝通路徑。" },
-          { title: "安排預約或諮詢", text: "協調預約準備、資料流轉、問題清單和實際溝通。" },
-          { title: "赴華與入院準備", text: "協助家屬了解出行時間、入院背景、付款準備、住宿和日常安排。" },
-          { title: "院內翻譯與協調", text: "在需要時支持醫學溝通和醫院就診期間的實務協調。" },
-          { title: "後續隨訪溝通", text: "出院或回國後，協助追蹤後續問題、復評時間和家屬溝通。" },
+        "eyebrow": "服務流程",
+        "title": "服務流程如何運作",
+        "body": "您可以先在所在地聯絡我們。付費服務與出行安排前，先確認協調範圍。",
+        "steps": [
+          {
+            "title": "說明您的需要",
+            "text": "提供所在國家或地區、偏好語言，以及您是患者本人還是家屬。"
+          },
+          {
+            "title": "初步協調評估",
+            "text": "評估協調是否可行，以及在聯絡專家前還缺少哪些關鍵資料。"
+          },
+          {
+            "title": "匹配專家路徑",
+            "text": "根據個案匹配合適的腫瘤、MDT、臨床研究或手術溝通路徑。"
+          },
+          {
+            "title": "安排預約或諮詢",
+            "text": "協調預約準備、資料流轉、問題清單和實際溝通。"
+          },
+          {
+            "title": "赴華與入院準備",
+            "text": "協助家屬了解出行時間、入院背景、付款準備、住宿和日常安排。"
+          },
+          {
+            "title": "院內翻譯與協調",
+            "text": "在需要時支持醫學溝通和醫院就診期間的實務協調。"
+          },
+          {
+            "title": "後續隨訪溝通",
+            "text": "出院或回國後，協助追蹤後續問題、復評時間和家屬溝通。"
+          }
         ],
-        documentsTitle: "建議準備資料",
-        documents: ["目前診斷與病情摘要", "病理報告", "影像報告和近期檢查結果", "基因或分子檢測，如有", "既往治療史和用藥清單", "目前症狀、體能狀態和感染史"],
+        "documentsTitle": "建議準備資料",
+        "documents": [
+          "目前診斷與病情摘要",
+          "病理報告",
+          "影像報告和近期檢查結果",
+          "基因或分子檢測，如有",
+          "既往治療史和用藥清單",
+          "目前症狀、體能狀態和感染史"
+        ]
       },
       register: {
-        eyebrow: "會員登記",
-        title: "登記會員意向並準備病歷資料供個案評估",
-        body: "如果患者希望由 H&C Care 評估是否適合會員或協調服務，可先從此頁開始。請勿通過本網站提交急症請求或高度緊急的臨床指示。",
-        portalTitle: "患者會員個案檔案入口",
-        portalText: "線上第一步是登記服務意向並建立結構化個案檔案。在轉交敏感病歷前，我們會先確認服務範圍、患者授權，以及對患者或獲授權家屬最合適的提交渠道。",
-        portalCards: [
-          { title: "建立會員檔案", text: "只收集理解患者、語言、癌種和協調需求所需的最少基本資料。" },
-          { title: "確認授權與服務範圍", text: "付費協調只會在患者或獲授權家屬理解服務邊界並確認書面安排後開始。" },
-          { title: "準備安全資料提交", text: "病歷只通過確認渠道傳送。完整帳戶式資料上傳系統，應在身份驗證、加密儲存和存取記錄配置完成後再加入。" },
-        ],
-        stepsTitle: "提交流程",
-        steps: [
-          { title: "登記服務意向", text: "先說明患者基本情況、所在國家或地區、偏好語言、癌種，以及正在考慮的服務檔次。" },
-          { title: "準備病歷資料包", text: "按以下清單整理報告。建議提供清晰 PDF、影像連結和帶日期的病情摘要。" },
-          { title: "經確認渠道提交", text: "初步聯絡後，我們會確認適合的電郵或 WhatsApp 提交方式；付費協調開始前需確認書面服務協議。" },
-        ],
-        documentsTitle: "病歷資料清單",
-        documents: [
+        "eyebrow": "患者諮詢",
+        "title": "開始您的就醫協調諮詢",
+        "body": "先提供少量基本資料即可開始，不必等齊所有報告，也不必現在選定服務檔次。",
+        "documentsTitle": "病歷資料清單",
+        "documents": [
           "活檢報告",
           "PET/CT 掃描報告",
           "任何病理或免疫組化（IHC）報告",
@@ -595,34 +725,28 @@ export const content: Record<Locale, SiteContent> = {
           "目前症狀、日常活動能力、食慾、體重變化、發熱、疼痛及整體狀況簡述",
           "近期 CT、MRI、超聲、內鏡或其他影像報告；如有，請提供 DICOM 文件或影像分享連結",
           "出院小結、診斷證明、手術記錄、內鏡報告或操作記錄，如有",
-          "重要既往病史，例如心、腎、肝、感染、自身免疫病、肝炎、結核或其他重大疾病",
-          "患者護照或身份頁、聯絡人資料；如由家屬代為溝通，請提供患者授權",
-        ],
-        fieldsTitle: "首封信息建議包含",
-        fields: ["患者姓名或縮寫", "年齡和性別", "所在國家或地區", "診斷和分期，如已知", "目前治療狀態", "希望協調的主要問題", "偏好語言", "希望了解的服務檔次"],
-        secureTitle: "後續安全會員系統應包含",
-        secureItems: [
-          "患者登入和獲授權家屬訪問",
-          "加密病歷儲存和受控存取記錄",
-          "資料提交狀態、缺失文件提醒和個案經理備註",
-          "清晰的同意、保存、刪除和急症使用邊界",
-        ],
-        consentTitle: "私隱與授權",
-        consent: "病歷屬於敏感個人資料。請僅在患者本人或獲授權家屬同意後發送，並確認 H&C Care 可將資料用於個案準備及協調溝通。",
-        email: "電郵提交登記資料",
-        whatsapp: "WhatsApp 先確認提交方式",
-        note: "此頁僅為登記與資料準備指引，不是急症渠道、醫療諮詢平台、診斷服務、治療建議，也不保證任何醫院、醫生、治療、手術或臨床研究路徑會接收個案。",
+          "重要既往病史，例如心、腎、肝、感染、自身免疫病、肝炎、結核或其他重大疾病"
+        ]
       },
       clinicalTeam: {
-        eyebrow: "醫療專業人員主導",
-        title: "我們不是普通旅行陪診團隊",
-        body: "腫瘤就醫協調不同於普通旅行安排。團隊需要理解病歷、臨床問題、醫院流程和患者家庭的實際壓力。",
-        cards: [
-          { title: "醫療專業背景主導", text: "核心協調成員具備英國護理碩士、美國紐約州註冊護士資格、中國護士執業資格及中國副主任護師職稱。" },
-          { title: "腫瘤與醫院場景經驗", text: "臨床背景涵蓋腫瘤、急診及手術室等工作場景，有助於更安全地進行病歷準備和醫學溝通。" },
-          { title: "醫學語境下的協調", text: "協助家屬把複雜病歷、臨床問題和醫院要求整理成更清晰的就醫路徑。" },
+        "eyebrow": "了解支持您的團隊",
+        "title": "理解臨床，也理解患者與家屬",
+        "body": "協調團隊將醫療工作經驗用於病歷準備與醫院溝通。以下專家資料介紹廣州腫瘤路徑相關的臨床專長，實際接診與安排需按個案確認。",
+        "cards": [
+          {
+            "title": "醫療專業背景主導",
+            "text": "核心協調成員具備英國護理碩士、美國紐約州註冊護士資格、中國護士執業資格及中國副主任護師職稱。"
+          },
+          {
+            "title": "腫瘤與醫院場景經驗",
+            "text": "臨床背景涵蓋腫瘤、急診及手術室等工作場景，有助於更安全地進行病歷準備和醫學溝通。"
+          },
+          {
+            "title": "醫學語境下的協調",
+            "text": "協助家屬把複雜病歷、臨床問題和醫院要求整理成更清晰的就醫路徑。"
+          }
         ],
-        note: "以上背景用於支持個案協調和醫學溝通，不表示 H&C Care 在香港提供診斷、治療、護理服務或醫療執業。",
+        "note": "以上背景用於支持個案協調和醫學溝通，不表示 H&C Care 在香港提供診斷、治療、護理服務或醫療執業。"
       },
       ethics: {
         eyebrow: "信任與合規",
@@ -638,12 +762,12 @@ export const content: Record<Locale, SiteContent> = {
         note: "正式服務範圍、費用、私隱處理和責任邊界，應在付款前通過書面會員協議確認。",
       },
       contact: {
-        eyebrow: "聯絡",
-        title: "申請會員諮詢",
-        body: `請通過 WhatsApp 或電郵聯絡 ${contact.name}。請說明患者診斷、所在國家或地區、目前狀況和主要協調問題。緊急情況請勿通過本網站處理。`,
-        email: "電郵 H&C Care",
-        whatsapp: "WhatsApp 聯絡 H&C Care",
-        privacy: "通過電郵或 WhatsApp 發送的醫療資料將用於了解個案及安排協調，並可能僅為個案準備及評估目的分享予香港以外相關醫療團隊。",
+        "eyebrow": "為下一步做好準備",
+        "title": "先從一次溝通開始",
+        "body": "告訴我們您在哪裡，以及家庭需要什麼支持。在發送完整病歷前，我們會先與您確認所需資料及聯絡渠道。",
+        "email": "電郵聯絡",
+        "whatsapp": "WhatsApp",
+        "privacy": "通過電郵或 WhatsApp 發送的醫療資料將用於了解個案及安排協調，並可能僅為個案準備及評估目的分享予香港以外相關醫療團隊。"
       },
       privacy: {
         eyebrow: "私隱聲明",
@@ -673,39 +797,70 @@ export const content: Record<Locale, SiteContent> = {
         title: "醫療免責聲明",
         body: `${brand.name} 提供一般資訊、會員制個案管理及協調支持，不能替代持牌醫生的診斷或治療。是否適合治療、治療結果和費用均因個案而異，不能作出保證。`,
       },
+
+      "car-t": {
+        "eyebrow": "患者資訊 · 胃癌",
+        "title": "CLDN18.2 CAR-T：如何準備專家溝通",
+        "body": "了解與中國合資格腫瘤團隊討論 satri-cel（CT041）時，哪些資料可能有幫助。",
+        "cards": [
+          {
+            "title": "CLDN18.2 是什麼？",
+            "text": "CLDN18.2 是可在腫瘤組織中檢測的標誌物。專家需結合病理、檢測方法、結果、診斷及既往治療一併判斷。"
+          },
+          {
+            "title": "目前有哪些獲批資訊？",
+            "text": "科濟藥業於2026年6月22日公告 satricabtagene autoleucel（satri-cel／CT041）在中國獲批，稱其為全球首個獲批用於實體瘤的 CAR-T 產品。公告適應證為 CLDN18.2 陽性、HER2 陰性，既往至少二線治療失敗的晚期胃或胃食管交界部腺癌。"
+          },
+          {
+            "title": "建議先準備哪些資料？",
+            "text": "已有病理與免疫組化報告、CLDN18.2 和 HER2 結果、近期影像、按日期整理的治療史、血液檢查、目前用藥及整體狀況摘要。額外檢測與安全性評估由接診團隊確認。"
+          }
+        ],
+        "note": "本頁為一般資訊，不構成治療適用性評估。H&C Care 協調資料與溝通；接診醫生需按個案確認現行核准說明書、適應條件、風險、可及性及費用，不保證獲得治療或療效。"
+      },
     },
   },
 
   ru: {
     nav: {
-      home: "Главная",
-      membership: "Членство",
-      oncology: "Онкология",
-      mdt: "MDT",
-      experts: "Эксперты",
-      hospitals: "Больницы",
-      journey: "Маршрут",
-      register: "Регистрация",
-      contact: "Контакты",
-      privacy: "Конфиденциальность",
-      terms: "Границы услуг",
+      "home": "Главная",
+      "membership": "Услуги",
+      "oncology": "Онкология",
+      "mdt": "MDT",
+      "experts": "Эксперты",
+      "hospitals": "Больницы",
+      "journey": "Маршрут",
+      "register": "Обратиться к нам",
+      "contact": "Контакты",
+      "privacy": "Конфиденциальность",
+      "terms": "Границы услуг",
+      "car-t": "CLDN18.2 CAR-T"
     },
     seo: {
       title: `${brand.name} | Координация онкологического лечения в Китае`,
       description: "Помогаем международным онкологическим пациентам подготовить документы, найти подходящих специалистов, изучить маршруты лечения и пройти больничный путь в Китае.",
     },
     hero: {
-      eyebrow: "Координация онкологии в Китае",
-      title: "Помогаем международным онкологическим пациентам",
-      highlight: "получить доступ к надежным онкологическим маршрутам в Китае",
-      body: `${brand.name} помогает подготовить медицинские документы, связаться с опытными онкологическими специалистами, изучить передовые маршруты лечения и пройти больничный путь в Китае.`,
-      primary: "Отправить документы",
-      secondary: "Посмотреть маршрут",
-      trust: [
-        { title: "Фокус на онкологии", text: "Мы не обычное агентство медицинского туризма; наша публичная линия сфокусирована на онкологии." },
-        { title: "Специалисты Гуандуна", text: "Мы помогаем подобрать подходящие ресурсы онкологии, лимфомы, MDT или хирургии в Гуандуне и Гуанчжоу." },
-        { title: "Четкие границы", text: "Мы помогаем понять, подготовить, координировать и коммуницировать, но не диагностируем и не лечим." },
-      ],
+      "eyebrow": "H&C Care · Поддержка иностранных пациентов",
+      "title": "Координация онкологической помощи в Китае",
+      "highlight": "",
+      "body": "Поддержка специалистов с клиническим опытом для иностранных пациентов. Наш фокус — лимфомы и солидные опухоли в Гуанчжоу. Помогаем подготовить документы, связаться с врачами и спланировать следующий шаг.",
+      "primary": "Обратиться к нам",
+      "secondary": "WhatsApp",
+      "trust": [
+        {
+          "title": "Онкологический фокус",
+          "text": ""
+        },
+        {
+          "title": "Клинический опыт",
+          "text": ""
+        },
+        {
+          "title": "Гуанчжоу, Китай",
+          "text": ""
+        }
+      ]
     },
     sections: {
       pain: {
@@ -736,50 +891,119 @@ export const content: Record<Locale, SiteContent> = {
         ],
       },
       membership: {
-        eyebrow: "Стоимость услуг для пациентов",
-        title: "Три уровня координационных услуг для международных онкологических пациентов",
-        body: "Указанные сборы являются только платой за координационные услуги H&C Care. Больничные, врачебные, анализы, лекарства, лечение, операция, поездка, проживание, страховка, транспорт и другие расходы третьих сторон оплачиваются отдельно.",
-        plans: [
-          { name: "Первичная консультация по маршруту", price: "Бесплатно", fit: "Для пациентов, которые впервые изучают возможность онкологической помощи в Китае.", items: ["Первичный скрининг потребностей", "Общее объяснение маршрута лечения в Китае", "Список медицинских документов и подготовки к поездке", "Одно онлайн-объяснение или базовая текстовая консультация"] },
-          { name: "Координация одного цикла", price: "USD 300 / пациент / цикл услуги", fit: "Для одного цикла подготовки документов, связи со специалистом, консультации или госпитализации.", items: ["Сбор документов и временная линия случая", "Подготовка коммуникации со специалистом или больницей", "Координация записи, онлайн-консультации или госпитализации", "Список подготовки к поездке и один follow-up после выписки"] },
-          { name: "Годовая координация пациента", price: "USD 980 / пациент / 12 месяцев", fit: "Для пациентов, которым в течение года могут понадобиться повторные поездки в Китай и постоянное управление случаем.", items: ["Ведение годового электронного файла случая", "Напоминания о follow-up и обновлении документов", "До 4 циклов координации госпитализации в год", "До 2 раундов координации повторной оценки специалиста или маршрута"] },
+        "eyebrow": "Услуги и поддержка",
+        "title": "Поддержка с учетом вашей ситуации",
+        "body": "Первичное обращение, отдельная задача или годовое сопровождение. Объем и стоимость согласуются письменно до начала платных услуг.",
+        "plans": [
+          {
+            "name": "Первичное обращение",
+            "fit": "Для семей, изучающих помощь в Китае.",
+            "items": [
+              "Обсуждение потребностей",
+              "Порядок подготовки",
+              "Список документов"
+            ]
+          },
+          {
+            "name": "Отдельная координация",
+            "fit": "Для определенной задачи со специалистом или больницей.",
+            "items": [
+              "Резюме и хронология случая",
+              "Согласованная запись или коммуникация",
+              "Следующие практические шаги"
+            ]
+          },
+          {
+            "name": "Годовое сопровождение",
+            "fit": "Для длительной координационной поддержки.",
+            "items": [
+              "Обновление файла случая",
+              "Согласованные повторные обсуждения",
+              "Связь с семьей на разных этапах"
+            ]
+          }
         ],
-        modulesTitle: "Специальные модули поддержки",
-        modules: [
-          { title: "Lymphoma MDT Coordination", text: "Подготовка материалов для обсуждения лимфомы и сложных случаев со специалистами Гуандуна и Гуанчжоу." },
-          { title: "Immune Recovery Support", text: "Организация данных иммунного статуса, врачебное сопровождение, питание, образ жизни и квартальный обзор для стабильной или восстановительной фазы." },
-          { title: "Surgical Pathway Coordination", text: "Поддержка коммуникации, когда повторная оценка позволяет обсуждать хирургический маршрут." },
+        "modulesTitle": "Специальные модули поддержки",
+        "modules": [
+          {
+            "title": "Координация MDT при лимфоме",
+            "text": "Подготовка материалов для обсуждения лимфомы и сложных случаев со специалистами Гуандуна и Гуанчжоу."
+          },
+          {
+            "title": "Поддержка восстановления и наблюдения",
+            "text": "Подготовка записи, этапов госпитализации и напоминаний о следующем обсуждении."
+          },
+          {
+            "title": "Координация хирургического маршрута",
+            "text": "Поддержка коммуникации, когда повторная оценка позволяет обсуждать хирургический маршрут."
+          }
         ],
-        modulesNote: "Модули являются координационной и консультационной поддержкой, а не медицинскими пакетами или обещанием лечения.",
-        note: "Сборы указаны на одного пациента и не передаются другим лицам. Бесплатная первичная консультация обычно ограничена одним разом для пациента. Услуги не являются страховкой, медицинским пакетом или предоплаченным лечением; принятие случая, диагноз, право на лечение, операция, стоимость и результат определяются больницами и врачами. Окончательный объем услуг должен быть подтвержден письменным соглашением до оплаты.",
+        "modulesNote": "Модули являются координационной и консультационной поддержкой, а не медицинскими пакетами или обещанием лечения.",
+        "note": "Координация и медицинские расходы оплачиваются отдельно. Стоимость больницы, врачей, обследований, лечения, поездки, проживания и стороннего перевода подтверждается отдельно. Письменное предложение описывает услуги, сроки и условия отмены."
       },
       oncology: {
-        eyebrow: "Передовые онкологические маршруты",
-        title: "Изучение подходящих лечебных и исследовательских возможностей в Китае",
-        body: "Для подходящих пациентов мы помогаем подготовить документы и координировать коммуникацию по передовым онкологическим опциям. Решения принимают врачи и учреждения.",
-        cards: [
-          { title: "Иммуно- и таргетная терапия", text: "Подготовка истории лечения, биомаркеров, ответа на терапию и вопросов для специалиста." },
-          { title: "CLDN18.2-позитивный рак желудка и CAR-T", text: "CLDN18.2 является важным биомаркером при раке желудка и гастроэзофагеального перехода. По публичной информации компании, satri-cel/CT041 одобрен в Китае как первый CAR-T продукт для солидной опухоли: для взрослых пациентов с CLDN18.2-позитивной, HER2-негативной распространенной аденокарциномой желудка или гастроэзофагеального перехода после неудачи как минимум двух линий терапии. Мы помогаем организовать патологию, биомаркеры, визуализацию и историю лечения для общения с квалифицированной командой." },
-          { title: "Клеточная терапия", text: "Подготовка вопросов о маршрутах, критериях, безопасности, сроках и требованиях больницы." },
-          { title: "Клинические исследования", text: "Помогаем изучить потенциальные исследования, документы, критерии и коммуникацию с командами." },
-          { title: "Хирургия после переоценки", text: "Когда это уместно, координируем коммуникацию с хирургическими командами." },
-          { title: "Ясность для семьи", text: "Переводим сложные шаги в понятную временную линию, не заменяя советы врача." },
+        "eyebrow": "Передовые онкологические маршруты",
+        "title": "Изучение подходящих лечебных и исследовательских возможностей в Китае",
+        "body": "Для подходящих пациентов мы помогаем подготовить документы и координировать коммуникацию по передовым онкологическим опциям. Решения принимают врачи и учреждения.",
+        "cards": [
+          {
+            "title": "Иммуно- и таргетная терапия",
+            "text": "Подготовка истории лечения, биомаркеров, ответа на терапию и вопросов для специалиста."
+          },
+          {
+            "title": "CLDN18.2-позитивный рак желудка и CAR-T",
+            "text": "22 июня 2026 года CARsgen объявила об одобрении в Китае satricabtagene autoleucel (satri-cel/CT041), назвав его первым в мире одобренным CAR-T продуктом для солидных опухолей. Объявленное показание: CLDN18.2-положительная, HER2-отрицательная распространенная аденокарцинома желудка или гастроэзофагеального перехода после неудачи минимум двух линий лечения."
+          },
+          {
+            "title": "Клеточная терапия",
+            "text": "Подготовка вопросов о маршрутах, критериях, безопасности, сроках и требованиях больницы."
+          },
+          {
+            "title": "Клинические исследования",
+            "text": "Помогаем изучить потенциальные исследования, документы, критерии и коммуникацию с командами."
+          },
+          {
+            "title": "Хирургия после переоценки",
+            "text": "Когда это уместно, координируем коммуникацию с хирургическими командами."
+          },
+          {
+            "title": "Ясность для семьи",
+            "text": "Переводим сложные шаги в понятную временную линию, не заменяя советы врача."
+          }
         ],
-        note: "Мы не предоставляем CAR-T или другое лечение, не определяем право на терапию, не гарантируем доступ к одобренному лечению или клиническим исследованиям, включение в исследование или результаты.",
+        "note": "Мы не предоставляем CAR-T или другое лечение, не определяем право на терапию, не гарантируем доступ к одобренному лечению или клиническим исследованиям, включение в исследование или результаты."
       },
       mdt: {
-        eyebrow: "Онкологи Гуандуна",
-        title: "Доступ к ведущим онкологическим специалистам Гуандуна",
-        body: "Мы помогаем подобрать подходящие ресурсы по типу рака, стадии, истории лечения, текущему состоянию и клиническим задачам.",
-        cards: [
-          { title: "Сильная сторона лимфомы", text: "Наиболее сильный слой ресурсов связан с лимфомой и сложной гематоонкологией." },
-          { title: "Солидные опухоли", text: "Подготовка маршрута для медицинской онкологии, хирургии, лучевой терапии или комбинированного обсуждения." },
-          { title: "Second opinion и MDT", text: "Организация документов и вопросов для более фокусного обсуждения." },
-          { title: "Подходящий путь важнее имени", text: "Маршрут зависит от диагноза, стадии, прошлой терапии, состояния и реальной доступности." },
+        "eyebrow": "Онкологи Гуандуна",
+        "title": "Лимфомы и междисциплинарное обсуждение",
+        "body": "Мы помогаем подобрать подходящие ресурсы по типу рака, стадии, истории лечения, текущему состоянию и клиническим задачам.",
+        "cards": [
+          {
+            "title": "Сильная сторона лимфомы",
+            "text": "Наиболее сильный слой ресурсов связан с лимфомой и сложной гематоонкологией."
+          },
+          {
+            "title": "Солидные опухоли",
+            "text": "Подготовка маршрута для медицинской онкологии, хирургии, лучевой терапии или комбинированного обсуждения."
+          },
+          {
+            "title": "Second opinion и MDT",
+            "text": "Организация документов и вопросов для более фокусного обсуждения."
+          },
+          {
+            "title": "Подходящий путь важнее имени",
+            "text": "Маршрут зависит от диагноза, стадии, прошлой терапии, состояния и реальной доступности."
+          }
         ],
-        questionsTitle: "Вопросы, которые мы помогаем подготовить",
-        questions: ["Достаточно ли документов для экспертного разбора?", "Нужен ли MDT до поездки?", "Какая переоценка нужна перед обсуждением операции?", "Какие документы нужно перевести?", "Какую временную линию контроля подготовить?"],
-        note: "MDT-координация не гарантирует принятие конкретным врачом, больницей, лечением или операцией.",
+        "questionsTitle": "Вопросы, которые мы помогаем подготовить",
+        "questions": [
+          "Достаточно ли документов для экспертного разбора?",
+          "Нужен ли MDT до поездки?",
+          "Какая переоценка нужна перед обсуждением операции?",
+          "Какие документы нужно перевести?",
+          "Какую временную линию контроля подготовить?"
+        ],
+        "note": "MDT-координация не гарантирует принятие конкретным врачом, больницей, лечением или операцией."
       },
       experts: {
         eyebrow: "Клинический фон",
@@ -804,41 +1028,55 @@ export const content: Record<Locale, SiteContent> = {
         note: `${brand.name} operated by ${brand.legalName}. This website is not the official website of any hospital unless stated.`,
       },
       journey: {
-        eyebrow: "Маршрут пациента",
-        title: "Как работает процесс",
-        body: "Первый шаг — не обещать лечение, а понять случай, организовать документы и подготовить meaningful discussion со специалистом.",
-        steps: [
-          { title: "Передача документов", text: "Диагноз, страна, текущий статус, прошлое лечение и главный вопрос семьи." },
-          { title: "Первичная оценка", text: "Оцениваем реалистичность координации и недостающие данные." },
-          { title: "Подбор маршрута", text: "Онкология, MDT, исследование или хирургическая коммуникация по ситуации." },
-          { title: "Запись или консультация", text: "Подготовка записи, документов, вопросов и коммуникации." },
-          { title: "Подготовка поездки", text: "Сроки, госпитализация, оплата, проживание и бытовые потребности." },
-          { title: "Внутрибольничная координация", text: "Поддержка медицинской коммуникации и практических шагов." },
-          { title: "Follow-up", text: "Вопросы после выписки, сроки контроля и связь с семьей." },
+        "eyebrow": "Маршрут пациента",
+        "title": "Как работает процесс",
+        "body": "Начать можно из дома. Объем координации согласуется до платной работы и организации поездки.",
+        "steps": [
+          {
+            "title": "Расскажите о потребностях",
+            "text": "Укажите страну, предпочтительный язык и обращаетесь ли вы как пациент или родственник."
+          },
+          {
+            "title": "Первичная оценка",
+            "text": "Оцениваем реалистичность координации и недостающие данные."
+          },
+          {
+            "title": "Подбор маршрута",
+            "text": "Онкология, MDT, исследование или хирургическая коммуникация по ситуации."
+          },
+          {
+            "title": "Запись или консультация",
+            "text": "Подготовка записи, документов, вопросов и коммуникации."
+          },
+          {
+            "title": "Подготовка поездки",
+            "text": "Сроки, госпитализация, оплата, проживание и бытовые потребности."
+          },
+          {
+            "title": "Внутрибольничная координация",
+            "text": "Поддержка медицинской коммуникации и практических шагов."
+          },
+          {
+            "title": "Follow-up",
+            "text": "Вопросы после выписки, сроки контроля и связь с семьей."
+          }
         ],
-        documentsTitle: "Документы",
-        documents: ["Диагноз и резюме", "Патология", "Визуализация и анализы", "Генетика/молекулярные тесты", "История лечения и лекарства", "Текущие симптомы и инфекции"],
+        "documentsTitle": "Документы",
+        "documents": [
+          "Диагноз и резюме",
+          "Патология",
+          "Визуализация и анализы",
+          "Генетика/молекулярные тесты",
+          "История лечения и лекарства",
+          "Текущие симптомы и инфекции"
+        ]
       },
       register: {
-        eyebrow: "Регистрация пациента",
-        title: "Регистрация интереса и подготовка медицинских документов",
-        body: "Начните здесь, если пациент хочет понять, подходит ли членство или координационная услуга H&C Care. Не отправляйте экстренные запросы или срочные клинические инструкции через сайт.",
-        portalTitle: "Вход для создания файла пациента",
-        portalText:
-          "Первый онлайн-шаг - регистрация интереса и создание структурированного файла случая. Перед передачей чувствительных медицинских документов мы подтверждаем объем услуги, согласие и самый безопасный канал отправки.",
-        portalCards: [
-          { title: "Создать файл пациента", text: "Мы собираем только минимальную базовую информацию о пациенте, языке, типе рака и потребности в координации." },
-          { title: "Подтвердить согласие и объем услуги", text: "Платная координация начинается только после понимания границ услуги и подтверждения письменного соглашения пациентом или уполномоченной семьей." },
-          { title: "Подготовить безопасную отправку", text: "Медицинские документы отправляются только через подтвержденный канал. Полный портал загрузки требует аутентификации, шифрованного хранения и журналов доступа." },
-        ],
-        stepsTitle: "Как отправляются материалы",
-        steps: [
-          { title: "Зарегистрировать интерес", text: "Укажите основную ситуацию пациента, страну или регион, предпочтительный язык, тип рака и интересующий уровень услуги." },
-          { title: "Подготовить пакет документов", text: "Используйте список ниже. Предпочтительны четкие PDF, ссылки на изображения и резюме с датами." },
-          { title: "Отправить через подтвержденный канал", text: "После первичного контакта мы подтвердим подходящий email или WhatsApp и необходимость письменного соглашения перед платной координацией." },
-        ],
-        documentsTitle: "Список медицинских документов",
-        documents: [
+        "eyebrow": "Обращение пациента",
+        "title": "Начните обращение по координации",
+        "body": "Для начала достаточно нескольких основных сведений. Не нужно ждать всех отчетов или заранее выбирать услугу.",
+        "documentsTitle": "Список медицинских документов",
+        "documents": [
           "Отчеты биопсии",
           "Отчеты PET/CT",
           "Любые патологоанатомические или IHC отчеты",
@@ -849,34 +1087,28 @@ export const content: Record<Locale, SiteContent> = {
           "Краткое описание текущих симптомов, активности, аппетита, изменения веса, температуры, боли и общего состояния",
           "Недавние CT, MRI, ultrasound, endoscopy или другие отчеты визуализации, а также DICOM-файлы или ссылки, если доступны",
           "Выписки, диагностические письма, операционные записи, эндоскопические отчеты или процедурные записи, если доступны",
-          "Важный анамнез: сердце, почки, печень, инфекции, аутоиммунные болезни, гепатит, туберкулез или другие значимые заболевания",
-          "Паспорт или удостоверение пациента, данные контактного лица и разрешение, если семья общается от имени пациента",
-        ],
-        fieldsTitle: "Что указать в первом сообщении",
-        fields: ["Имя или инициалы пациента", "Возраст и пол", "Страна или регион", "Диагноз и стадия, если известны", "Текущий статус лечения", "Главный вопрос для координации", "Предпочтительный язык", "Интересующий уровень услуги"],
-        secureTitle: "Для будущего безопасного портала",
-        secureItems: [
-          "Логин пациента и доступ уполномоченной семьи",
-          "Шифрованное хранение документов и журналы контролируемого доступа",
-          "Статус загрузки, напоминания о недостающих документах и заметки case manager",
-          "Ясные правила согласия, хранения, удаления и экстренного использования",
-        ],
-        consentTitle: "Конфиденциальность и согласие",
-        consent: "Медицинские документы содержат чувствительные персональные данные. Отправляйте их только при согласии пациента или уполномоченного члена семьи на использование H&C Care для подготовки случая и координации.",
-        email: "Отправить материалы по email",
-        whatsapp: "Сначала уточнить в WhatsApp",
-        note: "Эта страница является руководством по регистрации и подготовке документов. Это не канал экстренной помощи, не медицинская консультация, не диагностика, не рекомендация лечения и не гарантия принятия больницей, врачом, лечением, операцией или клиническим исследованием.",
+          "Важный анамнез: сердце, почки, печень, инфекции, аутоиммунные болезни, гепатит, туберкулез или другие значимые заболевания"
+        ]
       },
       clinicalTeam: {
-        eyebrow: "Клиническое руководство",
-        title: "Медицинские специалисты, а не обычные travel agents",
-        body: "Онкологическая координация требует клинической грамотности, организации случая и понимания больничных процессов.",
-        cards: [
-          { title: "Медицинская подготовка", text: "Ключевой координатор имеет Master's degree in Nursing from the UK, New York State RN license, Chinese nursing license и звание Associate Chief Nurse in China." },
-          { title: "Опыт больничной работы", text: "Опыт включает онкологию, emergency care и operating room settings." },
-          { title: "Медицинская коммуникация", text: "Мы помогаем структурировать документы, вопросы и инструкции больницы." },
+        "eyebrow": "Кто помогает вам",
+        "title": "Понимание клиники и личная поддержка",
+        "body": "Координаторы используют медицинский опыт при подготовке документов и общении с больницами. Профили ниже описывают специалистов, связанных с онкологическими маршрутами Гуанчжоу. Возможность приема подтверждается для каждого случая.",
+        "cards": [
+          {
+            "title": "Медицинская подготовка",
+            "text": "Ключевой координатор имеет Master's degree in Nursing from the UK, New York State RN license, Chinese nursing license и звание Associate Chief Nurse in China."
+          },
+          {
+            "title": "Опыт больничной работы",
+            "text": "Опыт включает онкологию, emergency care и operating room settings."
+          },
+          {
+            "title": "Медицинская коммуникация",
+            "text": "Мы помогаем структурировать документы, вопросы и инструкции больницы."
+          }
         ],
-        note: "Эти данные поддерживают координацию, но не означают диагностику, лечение, nursing services или медицинскую практику H&C Care в Гонконге.",
+        "note": "Эти данные поддерживают координацию, но не означают диагностику, лечение, nursing services или медицинскую практику H&C Care в Гонконге."
       },
       ethics: {
         eyebrow: "Доверие и комплаенс",
@@ -892,12 +1124,12 @@ export const content: Record<Locale, SiteContent> = {
         note: "Объем услуг, сборы, privacy и ответственность должны быть подтверждены письменным договором до оплаты.",
       },
       contact: {
-        eyebrow: "Контакт",
-        title: "Запросить консультацию по членству",
-        body: `Свяжитесь с ${contact.name} по WhatsApp или email. Укажите диагноз, регион, текущее состояние и главный вопрос.`,
-        email: "Email H&C Care",
-        whatsapp: "WhatsApp H&C Care",
-        privacy: "Медицинская информация используется для понимания случая и координации; она может передаваться релевантным медицинским командам за пределами Гонконга.",
+        "eyebrow": "Следующий шаг",
+        "title": "Начнем с разговора",
+        "body": "Расскажите, где вы находитесь и какая поддержка нужна семье. До отправки полного медицинского файла мы уточним документы и канал связи.",
+        "email": "Написать по email",
+        "whatsapp": "WhatsApp",
+        "privacy": "Медицинская информация используется для понимания случая и координации; она может передаваться релевантным медицинским командам за пределами Гонконга."
       },
       privacy: {
         eyebrow: "Конфиденциальность",
@@ -927,39 +1159,70 @@ export const content: Record<Locale, SiteContent> = {
         title: "Медицинское уведомление",
         body: `${brand.name} предоставляет информацию и координацию, но не заменяет врачебную диагностику или лечение. Результаты и стоимость не гарантируются.`,
       },
+
+      "car-t": {
+        "eyebrow": "Информация для пациентов · Рак желудка",
+        "title": "CLDN18.2 CAR-T: подготовка к обсуждению",
+        "body": "Какие документы могут помочь при обсуждении satri-cel (CT041) с квалифицированной онкологической командой Китая.",
+        "cards": [
+          {
+            "title": "Что такое CLDN18.2?",
+            "text": "CLDN18.2 — биомаркер, исследуемый в ткани опухоли. Врач оценивает патологию, метод тестирования и результаты вместе с диагнозом и историей лечения."
+          },
+          {
+            "title": "Какое одобрение объявлено?",
+            "text": "22 июня 2026 года CARsgen объявила об одобрении в Китае satricabtagene autoleucel (satri-cel/CT041), назвав его первым в мире одобренным CAR-T продуктом для солидных опухолей. Объявленное показание: CLDN18.2-положительная, HER2-отрицательная распространенная аденокарцинома желудка или гастроэзофагеального перехода после неудачи минимум двух линий лечения."
+          },
+          {
+            "title": "Что подготовить?",
+            "text": "Патологию и IHC, результаты CLDN18.2 и HER2, недавние снимки, хронологию лечения, анализы крови, лекарства и описание текущего состояния. Дополнительные обследования определяет принимающая команда."
+          }
+        ],
+        "note": "Это общая информация, а не оценка пригодности лечения. H&C Care координирует документы и связь. Врачи подтверждают действующую инструкцию, критерии, риски, доступность и стоимость для пациента. Доступ и результат не гарантируются."
+      },
     },
   },
 
   ar: {
     nav: {
-      home: "الرئيسية",
-      membership: "العضوية",
-      oncology: "تنسيق الأورام",
-      mdt: "موارد MDT",
-      experts: "الخبراء",
-      hospitals: "المستشفيات",
-      journey: "المسار",
-      register: "التسجيل",
-      contact: "تواصل",
-      privacy: "الخصوصية",
-      terms: "حدود الخدمة",
+      "home": "الرئيسية",
+      "membership": "الخدمات",
+      "oncology": "تنسيق الأورام",
+      "mdt": "موارد MDT",
+      "experts": "الخبراء",
+      "hospitals": "المستشفيات",
+      "journey": "المسار",
+      "register": "ابدأ استفسارك",
+      "contact": "تواصل",
+      "privacy": "الخصوصية",
+      "terms": "حدود الخدمة",
+      "car-t": "CLDN18.2 CAR-T"
     },
     seo: {
       title: `${brand.name} | تنسيق رعاية الأورام في الصين`,
       description: "نساعد مرضى السرطان الدوليين على تجهيز السجلات، والتواصل مع متخصصي الأورام المناسبين، واستكشاف المسارات العلاجية، والتنقل داخل المستشفيات في الصين.",
     },
     hero: {
-      eyebrow: "تنسيق طبي متخصص في الأورام داخل الصين",
-      title: "نساعد مرضى السرطان الدوليين",
-      highlight: "على الوصول إلى مسارات أورام موثوقة في الصين",
-      body: `تساعد ${brand.name} المرضى على تجهيز السجلات الطبية، والتواصل مع متخصصي أورام ذوي خبرة، واستكشاف مسارات علاجية متقدمة، والتنقل داخل رعاية المستشفى في الصين.`,
-      primary: "إرسال السجلات للمراجعة",
-      secondary: "عرض مسار المريض",
-      trust: [
-        { title: "تركيز على الأورام", text: "لسنا وكالة سفر طبية عامة. خط خدمتنا العام يركز على مسارات السرطان." },
-        { title: "موارد غوانغدونغ", text: "نساعد في مطابقة الحالة مع موارد الأورام أو اللمفوما أو MDT أو الجراحة في غوانغدونغ وقوانغتشو." },
-        { title: "حدود واضحة", text: "نساعد على الفهم والتحضير والتنسيق والتواصل، ولا نشخص أو نعالج المرضى." },
-      ],
+      "eyebrow": "H&C Care · دعم المرضى الدوليين",
+      "title": "تنسيق رعاية الأورام في الصين",
+      "highlight": "",
+      "body": "دعم يشارك فيه مهنيون ذوو خبرة سريرية للمرضى الدوليين، مع التركيز على اللمفوما والأورام الصلبة في قوانغتشو. نساعد في إعداد السجلات والتواصل مع المختصين والتخطيط للخطوة التالية.",
+      "primary": "ابدأ استفسارك",
+      "secondary": "WhatsApp",
+      "trust": [
+        {
+          "title": "تركيز على الأورام",
+          "text": ""
+        },
+        {
+          "title": "خبرة سريرية",
+          "text": ""
+        },
+        {
+          "title": "قوانغتشو، الصين",
+          "text": ""
+        }
+      ]
     },
     sections: {
       pain: {
@@ -990,50 +1253,119 @@ export const content: Record<Locale, SiteContent> = {
         ],
       },
       membership: {
-        eyebrow: "رسوم خدمات المرضى",
-        title: "ثلاثة مستويات من خدمات التنسيق لمرضى الأورام الدوليين",
-        body: "الرسوم أدناه هي رسوم تنسيق H&C Care فقط. رسوم المستشفى والأطباء والفحوصات والأدوية والعلاج والجراحة والسفر والإقامة والتأمين والمركبات وأي تكاليف طرف ثالث منفصلة.",
-        plans: [
-          { name: "استشارة المسار الأساسية", price: "مجانا", fit: "للمرضى الذين يستكشفون لأول مرة إمكانية رعاية الأورام في الصين.", items: ["فرز أولي للاحتياجات", "شرح عام لمسار الأورام في الصين", "قائمة السجلات الطبية والتحضير للسفر", "شرح واحد عبر الإنترنت أو استشارة نصية أساسية"] },
-          { name: "تنسيق دورة واحدة", price: "USD 300 / مريض / دورة خدمة", fit: "لدورة واحدة من تحضير السجلات أو تواصل متخصص أو استشارة أو تنسيق دخول المستشفى.", items: ["جمع السجلات وجدول الحالة", "تحضير التواصل مع المتخصص أو المستشفى", "تنسيق الموعد أو الاستشارة عن بعد أو طلب الدخول", "قائمة ما قبل السفر ومتابعة واحدة بعد الخروج"] },
-          { name: "تنسيق سنوي للمريض", price: "USD 980 / مريض / 12 شهرا", fit: "للمرضى الذين قد يحتاجون زيارات علاجية متكررة إلى الصين وإدارة مستمرة للحالة خلال عام.", items: ["صيانة ملف الحالة الإلكتروني السنوي", "تذكيرات المتابعة وتحديث الوثائق", "حتى 4 دورات تنسيق دخول المستشفى سنويا", "حتى جولتين من إعادة تقييم المتخصص أو المسار"] },
+        "eyebrow": "الخدمات والدعم",
+        "title": "دعم يناسب حالتك",
+        "body": "استفسار أولي أو مهمة تنسيق محددة أو دعم سنوي. نؤكد النطاق وعرض السعر كتابيا قبل بدء الخدمات المدفوعة.",
+        "plans": [
+          {
+            "name": "استفسار أولي عن المسار",
+            "fit": "للعائلات التي تستكشف الرعاية في الصين.",
+            "items": [
+              "مناقشة احتياجات التنسيق",
+              "فهم خطوات التحضير",
+              "قائمة السجلات المطلوبة"
+            ]
+          },
+          {
+            "name": "تنسيق محدد",
+            "fit": "لمهمة واضحة مع مختص أو مستشفى.",
+            "items": [
+              "إعداد ملخص الحالة وتاريخ العلاج",
+              "تنسيق المواعيد أو التواصل المتفق عليه",
+              "توضيح الخطوات العملية التالية"
+            ]
+          },
+          {
+            "name": "دعم الحالة السنوي",
+            "fit": "للمرضى الذين يحتاجون تنسيقا مستمرا.",
+            "items": [
+              "تحديث ملف الحالة",
+              "تنسيق المراجعات والمتابعة المتفق عليها",
+              "التواصل مع العائلة عبر المراحل"
+            ]
+          }
         ],
-        modulesTitle: "وحدات دعم خاصة",
-        modules: [
-          { title: "Lymphoma MDT Coordination", text: "تحضير مواد النقاش لحالات اللمفوما والحالات المعقدة مع متخصصي غوانغدونغ وقوانغتشو." },
-          { title: "Immune Recovery Support", text: "تنظيم بيانات الحالة المناعية، متابعة استشارية طبية، تنسيق التغذية ونمط الحياة، ومراجعة ربع سنوية للمرحلة المستقرة أو التعافي." },
-          { title: "Surgical Pathway Coordination", text: "دعم التواصل عندما تشير إعادة التقييم إلى إمكانية مناقشة المسار الجراحي." },
+        "modulesTitle": "وحدات دعم خاصة",
+        "modules": [
+          {
+            "title": "تنسيق MDT لللمفوما",
+            "text": "تحضير مواد النقاش لحالات اللمفوما والحالات المعقدة مع متخصصي غوانغدونغ وقوانغتشو."
+          },
+          {
+            "title": "دعم التعافي والمتابعة",
+            "text": "التحضير للمواعيد وخطوات المستشفى والتذكير بالمراجعة التالية."
+          },
+          {
+            "title": "تنسيق المسار الجراحي",
+            "text": "دعم التواصل عندما تشير إعادة التقييم إلى إمكانية مناقشة المسار الجراحي."
+          }
         ],
-        modulesNote: "هذه الوحدات هي دعم تنسيقي واستشاري وليست حزمة طبية أو وعدا بالعلاج.",
-        note: "تحتسب الرسوم لكل مريض ولا يمكن نقلها إلى شخص آخر. الاستشارة الأساسية المجانية عادة مرة واحدة لكل مريض. هذه الخدمات ليست تأمينا أو حزمة طبية أو خطة علاج مسبقة الدفع؛ القبول والتشخيص وأهلية العلاج والجراحة والتكلفة والنتائج تحددها المستشفيات والأطباء. يجب تأكيد نطاق الخدمة النهائي في اتفاق مكتوب قبل الدفع.",
+        "modulesNote": "هذه الوحدات هي دعم تنسيقي واستشاري وليست حزمة طبية أو وعدا بالعلاج.",
+        "note": "رسوم التنسيق منفصلة عن النفقات الطبية. تؤكد تكاليف المستشفى والأطباء والفحوص والعلاج والسفر والإقامة والترجمة الخارجية بشكل منفصل. يوضح المقترح المكتوب الخدمات والتوقيت وترتيبات الإلغاء."
       },
       oncology: {
-        eyebrow: "مسارات أورام متقدمة",
-        title: "استكشاف مسارات علاج وبحث مناسبة في الصين",
-        body: "للمرضى المؤهلين، نساعد في تحضير السجلات وتنسيق التواصل حول خيارات أورام متقدمة. الأهلية والقرار الطبي للطبيب والمؤسسة.",
-        cards: [
-          { title: "العلاج المناعي والموجه", text: "تحضير تاريخ العلاج والواسمات الحيوية والاستجابة والأسئلة للنقاش." },
-          { title: "سرطان المعدة CLDN18.2-positive ومسار CAR-T", text: "CLDN18.2 واسم حيوي مهم في سرطان المعدة وسرطان موصل المعدة والمريء. تفيد معلومات الشركة العامة بأن satri-cel/CT041 تمت الموافقة عليه في الصين كأول منتج CAR-T لمؤشر ورم صلب، للبالغين المصابين بسرطان معدة أو موصل معدة ومريء متقدم CLDN18.2-positive وHER2-negative بعد فشل خطين علاجيين سابقين على الأقل. نساعد في تنظيم تقارير الباثولوجيا والواسمات الحيوية والتصوير وتاريخ العلاج للتواصل مع فريق مؤهل." },
-          { title: "نقاش العلاج الخلوي", text: "تحضير أسئلة حول المسارات والأهلية والسلامة والتوقيت ومتطلبات المستشفى." },
-          { title: "استكشاف التجارب السريرية", text: "مساعدة في فهم فرص البحث المحتملة والوثائق وشروط الأهلية والتواصل." },
-          { title: "تنسيق الجراحة بعد إعادة التقييم", text: "عندما يكون ذلك مناسبا، ننسق التواصل مع فرق الجراحة." },
-          { title: "وضوح للعائلة", text: "تحويل الخطوات المعقدة إلى جدول عملي دون استبدال نصيحة الطبيب." },
+        "eyebrow": "مسارات أورام متقدمة",
+        "title": "استكشاف مسارات علاج وبحث مناسبة في الصين",
+        "body": "للمرضى المؤهلين، نساعد في تحضير السجلات وتنسيق التواصل حول خيارات أورام متقدمة. الأهلية والقرار الطبي للطبيب والمؤسسة.",
+        "cards": [
+          {
+            "title": "العلاج المناعي والموجه",
+            "text": "تحضير تاريخ العلاج والواسمات الحيوية والاستجابة والأسئلة للنقاش."
+          },
+          {
+            "title": "سرطان المعدة CLDN18.2-positive ومسار CAR-T",
+            "text": "في 22 يونيو 2026 أعلنت CARsgen الموافقة في الصين على satricabtagene autoleucel (satri-cel/CT041)، ووصفته بأول منتج CAR-T معتمد عالميا للأورام الصلبة. الاستطباب المعلن هو السرطان الغدي المتقدم للمعدة أو الوصلة المعدية المريئية، الإيجابي لـ CLDN18.2 والسلبي لـ HER2، بعد فشل خطين علاجيين سابقين على الأقل."
+          },
+          {
+            "title": "نقاش العلاج الخلوي",
+            "text": "تحضير أسئلة حول المسارات والأهلية والسلامة والتوقيت ومتطلبات المستشفى."
+          },
+          {
+            "title": "استكشاف التجارب السريرية",
+            "text": "مساعدة في فهم فرص البحث المحتملة والوثائق وشروط الأهلية والتواصل."
+          },
+          {
+            "title": "تنسيق الجراحة بعد إعادة التقييم",
+            "text": "عندما يكون ذلك مناسبا، ننسق التواصل مع فرق الجراحة."
+          },
+          {
+            "title": "وضوح للعائلة",
+            "text": "تحويل الخطوات المعقدة إلى جدول عملي دون استبدال نصيحة الطبيب."
+          }
         ],
-        note: "لا نقدم CAR-T أو أي علاج آخر، ولا نحدد الأهلية، ولا نضمن الوصول إلى علاج معتمد أو مسارات بحث سريري، ولا نضمن دخول تجربة سريرية أو أي نتيجة علاجية.",
+        "note": "لا نقدم CAR-T أو أي علاج آخر، ولا نحدد الأهلية، ولا نضمن الوصول إلى علاج معتمد أو مسارات بحث سريري، ولا نضمن دخول تجربة سريرية أو أي نتيجة علاجية."
       },
       mdt: {
-        eyebrow: "متخصصو أورام غوانغدونغ",
-        title: "الوصول إلى متخصصي أورام بارزين في غوانغدونغ",
-        body: "نساعد في مطابقة كل مريض مع موارد مناسبة حسب نوع السرطان والمرحلة وتاريخ العلاج والحالة الحالية والحاجة السريرية.",
-        cards: [
-          { title: "قوة اللمفوما MDT", text: "أقوى مواردنا في اللمفوما وأورام الدم المعقدة في غوانغدونغ وقوانغتشو." },
-          { title: "مطابقة الأورام الصلبة", text: "تحضير الحالة لمسارات الأورام الطبية أو الجراحة أو الأشعة أو العلاج المتكامل." },
-          { title: "رأي ثان وMDT", text: "تنظيم الوثائق والأسئلة كي يكون النقاش أكثر تركيزا." },
-          { title: "المناسب أهم من الشهرة", text: "المسار يعتمد على التشخيص والمرحلة والعلاج السابق وحالة المريض والتوفر الواقعي." },
+        "eyebrow": "متخصصو أورام غوانغدونغ",
+        "title": "اللمفوما والمناقشة متعددة التخصصات",
+        "body": "نساعد في مطابقة كل مريض مع موارد مناسبة حسب نوع السرطان والمرحلة وتاريخ العلاج والحالة الحالية والحاجة السريرية.",
+        "cards": [
+          {
+            "title": "قوة اللمفوما MDT",
+            "text": "أقوى مواردنا في اللمفوما وأورام الدم المعقدة في غوانغدونغ وقوانغتشو."
+          },
+          {
+            "title": "مطابقة الأورام الصلبة",
+            "text": "تحضير الحالة لمسارات الأورام الطبية أو الجراحة أو الأشعة أو العلاج المتكامل."
+          },
+          {
+            "title": "رأي ثان وMDT",
+            "text": "تنظيم الوثائق والأسئلة كي يكون النقاش أكثر تركيزا."
+          },
+          {
+            "title": "المناسب أهم من الشهرة",
+            "text": "المسار يعتمد على التشخيص والمرحلة والعلاج السابق وحالة المريض والتوفر الواقعي."
+          }
         ],
-        questionsTitle: "أسئلة نساعد في تحضيرها",
-        questions: ["هل السجلات كافية للمراجعة؟", "هل تحتاج اللمفوما المتكررة إلى MDT قبل السفر؟", "ما إعادة التقييم المطلوبة قبل الجراحة؟", "ما الوثائق التي تحتاج ترجمة؟", "ما جدول المتابعة المناسب؟"],
-        note: "تنسيق MDT لا يضمن قبول طبيب أو مستشفى أو علاج أو عملية محددة.",
+        "questionsTitle": "أسئلة نساعد في تحضيرها",
+        "questions": [
+          "هل السجلات كافية للمراجعة؟",
+          "هل تحتاج اللمفوما المتكررة إلى MDT قبل السفر؟",
+          "ما إعادة التقييم المطلوبة قبل الجراحة؟",
+          "ما الوثائق التي تحتاج ترجمة؟",
+          "ما جدول المتابعة المناسب؟"
+        ],
+        "note": "تنسيق MDT لا يضمن قبول طبيب أو مستشفى أو علاج أو عملية محددة."
       },
       experts: {
         eyebrow: "خلفية سريرية",
@@ -1058,41 +1390,55 @@ export const content: Record<Locale, SiteContent> = {
         note: `${brand.name} operated by ${brand.legalName}. This website is not the official website of any hospital unless stated.`,
       },
       journey: {
-        eyebrow: "مسار المريض",
-        title: "كيف يعمل المسار",
-        body: "الخطوة الأولى ليست وعدا بالعلاج، بل فهم الحالة وتنظيم السجلات وتحديد المعلومات اللازمة لنقاش مفيد.",
-        steps: [
-          { title: "إرسال السجلات", text: "التشخيص والبلد والحالة الحالية والعلاج السابق والسؤال الرئيسي." },
-          { title: "تقييم تنسيقي أولي", text: "تقييم إمكانية التنسيق وما ينقص من معلومات." },
-          { title: "مطابقة المسار", text: "مسار أورام أو MDT أو بحث أو جراحة حسب الحالة." },
-          { title: "ترتيب موعد أو استشارة", text: "تحضير الوثائق والأسئلة والتواصل." },
-          { title: "تحضير السفر والمستشفى", text: "التوقيت والدخول والدفع والسكن والاحتياجات اليومية." },
-          { title: "تنسيق داخل المستشفى", text: "دعم التواصل الطبي والخطوات العملية عند الحاجة." },
-          { title: "دعم المتابعة", text: "أسئلة ما بعد الخروج وتوقيت المراجعة والتواصل العائلي." },
+        "eyebrow": "مسار المريض",
+        "title": "كيف يعمل المسار",
+        "body": "يمكنك البدء من بلدك. نؤكد نطاق التنسيق قبل الخدمات المدفوعة أو ترتيبات السفر.",
+        "steps": [
+          {
+            "title": "أخبرنا باحتياجك",
+            "text": "اذكر البلد واللغة المفضلة وما إذا كنت المريض أو أحد أفراد العائلة."
+          },
+          {
+            "title": "تقييم تنسيقي أولي",
+            "text": "تقييم إمكانية التنسيق وما ينقص من معلومات."
+          },
+          {
+            "title": "مطابقة المسار",
+            "text": "مسار أورام أو MDT أو بحث أو جراحة حسب الحالة."
+          },
+          {
+            "title": "ترتيب موعد أو استشارة",
+            "text": "تحضير الوثائق والأسئلة والتواصل."
+          },
+          {
+            "title": "تحضير السفر والمستشفى",
+            "text": "التوقيت والدخول والدفع والسكن والاحتياجات اليومية."
+          },
+          {
+            "title": "تنسيق داخل المستشفى",
+            "text": "دعم التواصل الطبي والخطوات العملية عند الحاجة."
+          },
+          {
+            "title": "دعم المتابعة",
+            "text": "أسئلة ما بعد الخروج وتوقيت المراجعة والتواصل العائلي."
+          }
         ],
-        documentsTitle: "وثائق للتحضير",
-        documents: ["ملخص التشخيص", "تقرير الباثولوجيا", "تقارير التصوير والفحوصات", "اختبارات جينية أو جزيئية", "تاريخ العلاج والأدوية", "الأعراض الحالية وحالات العدوى"],
+        "documentsTitle": "وثائق للتحضير",
+        "documents": [
+          "ملخص التشخيص",
+          "تقرير الباثولوجيا",
+          "تقارير التصوير والفحوصات",
+          "اختبارات جينية أو جزيئية",
+          "تاريخ العلاج والأدوية",
+          "الأعراض الحالية وحالات العدوى"
+        ]
       },
       register: {
-        eyebrow: "تسجيل العضوية",
-        title: "تسجيل الاهتمام وتحضير السجلات الطبية لمراجعة الحالة",
-        body: "ابدأ هنا إذا كان المريض يريد من H&C Care مراجعة ما إذا كانت العضوية أو خدمة التنسيق مناسبة. لا ترسل طلبات طارئة أو تعليمات سريرية عاجلة عبر هذا الموقع.",
-        portalTitle: "مدخل ملف عضو المريض",
-        portalText:
-          "الخطوة الأولى عبر الإنترنت هي تسجيل الاهتمام وإنشاء ملف حالة منظم. قبل نقل السجلات الطبية الحساسة، نؤكد نطاق الخدمة والموافقة وأأمن قناة إرسال للمريض أو فرد العائلة المخول.",
-        portalCards: [
-          { title: "إنشاء ملف عضو", text: "نجمع فقط الحد الأدنى من المعلومات الأساسية لفهم المريض واللغة ونوع السرطان واحتياج التنسيق." },
-          { title: "تأكيد الموافقة ونطاق الخدمة", text: "لا يبدأ التنسيق المدفوع إلا بعد أن يفهم المريض أو العائلة المخولة حدود الخدمة ويؤكد الترتيب المكتوب." },
-          { title: "تحضير إرسال آمن للسجلات", text: "ترسل الوثائق الطبية فقط عبر قناة مؤكدة. بوابة رفع كاملة بالحسابات تحتاج إلى تحقق هوية وتخزين مشفر وسجلات وصول." },
-        ],
-        stepsTitle: "كيف يتم الإرسال",
-        steps: [
-          { title: "تسجيل الاهتمام", text: "أرسل الوضع الأساسي للمريض، البلد أو المنطقة، اللغة المفضلة، نوع السرطان، ومستوى الخدمة المطلوب." },
-          { title: "تحضير ملف السجلات", text: "استخدم القائمة أدناه لجمع التقارير. يفضل إرسال PDF واضح وروابط صور وملخصات مؤرخة." },
-          { title: "الإرسال عبر قناة مؤكدة", text: "بعد التواصل الأولي، سنؤكد البريد أو WhatsApp المناسب وما إذا كان يلزم اتفاق خدمة مكتوب قبل بدء التنسيق المدفوع." },
-        ],
-        documentsTitle: "قائمة السجلات الطبية",
-        documents: [
+        "eyebrow": "استفسار المريض",
+        "title": "ابدأ استفسار تنسيق الرعاية",
+        "body": "تكفي معلومات أساسية قليلة للبدء. لا يلزم اكتمال التقارير أو اختيار الخدمة الآن.",
+        "documentsTitle": "قائمة السجلات الطبية",
+        "documents": [
           "تقارير الخزعة",
           "تقارير PET/CT",
           "أي تقارير باثولوجيا أو IHC",
@@ -1103,34 +1449,28 @@ export const content: Record<Locale, SiteContent> = {
           "وصف مختصر للأعراض الحالية، النشاط اليومي، الشهية، تغير الوزن، الحرارة، الألم، والحالة العامة",
           "تقارير CT أو MRI أو ultrasound أو endoscopy أو أي تصوير حديث، مع ملفات DICOM أو روابط مشاركة الصور إن وجدت",
           "ملخصات الخروج، خطابات التشخيص، ملاحظات الجراحة، تقارير المنظار أو سجلات الإجراءات إن وجدت",
-          "تاريخ مرضي مهم مثل القلب، الكلى، الكبد، العدوى، أمراض المناعة الذاتية، التهاب الكبد، السل أو أمراض رئيسية أخرى",
-          "صفحة جواز أو هوية المريض، بيانات الشخص المسؤول، وتفويض إذا كان أحد أفراد العائلة يتواصل نيابة عن المريض",
-        ],
-        fieldsTitle: "ما يجب تضمينه في الرسالة الأولى",
-        fields: ["اسم المريض أو الأحرف الأولى", "العمر والجنس", "البلد أو المنطقة", "التشخيص والمرحلة إن عرفت", "حالة العلاج الحالية", "السؤال الرئيسي للتنسيق", "اللغة المفضلة", "مستوى الخدمة المطلوب"],
-        secureTitle: "للبوابة الآمنة المستقبلية",
-        secureItems: [
-          "تسجيل دخول المريض ووصول العائلة المخولة",
-          "تخزين وثائق مشفر وسجلات وصول مضبوطة",
-          "حالة الرفع، تذكيرات الوثائق الناقصة، وملاحظات مدير الحالة",
-          "حدود واضحة للموافقة والحفظ والحذف والاستخدام في الطوارئ",
-        ],
-        consentTitle: "الخصوصية والموافقة",
-        consent: "السجلات الطبية تحتوي على بيانات شخصية حساسة. يرجى إرسالها فقط إذا وافق المريض أو فرد العائلة المخول على استخدامها من H&C Care لتحضير الحالة والتنسيق.",
-        email: "إرسال مواد التسجيل بالبريد",
-        whatsapp: "اسأل عبر WhatsApp قبل إرسال الملفات",
-        note: "هذه الصفحة دليل تسجيل وتحضير مواد فقط. ليست قناة طوارئ أو منصة استشارة طبية أو خدمة تشخيص أو توصية علاجية، ولا تضمن قبول أي مستشفى أو طبيب أو علاج أو جراحة أو مسار بحث سريري للحالة.",
+          "تاريخ مرضي مهم مثل القلب، الكلى، الكبد، العدوى، أمراض المناعة الذاتية، التهاب الكبد، السل أو أمراض رئيسية أخرى"
+        ]
       },
       clinicalTeam: {
-        eyebrow: "تنسيق بقيادة طبية",
-        title: "يقوده متخصصون صحيون، لا وكلاء سفر عامون",
-        body: "تنسيق الأورام يحتاج فهما طبيا وتنظيما للحالة ومعرفة بسير المستشفى.",
-        cards: [
-          { title: "خلفية صحية", text: "عضو تنسيق أساسي يحمل UK Master's degree in Nursing وNew York State RN license ورخصة تمريض صينية ولقب Associate Chief Nurse in China." },
-          { title: "خبرة سريرية", text: "تشمل الخبرة الأورام والطوارئ وغرفة العمليات، مما يدعم تحضيرا وتواصلا أكثر أمانا." },
-          { title: "تنسيق بلغة طبية", text: "نساعد في تنظيم السجلات والأسئلة وتعليمات المستشفى في مسار واضح." },
+        "eyebrow": "الفريق الذي يدعم رحلتك",
+        "title": "فهم سريري وتنسيق شخصي",
+        "body": "يستفيد المنسقون من خبرتهم الصحية في إعداد السجلات والتواصل مع المستشفيات. تعرض الملفات التالية خبرات ذات صلة بمسارات الأورام في قوانغتشو. يؤكد توفر المختص لكل حالة.",
+        "cards": [
+          {
+            "title": "خلفية صحية",
+            "text": "عضو تنسيق أساسي يحمل UK Master's degree in Nursing وNew York State RN license ورخصة تمريض صينية ولقب Associate Chief Nurse in China."
+          },
+          {
+            "title": "خبرة سريرية",
+            "text": "تشمل الخبرة الأورام والطوارئ وغرفة العمليات، مما يدعم تحضيرا وتواصلا أكثر أمانا."
+          },
+          {
+            "title": "تنسيق بلغة طبية",
+            "text": "نساعد في تنظيم السجلات والأسئلة وتعليمات المستشفى في مسار واضح."
+          }
         ],
-        note: "هذه الخلفية تدعم التنسيق والتواصل، ولا تعني أن H&C Care تقدم تشخيصا أو علاجا أو تمريضا أو ممارسة طبية في هونغ كونغ.",
+        "note": "هذه الخلفية تدعم التنسيق والتواصل، ولا تعني أن H&C Care تقدم تشخيصا أو علاجا أو تمريضا أو ممارسة طبية في هونغ كونغ."
       },
       ethics: {
         eyebrow: "الثقة والامتثال",
@@ -1146,12 +1486,12 @@ export const content: Record<Locale, SiteContent> = {
         note: "يجب تأكيد نطاق الخدمة والرسوم والخصوصية والمسؤوليات في اتفاق مكتوب قبل الدفع.",
       },
       contact: {
-        eyebrow: "تواصل",
-        title: "طلب استشارة عضوية",
-        body: `تواصل مع ${contact.name} عبر WhatsApp أو البريد. أرسل التشخيص والمنطقة والحالة الحالية والسؤال الرئيسي.`,
-        email: "Email H&C Care",
-        whatsapp: "WhatsApp H&C Care",
-        privacy: "تستخدم المعلومات الطبية لفهم الحالة والتنسيق، وقد تشارك مع فرق طبية مناسبة خارج هونغ كونغ.",
+        "eyebrow": "لخطوتك التالية",
+        "title": "لنبدأ بمحادثة",
+        "body": "أخبرنا بمكانك والدعم الذي تحتاجه عائلتك. نؤكد الوثائق وقناة التواصل قبل إرسال ملف طبي كامل.",
+        "email": "البريد الإلكتروني",
+        "whatsapp": "WhatsApp",
+        "privacy": "تستخدم المعلومات الطبية لفهم الحالة والتنسيق، وقد تشارك مع فرق طبية مناسبة خارج هونغ كونغ."
       },
       privacy: {
         eyebrow: "الخصوصية",
@@ -1181,39 +1521,70 @@ export const content: Record<Locale, SiteContent> = {
         title: "إخلاء مسؤولية طبية",
         body: `${brand.name} تقدم معلومات وتنسيقا ولا تحل محل تشخيص أو علاج الطبيب. النتائج والتكاليف غير مضمونة.`,
       },
+
+      "car-t": {
+        "eyebrow": "معلومات المرضى · سرطان المعدة",
+        "title": "CLDN18.2 CAR-T: التحضير لمناقشة المختص",
+        "body": "السجلات التي قد تساعد عند مناقشة satri-cel (CT041) مع فريق أورام مؤهل في الصين.",
+        "cards": [
+          {
+            "title": "ما هو CLDN18.2؟",
+            "text": "مؤشر حيوي يمكن فحصه في نسيج الورم. يراجع المختص الأنسجة وطريقة الفحص والنتائج مع التشخيص وتاريخ العلاج."
+          },
+          {
+            "title": "ما الموافقة المعلنة؟",
+            "text": "في 22 يونيو 2026 أعلنت CARsgen الموافقة في الصين على satricabtagene autoleucel (satri-cel/CT041)، ووصفته بأول منتج CAR-T معتمد عالميا للأورام الصلبة. الاستطباب المعلن هو السرطان الغدي المتقدم للمعدة أو الوصلة المعدية المريئية، الإيجابي لـ CLDN18.2 والسلبي لـ HER2، بعد فشل خطين علاجيين سابقين على الأقل."
+          },
+          {
+            "title": "ما الذي تحضره؟",
+            "text": "تقارير الأنسجة وIHC ونتائج CLDN18.2 وHER2 والتصوير الحديث وتاريخ العلاج المؤرخ وفحوص الدم والأدوية ووصف الحالة الحالية. يؤكد الفريق المستقبِل الفحوص الإضافية وتقييم السلامة."
+          }
+        ],
+        "note": "هذه معلومات عامة وليست تقييما لملاءمة العلاج. تنسق H&C Care السجلات والتواصل. يؤكد الأطباء النشرة المعتمدة الحالية والأهلية والمخاطر والتوفر والتكاليف لكل مريض؛ لا يضمن الوصول أو النتائج."
+      },
     },
   },
 
   id: {
     nav: {
-      home: "Beranda",
-      membership: "Keanggotaan",
-      oncology: "Koordinasi Onkologi",
-      mdt: "Sumber MDT",
-      experts: "Dokter",
-      hospitals: "Rumah sakit",
-      journey: "Alur",
-      register: "Registrasi",
-      contact: "Kontak",
-      privacy: "Privasi",
-      terms: "Batas Layanan",
+      "home": "Beranda",
+      "membership": "Layanan",
+      "oncology": "Koordinasi Onkologi",
+      "mdt": "Sumber MDT",
+      "experts": "Dokter",
+      "hospitals": "Rumah sakit",
+      "journey": "Alur",
+      "register": "Mulai pertanyaan",
+      "contact": "Kontak",
+      "privacy": "Privasi",
+      "terms": "Batas Layanan",
+      "car-t": "CLDN18.2 CAR-T"
     },
     seo: {
       title: `${brand.name} | Koordinasi Medis Onkologi di China`,
       description: "Membantu pasien kanker internasional menyiapkan rekam medis, terhubung dengan spesialis onkologi yang sesuai, mengeksplorasi jalur terapi, dan menjalani perawatan rumah sakit di China.",
     },
     hero: {
-      eyebrow: "Koordinasi medis fokus onkologi di China",
-      title: "Membantu pasien kanker internasional",
-      highlight: "mengakses jalur onkologi terpercaya di China",
-      body: `${brand.name} membantu pasien menyiapkan rekam medis, terhubung dengan spesialis onkologi berpengalaman, mengeksplorasi jalur terapi lanjutan, dan menjalani alur rumah sakit di China.`,
-      primary: "Kirim rekam medis",
-      secondary: "Lihat alur pasien",
-      trust: [
-        { title: "Fokus onkologi", text: "Kami bukan agen wisata medis umum. Layanan publik kami berfokus pada jalur pasien kanker." },
-        { title: "Akses spesialis Guangdong", text: "Kami membantu mencocokkan kasus dengan sumber onkologi, limfoma, MDT, atau bedah di Guangdong dan Guangzhou." },
-        { title: "Batas jelas", text: "Kami membantu memahami, menyiapkan, mengoordinasikan, dan berkomunikasi. Kami tidak mendiagnosis atau mengobati." },
-      ],
+      "eyebrow": "H&C Care · Dukungan pasien internasional",
+      "title": "Koordinasi perawatan kanker di China",
+      "highlight": "",
+      "body": "Dukungan tenaga kesehatan berpengalaman klinis bagi pasien internasional, dengan fokus limfoma dan tumor padat di Guangzhou. Kami membantu menyiapkan rekam medis, menghubungi spesialis, dan merencanakan langkah berikutnya.",
+      "primary": "Mulai pertanyaan",
+      "secondary": "WhatsApp",
+      "trust": [
+        {
+          "title": "Fokus onkologi",
+          "text": ""
+        },
+        {
+          "title": "Pengalaman klinis",
+          "text": ""
+        },
+        {
+          "title": "Guangzhou, China",
+          "text": ""
+        }
+      ]
     },
     sections: {
       pain: {
@@ -1244,50 +1615,119 @@ export const content: Record<Locale, SiteContent> = {
         ],
       },
       membership: {
-        eyebrow: "Biaya layanan pasien",
-        title: "Tiga tingkat layanan koordinasi untuk pasien onkologi internasional",
-        body: "Biaya di bawah ini hanya biaya layanan koordinasi H&C Care. Biaya rumah sakit, dokter, tes, obat, terapi, operasi, perjalanan, akomodasi, asuransi, kendaraan, dan biaya pihak ketiga lainnya terpisah.",
-        plans: [
-          { name: "Konsultasi Jalur Dasar", price: "Gratis", fit: "Untuk pasien yang pertama kali menilai apakah layanan onkologi di China relevan.", items: ["Skrining kebutuhan awal", "Penjelasan umum jalur onkologi di China", "Checklist rekam medis dan persiapan perjalanan", "Satu penjelasan online atau konsultasi teks dasar"] },
-          { name: "Koordinasi Satu Siklus", price: "USD 300 / pasien / siklus layanan", fit: "Untuk satu siklus persiapan rekam medis, komunikasi spesialis, konsultasi, atau koordinasi masuk rumah sakit.", items: ["Pengumpulan rekam medis dan timeline kasus", "Persiapan komunikasi spesialis atau rumah sakit", "Koordinasi janji, konsultasi jarak jauh, atau permohonan rawat inap", "Checklist sebelum perjalanan dan satu follow-up setelah pulang"] },
-          { name: "Koordinasi Pasien Tahunan", price: "USD 980 / pasien / 12 bulan", fit: "Untuk pasien yang mungkin perlu beberapa kunjungan terapi ke China dan manajemen kasus berkelanjutan dalam satu tahun.", items: ["Pemeliharaan file kasus elektronik tahunan", "Pengingat follow-up dan pembaruan dokumen", "Hingga 4 siklus koordinasi rawat inap per tahun", "Hingga 2 putaran koordinasi evaluasi ulang spesialis atau jalur"] },
+        "eyebrow": "Layanan dan dukungan",
+        "title": "Dukungan sesuai situasi Anda",
+        "body": "Mulai dari pertanyaan awal, tugas koordinasi tertentu, atau dukungan kasus tahunan. Lingkup dan penawaran dikonfirmasi sebelum layanan berbayar.",
+        "plans": [
+          {
+            "name": "Pertanyaan jalur awal",
+            "fit": "Untuk keluarga yang menjajaki perawatan di China.",
+            "items": [
+              "Bahas kebutuhan koordinasi",
+              "Pahami proses persiapan",
+              "Dapatkan daftar rekam medis"
+            ]
+          },
+          {
+            "name": "Koordinasi terfokus",
+            "fit": "Untuk tugas spesialis atau rumah sakit yang jelas.",
+            "items": [
+              "Ringkasan dan linimasa kasus",
+              "Janji atau komunikasi sesuai kesepakatan",
+              "Langkah praktis berikutnya"
+            ]
+          },
+          {
+            "name": "Dukungan kasus tahunan",
+            "fit": "Untuk pasien yang memerlukan koordinasi berkelanjutan.",
+            "items": [
+              "Perbarui berkas kasus",
+              "Koordinasi evaluasi dan tindak lanjut",
+              "Komunikasi keluarga lintas tahap"
+            ]
+          }
         ],
-        modulesTitle: "Modul dukungan khusus",
-        modules: [
-          { title: "Lymphoma MDT Coordination", text: "Persiapan materi diskusi untuk limfoma dan kasus kompleks dengan spesialis Guangdong dan Guangzhou." },
-          { title: "Immune Recovery Support", text: "Organisasi data status imun, follow-up konsultatif dokter, koordinasi nutrisi dan gaya hidup, serta tinjauan triwulanan untuk fase stabil atau pemulihan." },
-          { title: "Surgical Pathway Coordination", text: "Dukungan komunikasi bila evaluasi ulang menunjukkan jalur bedah dapat didiskusikan." },
+        "modulesTitle": "Modul dukungan khusus",
+        "modules": [
+          {
+            "title": "Koordinasi MDT limfoma",
+            "text": "Persiapan materi diskusi untuk limfoma dan kasus kompleks dengan spesialis Guangdong dan Guangzhou."
+          },
+          {
+            "title": "Dukungan pemulihan dan tindak lanjut",
+            "text": "Persiapan janji, proses rumah sakit, dan pengingat komunikasi atau evaluasi berikutnya."
+          },
+          {
+            "title": "Koordinasi jalur operasi",
+            "text": "Dukungan komunikasi bila evaluasi ulang menunjukkan jalur bedah dapat didiskusikan."
+          }
         ],
-        modulesNote: "Modul ini adalah dukungan koordinasi dan konsultasi, bukan paket medis atau janji terapi.",
-        note: "Biaya dihitung per pasien dan tidak dapat dialihkan. Konsultasi dasar gratis biasanya dibatasi satu kali per pasien. Layanan ini bukan asuransi, paket medis, atau rencana terapi prabayar; penerimaan, diagnosis, kelayakan terapi, operasi, biaya, dan hasil ditentukan rumah sakit dan dokter. Ruang lingkup akhir harus dikonfirmasi dalam perjanjian tertulis sebelum pembayaran.",
+        "modulesNote": "Modul ini adalah dukungan koordinasi dan konsultasi, bukan paket medis atau janji terapi.",
+        "note": "Biaya koordinasi terpisah dari biaya medis. Rumah sakit, dokter, pemeriksaan, terapi, perjalanan, akomodasi, dan penerjemah pihak ketiga dikonfirmasi terpisah. Proposal tertulis menjelaskan cakupan, waktu, dan pembatalan."
       },
       oncology: {
-        eyebrow: "Jalur onkologi lanjutan",
-        title: "Mengeksplorasi jalur terapi dan riset yang sesuai di China",
-        body: "Untuk pasien yang memenuhi syarat, kami membantu menyiapkan rekam medis dan koordinasi komunikasi seputar opsi onkologi lanjutan. Kelayakan dan arah terapi ditentukan dokter dan institusi.",
-        cards: [
-          { title: "Imunoterapi dan terapi target", text: "Persiapan riwayat terapi, biomarker, respons, dan pertanyaan untuk spesialis." },
-          { title: "Kanker lambung CLDN18.2-positive dan jalur CAR-T", text: "CLDN18.2 adalah biomarker penting pada kanker lambung dan gastroesophageal junction. Informasi publik perusahaan menyebut satri-cel/CT041 telah disetujui di China sebagai produk CAR-T pertama untuk indikasi tumor solid, bagi pasien dewasa dengan adenokarsinoma lambung atau gastroesophageal junction lanjut yang CLDN18.2-positive dan HER2-negative setelah gagal setidaknya dua lini terapi sebelumnya. Kami membantu mengatur laporan patologi, biomarker, imaging, dan riwayat terapi untuk komunikasi dengan tim yang memenuhi syarat." },
-          { title: "Diskusi terapi sel", text: "Persiapan pertanyaan tentang jalur, kelayakan, keamanan, waktu, dan persyaratan rumah sakit." },
-          { title: "Eksplorasi clinical trial", text: "Membantu memahami peluang riset, dokumen, syarat kelayakan, dan komunikasi dengan tim terkait." },
-          { title: "Koordinasi bedah setelah evaluasi ulang", text: "Bila sesuai, kami membantu komunikasi dengan tim bedah." },
-          { title: "Kejelasan jalur untuk keluarga", text: "Mengubah langkah rumah sakit yang kompleks menjadi timeline praktis tanpa mengganti nasihat dokter." },
+        "eyebrow": "Jalur onkologi lanjutan",
+        "title": "Mengeksplorasi jalur terapi dan riset yang sesuai di China",
+        "body": "Untuk pasien yang memenuhi syarat, kami membantu menyiapkan rekam medis dan koordinasi komunikasi seputar opsi onkologi lanjutan. Kelayakan dan arah terapi ditentukan dokter dan institusi.",
+        "cards": [
+          {
+            "title": "Imunoterapi dan terapi target",
+            "text": "Persiapan riwayat terapi, biomarker, respons, dan pertanyaan untuk spesialis."
+          },
+          {
+            "title": "Kanker lambung CLDN18.2-positive dan jalur CAR-T",
+            "text": "Pada 22 Juni 2026 CARsgen mengumumkan persetujuan China untuk satricabtagene autoleucel (satri-cel/CT041), disebut sebagai produk CAR-T pertama di dunia yang disetujui untuk tumor padat. Indikasi yang diumumkan ialah adenokarsinoma lambung atau sambungan gastroesofagus lanjut, CLDN18.2-positif, HER2-negatif, setelah kegagalan sedikitnya dua lini terapi sebelumnya."
+          },
+          {
+            "title": "Diskusi terapi sel",
+            "text": "Persiapan pertanyaan tentang jalur, kelayakan, keamanan, waktu, dan persyaratan rumah sakit."
+          },
+          {
+            "title": "Eksplorasi clinical trial",
+            "text": "Membantu memahami peluang riset, dokumen, syarat kelayakan, dan komunikasi dengan tim terkait."
+          },
+          {
+            "title": "Koordinasi bedah setelah evaluasi ulang",
+            "text": "Bila sesuai, kami membantu komunikasi dengan tim bedah."
+          },
+          {
+            "title": "Kejelasan jalur untuk keluarga",
+            "text": "Mengubah langkah rumah sakit yang kompleks menjadi timeline praktis tanpa mengganti nasihat dokter."
+          }
         ],
-        note: "Kami tidak memberi CAR-T atau terapi lain, menentukan kelayakan, menjamin akses ke terapi yang disetujui atau jalur riset klinis, menjamin masuk clinical trial, atau menjanjikan hasil.",
+        "note": "Kami tidak memberi CAR-T atau terapi lain, menentukan kelayakan, menjamin akses ke terapi yang disetujui atau jalur riset klinis, menjamin masuk clinical trial, atau menjanjikan hasil."
       },
       mdt: {
-        eyebrow: "Spesialis onkologi Guangdong",
-        title: "Akses ke spesialis onkologi unggulan di Guangdong",
-        body: "Kami membantu mencocokkan pasien dengan sumber onkologi yang sesuai berdasarkan jenis kanker, stadium, riwayat terapi, kondisi saat ini, dan kebutuhan klinis.",
-        cards: [
-          { title: "Kekuatan MDT limfoma", text: "Sumber terkuat kami adalah koordinasi limfoma dan hemato-onkologi kompleks di Guangdong dan Guangzhou." },
-          { title: "Pencocokan tumor solid", text: "Persiapan kasus untuk diskusi onkologi medis, bedah, radiasi, atau jalur terpadu." },
-          { title: "Second opinion dan MDT", text: "Merapikan dokumen dan pertanyaan agar diskusi lebih fokus." },
-          { title: "Kesesuaian lebih penting dari nama besar", text: "Jalur tepat bergantung pada diagnosis, stadium, terapi sebelumnya, kondisi pasien, dan ketersediaan nyata." },
+        "eyebrow": "Spesialis onkologi Guangdong",
+        "title": "Limfoma dan diskusi multidisiplin",
+        "body": "Kami membantu mencocokkan pasien dengan sumber onkologi yang sesuai berdasarkan jenis kanker, stadium, riwayat terapi, kondisi saat ini, dan kebutuhan klinis.",
+        "cards": [
+          {
+            "title": "Kekuatan MDT limfoma",
+            "text": "Sumber terkuat kami adalah koordinasi limfoma dan hemato-onkologi kompleks di Guangdong dan Guangzhou."
+          },
+          {
+            "title": "Pencocokan tumor solid",
+            "text": "Persiapan kasus untuk diskusi onkologi medis, bedah, radiasi, atau jalur terpadu."
+          },
+          {
+            "title": "Second opinion dan MDT",
+            "text": "Merapikan dokumen dan pertanyaan agar diskusi lebih fokus."
+          },
+          {
+            "title": "Kesesuaian lebih penting dari nama besar",
+            "text": "Jalur tepat bergantung pada diagnosis, stadium, terapi sebelumnya, kondisi pasien, dan ketersediaan nyata."
+          }
         ],
-        questionsTitle: "Pertanyaan kasus yang kami bantu siapkan",
-        questions: ["Apakah dokumen cukup untuk review spesialis?", "Apakah limfoma kambuh perlu MDT sebelum perjalanan?", "Evaluasi ulang apa yang diperlukan sebelum operasi?", "Dokumen apa yang perlu diterjemahkan?", "Timeline follow-up apa yang perlu disiapkan?"],
-        note: "Koordinasi MDT tidak menjamin penerimaan dokter, rumah sakit, terapi, atau operasi tertentu.",
+        "questionsTitle": "Pertanyaan kasus yang kami bantu siapkan",
+        "questions": [
+          "Apakah dokumen cukup untuk review spesialis?",
+          "Apakah limfoma kambuh perlu MDT sebelum perjalanan?",
+          "Evaluasi ulang apa yang diperlukan sebelum operasi?",
+          "Dokumen apa yang perlu diterjemahkan?",
+          "Timeline follow-up apa yang perlu disiapkan?"
+        ],
+        "note": "Koordinasi MDT tidak menjamin penerimaan dokter, rumah sakit, terapi, atau operasi tertentu."
       },
       experts: {
         eyebrow: "Latar klinis",
@@ -1312,41 +1752,55 @@ export const content: Record<Locale, SiteContent> = {
         note: `${brand.name} operated by ${brand.legalName}. This website is not the official website of any hospital unless stated.`,
       },
       journey: {
-        eyebrow: "Alur pasien",
-        title: "Cara proses bekerja",
-        body: "Langkah pertama bukan menjanjikan terapi, tetapi memahami kasus, mengatur rekam medis, dan menentukan informasi untuk diskusi yang bermakna.",
-        steps: [
-          { title: "Kirim rekam medis", text: "Diagnosis, negara, status saat ini, terapi sebelumnya, dan pertanyaan utama keluarga." },
-          { title: "Assessment koordinasi awal", text: "Menilai apakah koordinasi realistis dan informasi apa yang masih kurang." },
-          { title: "Pencocokan jalur spesialis", text: "Onkologi, MDT, riset, atau jalur bedah sesuai kasus." },
-          { title: "Pengaturan janji atau konsultasi", text: "Persiapan dokumen, pertanyaan, dan komunikasi." },
-          { title: "Persiapan perjalanan dan rumah sakit", text: "Waktu perjalanan, rawat inap, pembayaran, akomodasi, dan kebutuhan harian." },
-          { title: "Koordinasi di rumah sakit", text: "Dukungan komunikasi medis dan langkah praktis bila diperlukan." },
-          { title: "Dukungan follow-up", text: "Pertanyaan setelah pulang, jadwal review, dan komunikasi keluarga." },
+        "eyebrow": "Alur pasien",
+        "title": "Cara proses bekerja",
+        "body": "Anda dapat mulai dari rumah. Lingkup koordinasi dikonfirmasi sebelum layanan berbayar atau pengaturan perjalanan.",
+        "steps": [
+          {
+            "title": "Ceritakan kebutuhan Anda",
+            "text": "Sebutkan negara, bahasa pilihan, dan apakah Anda pasien atau anggota keluarga."
+          },
+          {
+            "title": "Assessment koordinasi awal",
+            "text": "Menilai apakah koordinasi realistis dan informasi apa yang masih kurang."
+          },
+          {
+            "title": "Pencocokan jalur spesialis",
+            "text": "Onkologi, MDT, riset, atau jalur bedah sesuai kasus."
+          },
+          {
+            "title": "Pengaturan janji atau konsultasi",
+            "text": "Persiapan dokumen, pertanyaan, dan komunikasi."
+          },
+          {
+            "title": "Persiapan perjalanan dan rumah sakit",
+            "text": "Waktu perjalanan, rawat inap, pembayaran, akomodasi, dan kebutuhan harian."
+          },
+          {
+            "title": "Koordinasi di rumah sakit",
+            "text": "Dukungan komunikasi medis dan langkah praktis bila diperlukan."
+          },
+          {
+            "title": "Dukungan follow-up",
+            "text": "Pertanyaan setelah pulang, jadwal review, dan komunikasi keluarga."
+          }
         ],
-        documentsTitle: "Dokumen",
-        documents: ["Diagnosis dan ringkasan", "Patologi", "Imaging dan hasil tes", "Tes genetik/molekuler", "Riwayat terapi dan obat", "Gejala dan infeksi saat ini"],
+        "documentsTitle": "Dokumen",
+        "documents": [
+          "Diagnosis dan ringkasan",
+          "Patologi",
+          "Imaging dan hasil tes",
+          "Tes genetik/molekuler",
+          "Riwayat terapi dan obat",
+          "Gejala dan infeksi saat ini"
+        ]
       },
       register: {
-        eyebrow: "Registrasi anggota",
-        title: "Daftar minat dan siapkan rekam medis untuk review kasus",
-        body: "Mulai di sini bila pasien ingin H&C Care menilai apakah keanggotaan atau layanan koordinasi sesuai. Jangan kirim permintaan darurat atau instruksi klinis mendesak melalui situs ini.",
-        portalTitle: "Pintu masuk file anggota pasien",
-        portalText:
-          "Langkah online pertama adalah mendaftarkan minat dan membuat file kasus yang terstruktur. Sebelum rekam medis sensitif dikirim, kami mengonfirmasi ruang lingkup layanan, persetujuan, dan kanal pengiriman paling aman bagi pasien atau keluarga yang berwenang.",
-        portalCards: [
-          { title: "Buat file anggota", text: "Kami hanya mengumpulkan informasi dasar minimum untuk memahami pasien, bahasa, jenis kanker, dan kebutuhan koordinasi." },
-          { title: "Konfirmasi persetujuan dan ruang lingkup", text: "Koordinasi berbayar dimulai hanya setelah pasien atau keluarga yang berwenang memahami batas layanan dan menyetujui pengaturan tertulis." },
-          { title: "Siapkan pengiriman rekam yang aman", text: "Dokumen medis dikirim hanya melalui kanal yang dikonfirmasi. Portal upload berbasis akun memerlukan autentikasi, penyimpanan terenkripsi, dan log akses." },
-        ],
-        stepsTitle: "Cara pengiriman",
-        steps: [
-          { title: "Daftar minat", text: "Kirim situasi dasar pasien, negara atau wilayah, bahasa pilihan, jenis kanker, dan tingkat layanan yang dipertimbangkan." },
-          { title: "Siapkan paket rekam medis", text: "Gunakan checklist di bawah untuk mengumpulkan laporan. PDF jelas, tautan gambar, dan ringkasan bertanggal lebih disukai." },
-          { title: "Kirim melalui kanal yang dikonfirmasi", text: "Setelah kontak awal, kami akan mengonfirmasi email atau WhatsApp yang sesuai dan apakah perjanjian layanan tertulis diperlukan sebelum koordinasi berbayar dimulai." },
-        ],
-        documentsTitle: "Checklist rekam medis",
-        documents: [
+        "eyebrow": "Pertanyaan pasien",
+        "title": "Mulai pertanyaan koordinasi perawatan",
+        "body": "Beberapa informasi dasar cukup untuk memulai. Anda tidak perlu menunggu semua laporan atau memilih layanan sekarang.",
+        "documentsTitle": "Checklist rekam medis",
+        "documents": [
           "Laporan biopsi",
           "Laporan PET/CT",
           "Laporan patologi atau immunohistochemistry (IHC), bila ada",
@@ -1357,34 +1811,28 @@ export const content: Record<Locale, SiteContent> = {
           "Deskripsi singkat gejala saat ini, aktivitas harian, nafsu makan, perubahan berat badan, demam, nyeri, dan kondisi umum",
           "Laporan CT, MRI, ultrasound, endoscopy, atau imaging terbaru lain, plus file DICOM atau tautan berbagi gambar bila tersedia",
           "Ringkasan pulang rumah sakit, surat diagnosis, catatan operasi, laporan endoscopy, atau catatan prosedur bila tersedia",
-          "Riwayat medis penting seperti jantung, ginjal, hati, infeksi, penyakit autoimun, hepatitis, tuberkulosis, atau kondisi besar lainnya",
-          "Paspor atau halaman identitas pasien, detail kontak keluarga, dan otorisasi bila keluarga berkomunikasi atas nama pasien",
-        ],
-        fieldsTitle: "Informasi untuk pesan pertama",
-        fields: ["Nama atau inisial pasien", "Usia dan jenis kelamin", "Negara atau wilayah", "Diagnosis dan stadium bila diketahui", "Status terapi saat ini", "Pertanyaan utama untuk koordinasi", "Bahasa pilihan", "Tingkat layanan yang diminati"],
-        secureTitle: "Untuk portal anggota aman di masa depan",
-        secureItems: [
-          "Login pasien dan akses keluarga yang berwenang",
-          "Penyimpanan dokumen terenkripsi dan log akses terkontrol",
-          "Status upload, pengingat dokumen yang kurang, dan catatan case manager",
-          "Batas yang jelas untuk persetujuan, retensi, penghapusan, dan penggunaan darurat",
-        ],
-        consentTitle: "Privasi dan persetujuan",
-        consent: "Rekam medis berisi data pribadi sensitif. Kirim dokumen hanya jika pasien atau keluarga yang berwenang setuju H&C Care menggunakannya untuk persiapan kasus dan komunikasi koordinasi.",
-        email: "Kirim materi registrasi via email",
-        whatsapp: "Tanya dulu sebelum kirim file di WhatsApp",
-        note: "Halaman ini adalah panduan registrasi dan persiapan dokumen. Ini bukan kanal darurat, platform konsultasi medis, layanan diagnosis, rekomendasi terapi, atau jaminan bahwa rumah sakit, dokter, terapi, operasi, atau jalur riset klinis akan menerima kasus.",
+          "Riwayat medis penting seperti jantung, ginjal, hati, infeksi, penyakit autoimun, hepatitis, tuberkulosis, atau kondisi besar lainnya"
+        ]
       },
       clinicalTeam: {
-        eyebrow: "Dipimpin tenaga kesehatan",
-        title: "Dipimpin profesional kesehatan, bukan agen perjalanan umum",
-        body: "Koordinasi onkologi membutuhkan literasi klinis, organisasi kasus, dan pemahaman alur rumah sakit.",
-        cards: [
-          { title: "Latar belakang profesional kesehatan", text: "Anggota koordinasi inti memiliki UK Master's degree in Nursing, New York State RN license, Chinese nursing license, dan gelar Associate Chief Nurse in China." },
-          { title: "Pengalaman klinis", text: "Pengalaman mencakup onkologi, emergency care, dan operating room settings." },
-          { title: "Koordinasi bahasa medis", text: "Membantu keluarga menyusun rekam medis, pertanyaan klinis, dan instruksi rumah sakit menjadi jalur yang jelas." },
+        "eyebrow": "Tim di balik perjalanan Anda",
+        "title": "Pemahaman klinis, koordinasi personal",
+        "body": "Koordinator menerapkan pengalaman kesehatan dalam persiapan rekam medis dan komunikasi rumah sakit. Profil berikut menjelaskan keahlian terkait jalur onkologi Guangzhou. Ketersediaan dikonfirmasi untuk setiap kasus.",
+        "cards": [
+          {
+            "title": "Latar belakang profesional kesehatan",
+            "text": "Anggota koordinasi inti memiliki UK Master's degree in Nursing, New York State RN license, Chinese nursing license, dan gelar Associate Chief Nurse in China."
+          },
+          {
+            "title": "Pengalaman klinis",
+            "text": "Pengalaman mencakup onkologi, emergency care, dan operating room settings."
+          },
+          {
+            "title": "Koordinasi bahasa medis",
+            "text": "Membantu keluarga menyusun rekam medis, pertanyaan klinis, dan instruksi rumah sakit menjadi jalur yang jelas."
+          }
         ],
-        note: "Kredensial ini mendukung koordinasi dan komunikasi medis, bukan berarti H&C Care menyediakan diagnosis, terapi, nursing services, atau praktik medis di Hong Kong.",
+        "note": "Kredensial ini mendukung koordinasi dan komunikasi medis, bukan berarti H&C Care menyediakan diagnosis, terapi, nursing services, atau praktik medis di Hong Kong."
       },
       ethics: {
         eyebrow: "Kepercayaan dan kepatuhan",
@@ -1400,12 +1848,12 @@ export const content: Record<Locale, SiteContent> = {
         note: "Ruang lingkup layanan, biaya, privasi, dan tanggung jawab perlu dikonfirmasi dalam perjanjian tertulis sebelum pembayaran.",
       },
       contact: {
-        eyebrow: "Kontak",
-        title: "Minta konsultasi keanggotaan",
-        body: `Hubungi ${contact.name} via WhatsApp atau email. Sertakan diagnosis, wilayah, status saat ini, dan pertanyaan utama.`,
-        email: "Email H&C Care",
-        whatsapp: "WhatsApp H&C Care",
-        privacy: "Informasi medis digunakan untuk memahami kasus dan koordinasi; dapat dibagikan dengan tim medis relevan di luar Hong Kong.",
+        "eyebrow": "Langkah berikutnya",
+        "title": "Mari mulai dengan percakapan",
+        "body": "Beri tahu lokasi Anda dan dukungan yang dibutuhkan keluarga. Kami mengonfirmasi dokumen dan kanal komunikasi sebelum Anda mengirim berkas medis lengkap.",
+        "email": "Email kami",
+        "whatsapp": "WhatsApp",
+        "privacy": "Informasi medis digunakan untuk memahami kasus dan koordinasi; dapat dibagikan dengan tim medis relevan di luar Hong Kong."
       },
       privacy: {
         eyebrow: "Privasi",
@@ -1435,39 +1883,70 @@ export const content: Record<Locale, SiteContent> = {
         title: "Penafian medis",
         body: `${brand.name} menyediakan informasi dan koordinasi, tidak menggantikan diagnosis atau terapi dokter. Hasil dan biaya tidak dijamin.`,
       },
+
+      "car-t": {
+        "eyebrow": "Informasi pasien · Kanker lambung",
+        "title": "CLDN18.2 CAR-T: persiapan diskusi spesialis",
+        "body": "Dokumen yang dapat membantu saat membahas satri-cel (CT041) dengan tim onkologi berkualifikasi di China.",
+        "cards": [
+          {
+            "title": "Apa itu CLDN18.2?",
+            "text": "Biomarker yang dapat diperiksa pada jaringan tumor. Spesialis menilai patologi, metode, dan hasil tes bersama diagnosis dan riwayat terapi."
+          },
+          {
+            "title": "Persetujuan apa yang diumumkan?",
+            "text": "Pada 22 Juni 2026 CARsgen mengumumkan persetujuan China untuk satricabtagene autoleucel (satri-cel/CT041), disebut sebagai produk CAR-T pertama di dunia yang disetujui untuk tumor padat. Indikasi yang diumumkan ialah adenokarsinoma lambung atau sambungan gastroesofagus lanjut, CLDN18.2-positif, HER2-negatif, setelah kegagalan sedikitnya dua lini terapi sebelumnya."
+          },
+          {
+            "title": "Apa yang disiapkan?",
+            "text": "Patologi dan IHC, hasil CLDN18.2 dan HER2, pencitraan terbaru, riwayat terapi bertanggal, tes darah, obat, dan ringkasan kondisi terkini. Tim penerima menentukan pemeriksaan tambahan dan penilaian keselamatan."
+          }
+        ],
+        "note": "Informasi umum ini bukan penilaian kelayakan terapi. H&C Care mengoordinasikan dokumen dan komunikasi. Dokter perlu mengonfirmasi label resmi terkini, kelayakan, risiko, ketersediaan, dan biaya bagi setiap pasien. Akses dan hasil tidak dijamin."
+      },
     },
   },
 
   ms: {
     nav: {
-      home: "Utama",
-      membership: "Keahlian",
-      oncology: "Koordinasi Onkologi",
-      mdt: "Sumber MDT",
-      experts: "Pakar",
-      hospitals: "Hospital",
-      journey: "Laluan",
-      register: "Pendaftaran",
-      contact: "Hubungi",
-      privacy: "Privasi",
-      terms: "Sempadan Servis",
+      "home": "Utama",
+      "membership": "Perkhidmatan",
+      "oncology": "Koordinasi Onkologi",
+      "mdt": "Sumber MDT",
+      "experts": "Pakar",
+      "hospitals": "Hospital",
+      "journey": "Laluan",
+      "register": "Mulakan pertanyaan",
+      "contact": "Hubungi",
+      "privacy": "Privasi",
+      "terms": "Sempadan Servis",
+      "car-t": "CLDN18.2 CAR-T"
     },
     seo: {
       title: `${brand.name} | Koordinasi Perubatan Onkologi di China`,
       description: "Membantu pesakit kanser antarabangsa menyediakan rekod, berhubung dengan pakar onkologi sesuai, meneroka laluan rawatan, dan menavigasi penjagaan hospital di China.",
     },
     hero: {
-      eyebrow: "Koordinasi perubatan berfokus onkologi di China",
-      title: "Membantu pesakit kanser antarabangsa",
-      highlight: "mengakses laluan onkologi dipercayai di China",
-      body: `${brand.name} membantu pesakit menyediakan rekod perubatan, berhubung dengan pakar onkologi berpengalaman, meneroka laluan rawatan lanjutan dan menavigasi penjagaan hospital di China.`,
-      primary: "Hantar rekod untuk semakan",
-      secondary: "Lihat laluan pesakit",
-      trust: [
-        { title: "Fokus onkologi", text: "Kami bukan ejen pelancongan perubatan umum. Servis awam kami fokus pada laluan pesakit kanser." },
-        { title: "Akses pakar Guangdong", text: "Kami membantu memadankan kes dengan sumber onkologi, limfoma, MDT atau bedah di Guangdong dan Guangzhou." },
-        { title: "Sempadan jelas", text: "Kami membantu memahami, menyediakan, menyelaras dan berkomunikasi. Kami tidak mendiagnosis atau merawat." },
-      ],
+      "eyebrow": "H&C Care · Sokongan pesakit antarabangsa",
+      "title": "Koordinasi penjagaan kanser di China",
+      "highlight": "",
+      "body": "Sokongan profesional kesihatan berpengalaman klinikal untuk pesakit antarabangsa, dengan fokus limfoma dan tumor pepejal di Guangzhou. Kami membantu menyediakan rekod, berhubung dengan pakar, dan merancang langkah seterusnya.",
+      "primary": "Mulakan pertanyaan",
+      "secondary": "WhatsApp",
+      "trust": [
+        {
+          "title": "Fokus onkologi",
+          "text": ""
+        },
+        {
+          "title": "Pengalaman klinikal",
+          "text": ""
+        },
+        {
+          "title": "Guangzhou, China",
+          "text": ""
+        }
+      ]
     },
     sections: {
       pain: {
@@ -1498,50 +1977,119 @@ export const content: Record<Locale, SiteContent> = {
         ],
       },
       membership: {
-        eyebrow: "Yuran servis pesakit",
-        title: "Tiga tahap servis koordinasi untuk pesakit onkologi antarabangsa",
-        body: "Yuran di bawah hanyalah yuran servis koordinasi H&C Care. Kos hospital, doktor, ujian, ubat, rawatan, pembedahan, perjalanan, penginapan, insurans, kenderaan dan kos pihak ketiga lain adalah berasingan.",
-        plans: [
-          { name: "Konsultasi Laluan Asas", price: "Percuma", fit: "Untuk pesakit yang pertama kali menilai sama ada rawatan onkologi di China relevan.", items: ["Saringan keperluan awal", "Penjelasan umum laluan onkologi di China", "Senarai semak rekod perubatan dan persediaan perjalanan", "Satu penjelasan dalam talian atau konsultasi teks asas"] },
-          { name: "Koordinasi Satu Kitaran", price: "USD 300 / pesakit / kitaran servis", fit: "Untuk satu kitaran penyediaan rekod, komunikasi pakar, konsultasi atau koordinasi kemasukan hospital.", items: ["Pengumpulan rekod dan garis masa kes", "Persediaan komunikasi pakar atau hospital", "Koordinasi temu janji, konsultasi jauh atau permohonan rawat inap", "Senarai semak sebelum perjalanan dan satu susulan selepas keluar"] },
-          { name: "Koordinasi Pesakit Tahunan", price: "USD 980 / pesakit / 12 bulan", fit: "Untuk pesakit yang mungkin memerlukan lawatan rawatan berulang ke China dan pengurusan kes berterusan dalam setahun.", items: ["Penyelenggaraan fail kes elektronik tahunan", "Peringatan susulan dan kemas kini dokumen", "Sehingga 4 kitaran koordinasi rawat inap setahun", "Sehingga 2 pusingan koordinasi penilaian semula pakar atau laluan"] },
+        "eyebrow": "Perkhidmatan dan sokongan",
+        "title": "Sokongan mengikut keadaan anda",
+        "body": "Bermula dengan pertanyaan awal, tugas koordinasi tertentu atau sokongan kes tahunan. Skop dan sebut harga disahkan sebelum perkhidmatan berbayar.",
+        "plans": [
+          {
+            "name": "Pertanyaan laluan awal",
+            "fit": "Untuk keluarga yang meneroka penjagaan di China.",
+            "items": [
+              "Bincang keperluan koordinasi",
+              "Fahami proses persediaan",
+              "Terima senarai rekod perubatan"
+            ]
+          },
+          {
+            "name": "Koordinasi khusus",
+            "fit": "Untuk tugas pakar atau hospital yang jelas.",
+            "items": [
+              "Ringkasan dan garis masa kes",
+              "Janji temu atau komunikasi dipersetujui",
+              "Langkah praktikal seterusnya"
+            ]
+          },
+          {
+            "name": "Sokongan kes tahunan",
+            "fit": "Untuk pesakit yang memerlukan koordinasi berterusan.",
+            "items": [
+              "Kemas kini fail kes",
+              "Koordinasi semakan dan susulan",
+              "Komunikasi keluarga merentas tahap"
+            ]
+          }
         ],
-        modulesTitle: "Modul sokongan khusus",
-        modules: [
-          { title: "Lymphoma MDT Coordination", text: "Persediaan bahan perbincangan untuk limfoma dan kes kompleks bersama pakar Guangdong dan Guangzhou." },
-          { title: "Immune Recovery Support", text: "Organisasi data status imun, susulan konsultasi doktor, koordinasi nutrisi dan gaya hidup, serta semakan suku tahunan untuk fasa stabil atau pemulihan." },
-          { title: "Surgical Pathway Coordination", text: "Sokongan komunikasi apabila penilaian semula menunjukkan laluan bedah boleh dibincangkan." },
+        "modulesTitle": "Modul sokongan khusus",
+        "modules": [
+          {
+            "title": "Koordinasi MDT limfoma",
+            "text": "Persediaan bahan perbincangan untuk limfoma dan kes kompleks bersama pakar Guangdong dan Guangzhou."
+          },
+          {
+            "title": "Sokongan pemulihan dan susulan",
+            "text": "Persediaan janji temu, langkah hospital dan peringatan komunikasi atau semakan seterusnya."
+          },
+          {
+            "title": "Koordinasi laluan pembedahan",
+            "text": "Sokongan komunikasi apabila penilaian semula menunjukkan laluan bedah boleh dibincangkan."
+          }
         ],
-        modulesNote: "Modul ini ialah sokongan koordinasi dan konsultasi, bukan pakej perubatan atau janji rawatan.",
-        note: "Yuran dikira bagi setiap pesakit dan tidak boleh dipindahkan. Konsultasi asas percuma biasanya terhad kepada satu kali bagi setiap pesakit. Servis ini bukan insurans, pakej perubatan atau pelan rawatan prabayar; penerimaan, diagnosis, kelayakan rawatan, pembedahan, kos dan hasil ditentukan hospital dan doktor. Skop akhir perlu disahkan dalam perjanjian bertulis sebelum pembayaran.",
+        "modulesNote": "Modul ini ialah sokongan koordinasi dan konsultasi, bukan pakej perubatan atau janji rawatan.",
+        "note": "Yuran koordinasi berasingan daripada kos perubatan. Hospital, doktor, ujian, rawatan, perjalanan, penginapan dan jurubahasa pihak ketiga disahkan berasingan. Cadangan bertulis menerangkan skop, masa dan pembatalan."
       },
       oncology: {
-        eyebrow: "Laluan onkologi lanjutan",
-        title: "Meneroka laluan rawatan dan penyelidikan sesuai di China",
-        body: "Untuk pesakit yang layak, kami membantu menyediakan rekod dan koordinasi komunikasi sekitar pilihan onkologi lanjutan. Kelayakan dan arah rawatan ditentukan doktor dan institusi.",
-        cards: [
-          { title: "Imunoterapi dan terapi sasaran", text: "Persediaan sejarah rawatan, biomarker, respons dan soalan untuk pakar." },
-          { title: "Kanser gastrik CLDN18.2-positive dan laluan CAR-T", text: "CLDN18.2 ialah biomarker penting dalam kanser gastrik dan gastroesophageal junction. Maklumat awam syarikat menyebut satri-cel/CT041 telah diluluskan di China sebagai produk CAR-T pertama untuk indikasi tumor pepejal, bagi pesakit dewasa dengan adenokarsinoma gastrik atau gastroesophageal junction lanjut yang CLDN18.2-positive dan HER2-negative selepas gagal sekurang-kurangnya dua lini rawatan terdahulu. Kami membantu menyusun laporan patologi, biomarker, imaging dan sejarah rawatan untuk komunikasi dengan pasukan yang layak." },
-          { title: "Perbincangan terapi sel", text: "Persediaan soalan tentang laluan, kelayakan, keselamatan, masa dan keperluan hospital." },
-          { title: "Eksplorasi clinical trial", text: "Membantu memahami peluang penyelidikan, dokumen, syarat kelayakan dan komunikasi pasukan berkaitan." },
-          { title: "Koordinasi bedah selepas penilaian semula", text: "Jika sesuai, kami membantu komunikasi dengan pasukan bedah." },
-          { title: "Kejelasan laluan untuk keluarga", text: "Menukar langkah hospital kompleks menjadi garis masa praktikal tanpa mengganti nasihat doktor." },
+        "eyebrow": "Laluan onkologi lanjutan",
+        "title": "Meneroka laluan rawatan dan penyelidikan sesuai di China",
+        "body": "Untuk pesakit yang layak, kami membantu menyediakan rekod dan koordinasi komunikasi sekitar pilihan onkologi lanjutan. Kelayakan dan arah rawatan ditentukan doktor dan institusi.",
+        "cards": [
+          {
+            "title": "Imunoterapi dan terapi sasaran",
+            "text": "Persediaan sejarah rawatan, biomarker, respons dan soalan untuk pakar."
+          },
+          {
+            "title": "Kanser gastrik CLDN18.2-positive dan laluan CAR-T",
+            "text": "Pada 22 Jun 2026 CARsgen mengumumkan kelulusan China bagi satricabtagene autoleucel (satri-cel/CT041), digambarkan sebagai produk CAR-T pertama dunia diluluskan untuk tumor pepejal. Indikasi diumumkan ialah adenokarsinoma gastrik atau persimpangan gastroesofagus lanjut, CLDN18.2-positif, HER2-negatif, selepas kegagalan sekurang-kurangnya dua barisan rawatan terdahulu."
+          },
+          {
+            "title": "Perbincangan terapi sel",
+            "text": "Persediaan soalan tentang laluan, kelayakan, keselamatan, masa dan keperluan hospital."
+          },
+          {
+            "title": "Eksplorasi clinical trial",
+            "text": "Membantu memahami peluang penyelidikan, dokumen, syarat kelayakan dan komunikasi pasukan berkaitan."
+          },
+          {
+            "title": "Koordinasi bedah selepas penilaian semula",
+            "text": "Jika sesuai, kami membantu komunikasi dengan pasukan bedah."
+          },
+          {
+            "title": "Kejelasan laluan untuk keluarga",
+            "text": "Menukar langkah hospital kompleks menjadi garis masa praktikal tanpa mengganti nasihat doktor."
+          }
         ],
-        note: "Kami tidak memberi CAR-T atau rawatan lain, menentukan kelayakan, menjamin akses kepada rawatan yang diluluskan atau laluan penyelidikan klinikal, menjamin kemasukan clinical trial, atau menjanjikan hasil.",
+        "note": "Kami tidak memberi CAR-T atau rawatan lain, menentukan kelayakan, menjamin akses kepada rawatan yang diluluskan atau laluan penyelidikan klinikal, menjamin kemasukan clinical trial, atau menjanjikan hasil."
       },
       mdt: {
-        eyebrow: "Pakar onkologi Guangdong",
-        title: "Akses kepada pakar onkologi utama di Guangdong",
-        body: "Kami membantu memadankan pesakit dengan sumber onkologi yang sesuai berdasarkan jenis kanser, peringkat, sejarah rawatan, keadaan semasa dan keperluan klinikal.",
-        cards: [
-          { title: "Kekuatan MDT limfoma", text: "Sumber terkuat kami ialah koordinasi limfoma dan hemato-onkologi kompleks di Guangdong dan Guangzhou." },
-          { title: "Padanan tumor solid", text: "Persediaan kes untuk onkologi perubatan, bedah, radioterapi atau perbincangan bersepadu." },
-          { title: "Second opinion dan MDT", text: "Menyusun dokumen dan soalan agar perbincangan lebih fokus." },
-          { title: "Kesesuaian lebih penting daripada nama", text: "Laluan bergantung pada diagnosis, peringkat, rawatan terdahulu, keadaan pesakit dan ketersediaan sebenar." },
+        "eyebrow": "Pakar onkologi Guangdong",
+        "title": "Limfoma dan perbincangan multidisiplin",
+        "body": "Kami membantu memadankan pesakit dengan sumber onkologi yang sesuai berdasarkan jenis kanser, peringkat, sejarah rawatan, keadaan semasa dan keperluan klinikal.",
+        "cards": [
+          {
+            "title": "Kekuatan MDT limfoma",
+            "text": "Sumber terkuat kami ialah koordinasi limfoma dan hemato-onkologi kompleks di Guangdong dan Guangzhou."
+          },
+          {
+            "title": "Padanan tumor solid",
+            "text": "Persediaan kes untuk onkologi perubatan, bedah, radioterapi atau perbincangan bersepadu."
+          },
+          {
+            "title": "Second opinion dan MDT",
+            "text": "Menyusun dokumen dan soalan agar perbincangan lebih fokus."
+          },
+          {
+            "title": "Kesesuaian lebih penting daripada nama",
+            "text": "Laluan bergantung pada diagnosis, peringkat, rawatan terdahulu, keadaan pesakit dan ketersediaan sebenar."
+          }
         ],
-        questionsTitle: "Soalan kes yang kami bantu sediakan",
-        questions: ["Adakah dokumen cukup untuk semakan pakar?", "Adakah limfoma berulang perlu MDT sebelum perjalanan?", "Penilaian semula apa diperlukan sebelum bedah?", "Dokumen apa perlu diterjemah?", "Garis masa susulan apa perlu disediakan?"],
-        note: "Koordinasi MDT tidak menjamin penerimaan doktor, hospital, rawatan atau pembedahan tertentu.",
+        "questionsTitle": "Soalan kes yang kami bantu sediakan",
+        "questions": [
+          "Adakah dokumen cukup untuk semakan pakar?",
+          "Adakah limfoma berulang perlu MDT sebelum perjalanan?",
+          "Penilaian semula apa diperlukan sebelum bedah?",
+          "Dokumen apa perlu diterjemah?",
+          "Garis masa susulan apa perlu disediakan?"
+        ],
+        "note": "Koordinasi MDT tidak menjamin penerimaan doktor, hospital, rawatan atau pembedahan tertentu."
       },
       experts: {
         eyebrow: "Latar klinikal",
@@ -1566,41 +2114,55 @@ export const content: Record<Locale, SiteContent> = {
         note: `${brand.name} operated by ${brand.legalName}. This website is not the official website of any hospital unless stated.`,
       },
       journey: {
-        eyebrow: "Laluan pesakit",
-        title: "Bagaimana proses berfungsi",
-        body: "Langkah pertama bukan menjanjikan rawatan, tetapi memahami kes, mengatur rekod dan menentukan maklumat untuk perbincangan bermakna.",
-        steps: [
-          { title: "Hantar rekod perubatan", text: "Diagnosis, negara, status semasa, rawatan terdahulu dan soalan utama keluarga." },
-          { title: "Assessment koordinasi awal", text: "Menilai sama ada koordinasi realistik dan maklumat apa yang masih kurang." },
-          { title: "Padanan laluan pakar", text: "Onkologi, MDT, penyelidikan atau laluan bedah mengikut kes." },
-          { title: "Atur temu janji atau konsultasi", text: "Persediaan dokumen, soalan dan komunikasi." },
-          { title: "Persediaan perjalanan dan hospital", text: "Masa perjalanan, kemasukan, bayaran, penginapan dan keperluan harian." },
-          { title: "Koordinasi di hospital", text: "Sokongan komunikasi perubatan dan langkah praktikal jika diperlukan." },
-          { title: "Sokongan susulan", text: "Soalan selepas keluar, jadual semakan dan komunikasi keluarga." },
+        "eyebrow": "Laluan pesakit",
+        "title": "Bagaimana proses berfungsi",
+        "body": "Anda boleh bermula dari rumah. Skop koordinasi disahkan sebelum kerja berbayar atau pengaturan perjalanan.",
+        "steps": [
+          {
+            "title": "Nyatakan keperluan anda",
+            "text": "Beritahu negara, bahasa pilihan dan sama ada anda pesakit atau ahli keluarga."
+          },
+          {
+            "title": "Assessment koordinasi awal",
+            "text": "Menilai sama ada koordinasi realistik dan maklumat apa yang masih kurang."
+          },
+          {
+            "title": "Padanan laluan pakar",
+            "text": "Onkologi, MDT, penyelidikan atau laluan bedah mengikut kes."
+          },
+          {
+            "title": "Atur temu janji atau konsultasi",
+            "text": "Persediaan dokumen, soalan dan komunikasi."
+          },
+          {
+            "title": "Persediaan perjalanan dan hospital",
+            "text": "Masa perjalanan, kemasukan, bayaran, penginapan dan keperluan harian."
+          },
+          {
+            "title": "Koordinasi di hospital",
+            "text": "Sokongan komunikasi perubatan dan langkah praktikal jika diperlukan."
+          },
+          {
+            "title": "Sokongan susulan",
+            "text": "Soalan selepas keluar, jadual semakan dan komunikasi keluarga."
+          }
         ],
-        documentsTitle: "Dokumen",
-        documents: ["Diagnosis dan ringkasan", "Patologi", "Imej dan keputusan ujian", "Ujian genetik/molekul", "Sejarah rawatan dan ubat", "Simptom dan jangkitan semasa"],
+        "documentsTitle": "Dokumen",
+        "documents": [
+          "Diagnosis dan ringkasan",
+          "Patologi",
+          "Imej dan keputusan ujian",
+          "Ujian genetik/molekul",
+          "Sejarah rawatan dan ubat",
+          "Simptom dan jangkitan semasa"
+        ]
       },
       register: {
-        eyebrow: "Pendaftaran ahli",
-        title: "Daftar minat dan sediakan rekod perubatan untuk semakan kes",
-        body: "Mulakan di sini jika pesakit mahu H&C Care menilai sama ada keahlian atau servis koordinasi sesuai. Jangan hantar permintaan kecemasan atau arahan klinikal mendesak melalui laman ini.",
-        portalTitle: "Pintu masuk fail ahli pesakit",
-        portalText:
-          "Langkah online pertama ialah mendaftarkan minat dan mencipta fail kes berstruktur. Sebelum rekod perubatan sensitif dipindahkan, kami mengesahkan skop servis, persetujuan dan saluran penghantaran paling selamat untuk pesakit atau keluarga yang diberi kuasa.",
-        portalCards: [
-          { title: "Cipta fail ahli", text: "Kami hanya mengumpul maklumat asas minimum untuk memahami pesakit, bahasa, jenis kanser dan keperluan koordinasi." },
-          { title: "Sahkan persetujuan dan skop servis", text: "Koordinasi berbayar bermula hanya selepas pesakit atau keluarga yang diberi kuasa memahami sempadan servis dan mengesahkan pengaturan bertulis." },
-          { title: "Sediakan penghantaran rekod selamat", text: "Dokumen perubatan dihantar hanya melalui saluran yang disahkan. Portal upload berasaskan akaun memerlukan autentikasi, storan tersulit dan log akses." },
-        ],
-        stepsTitle: "Cara penghantaran",
-        steps: [
-          { title: "Daftar minat", text: "Hantar situasi asas pesakit, negara atau wilayah, bahasa pilihan, jenis kanser dan tahap servis yang dipertimbangkan." },
-          { title: "Sediakan pakej rekod", text: "Gunakan senarai semak di bawah untuk mengumpul laporan. PDF jelas, pautan imej dan ringkasan bertarikh lebih baik." },
-          { title: "Hantar melalui saluran disahkan", text: "Selepas kontak awal, kami akan mengesahkan email atau WhatsApp yang sesuai dan sama ada perjanjian servis bertulis diperlukan sebelum koordinasi berbayar bermula." },
-        ],
-        documentsTitle: "Senarai semak rekod perubatan",
-        documents: [
+        "eyebrow": "Pertanyaan pesakit",
+        "title": "Mulakan pertanyaan koordinasi penjagaan",
+        "body": "Beberapa maklumat asas mencukupi untuk bermula. Tidak perlu menunggu semua laporan atau memilih perkhidmatan sekarang.",
+        "documentsTitle": "Senarai semak rekod perubatan",
+        "documents": [
           "Laporan biopsi",
           "Laporan PET/CT",
           "Sebarang laporan patologi atau immunohistochemistry (IHC)",
@@ -1611,34 +2173,28 @@ export const content: Record<Locale, SiteContent> = {
           "Penerangan ringkas simptom semasa, aktiviti harian, selera makan, perubahan berat badan, demam, sakit dan keadaan umum",
           "Laporan CT, MRI, ultrasound, endoscopy atau imej terbaru lain, serta fail DICOM atau pautan perkongsian imej jika ada",
           "Ringkasan keluar hospital, surat diagnosis, nota pembedahan, laporan endoscopy atau rekod prosedur jika ada",
-          "Sejarah perubatan penting seperti jantung, buah pinggang, hati, jangkitan, penyakit autoimun, hepatitis, tuberkulosis atau keadaan utama lain",
-          "Pasport atau halaman identiti pesakit, butiran orang hubungan dan kebenaran jika keluarga berkomunikasi bagi pihak pesakit",
-        ],
-        fieldsTitle: "Maklumat untuk mesej pertama",
-        fields: ["Nama atau inisial pesakit", "Umur dan jantina", "Negara atau wilayah", "Diagnosis dan peringkat jika diketahui", "Status rawatan semasa", "Soalan utama untuk koordinasi", "Bahasa pilihan", "Tahap servis yang diminati"],
-        secureTitle: "Untuk portal ahli selamat akan datang",
-        secureItems: [
-          "Login pesakit dan akses keluarga yang diberi kuasa",
-          "Storan dokumen tersulit dan log akses terkawal",
-          "Status upload, peringatan dokumen yang kurang dan nota case manager",
-          "Sempadan jelas untuk persetujuan, penyimpanan, pemadaman dan penggunaan kecemasan",
-        ],
-        consentTitle: "Privasi dan persetujuan",
-        consent: "Rekod perubatan mengandungi data peribadi sensitif. Hantar dokumen hanya jika pesakit atau keluarga yang diberi kuasa bersetuju H&C Care menggunakannya untuk persediaan kes dan komunikasi koordinasi.",
-        email: "Hantar bahan pendaftaran melalui email",
-        whatsapp: "Tanya dahulu sebelum hantar fail di WhatsApp",
-        note: "Halaman ini ialah panduan pendaftaran dan persediaan dokumen. Ia bukan saluran kecemasan, platform konsultasi perubatan, servis diagnosis, cadangan rawatan atau jaminan bahawa hospital, doktor, rawatan, pembedahan atau laluan penyelidikan klinikal akan menerima kes.",
+          "Sejarah perubatan penting seperti jantung, buah pinggang, hati, jangkitan, penyakit autoimun, hepatitis, tuberkulosis atau keadaan utama lain"
+        ]
       },
       clinicalTeam: {
-        eyebrow: "Dipimpin profesional kesihatan",
-        title: "Dipimpin profesional kesihatan, bukan ejen perjalanan umum",
-        body: "Koordinasi onkologi memerlukan literasi klinikal, organisasi kes dan pemahaman aliran hospital.",
-        cards: [
-          { title: "Latar profesional kesihatan", text: "Ahli koordinasi teras memiliki UK Master's degree in Nursing, New York State RN license, Chinese nursing license dan gelaran Associate Chief Nurse in China." },
-          { title: "Pengalaman klinikal", text: "Pengalaman merangkumi onkologi, emergency care dan operating room settings." },
-          { title: "Koordinasi bahasa perubatan", text: "Membantu keluarga menyusun rekod, soalan klinikal dan arahan hospital menjadi laluan jelas." },
+        "eyebrow": "Pasukan di sebalik perjalanan anda",
+        "title": "Pemahaman klinikal, koordinasi peribadi",
+        "body": "Penyelaras menggunakan pengalaman kesihatan dalam penyediaan rekod dan komunikasi hospital. Profil berikut menerangkan kepakaran berkaitan laluan onkologi Guangzhou. Ketersediaan disahkan untuk setiap kes.",
+        "cards": [
+          {
+            "title": "Latar profesional kesihatan",
+            "text": "Ahli koordinasi teras memiliki UK Master's degree in Nursing, New York State RN license, Chinese nursing license dan gelaran Associate Chief Nurse in China."
+          },
+          {
+            "title": "Pengalaman klinikal",
+            "text": "Pengalaman merangkumi onkologi, emergency care dan operating room settings."
+          },
+          {
+            "title": "Koordinasi bahasa perubatan",
+            "text": "Membantu keluarga menyusun rekod, soalan klinikal dan arahan hospital menjadi laluan jelas."
+          }
         ],
-        note: "Kredensial ini menyokong koordinasi dan komunikasi perubatan, bukan bermaksud H&C Care menyediakan diagnosis, rawatan, nursing services atau amalan perubatan di Hong Kong.",
+        "note": "Kredensial ini menyokong koordinasi dan komunikasi perubatan, bukan bermaksud H&C Care menyediakan diagnosis, rawatan, nursing services atau amalan perubatan di Hong Kong."
       },
       ethics: {
         eyebrow: "Kepercayaan dan pematuhan",
@@ -1654,12 +2210,12 @@ export const content: Record<Locale, SiteContent> = {
         note: "Skop servis, yuran, privasi dan tanggungjawab perlu disahkan dalam perjanjian bertulis sebelum pembayaran.",
       },
       contact: {
-        eyebrow: "Hubungi",
-        title: "Mohon konsultasi keahlian",
-        body: `Hubungi ${contact.name} melalui WhatsApp atau email. Sertakan diagnosis, wilayah, status semasa dan soalan utama.`,
-        email: "Email H&C Care",
-        whatsapp: "WhatsApp H&C Care",
-        privacy: "Maklumat perubatan digunakan untuk memahami kes dan koordinasi; boleh dikongsi dengan pasukan perubatan relevan di luar Hong Kong.",
+        "eyebrow": "Langkah seterusnya",
+        "title": "Mari bermula dengan perbualan",
+        "body": "Beritahu lokasi dan sokongan yang keluarga perlukan. Kami sahkan dokumen dan saluran komunikasi sebelum fail perubatan penuh dihantar.",
+        "email": "E-mel kami",
+        "whatsapp": "WhatsApp",
+        "privacy": "Maklumat perubatan digunakan untuk memahami kes dan koordinasi; boleh dikongsi dengan pasukan perubatan relevan di luar Hong Kong."
       },
       privacy: {
         eyebrow: "Privasi",
@@ -1688,6 +2244,27 @@ export const content: Record<Locale, SiteContent> = {
       disclaimer: {
         title: "Penafian perubatan",
         body: `${brand.name} menyediakan maklumat dan koordinasi, tidak menggantikan diagnosis atau rawatan doktor. Hasil dan kos tidak dijamin.`,
+      },
+
+      "car-t": {
+        "eyebrow": "Maklumat pesakit · Kanser gastrik",
+        "title": "CLDN18.2 CAR-T: persediaan perbincangan pakar",
+        "body": "Rekod yang boleh membantu perbincangan satri-cel (CT041) dengan pasukan onkologi berkelayakan di China.",
+        "cards": [
+          {
+            "title": "Apakah CLDN18.2?",
+            "text": "Biomarker yang boleh diuji pada tisu tumor. Pakar menilai patologi, kaedah dan keputusan ujian bersama diagnosis serta sejarah rawatan."
+          },
+          {
+            "title": "Apakah kelulusan yang diumumkan?",
+            "text": "Pada 22 Jun 2026 CARsgen mengumumkan kelulusan China bagi satricabtagene autoleucel (satri-cel/CT041), digambarkan sebagai produk CAR-T pertama dunia diluluskan untuk tumor pepejal. Indikasi diumumkan ialah adenokarsinoma gastrik atau persimpangan gastroesofagus lanjut, CLDN18.2-positif, HER2-negatif, selepas kegagalan sekurang-kurangnya dua barisan rawatan terdahulu."
+          },
+          {
+            "title": "Apa yang perlu disediakan?",
+            "text": "Patologi dan IHC, keputusan CLDN18.2 dan HER2, pengimejan terkini, sejarah rawatan bertarikh, ujian darah, ubat dan ringkasan keadaan semasa. Pasukan penerima menentukan ujian tambahan dan penilaian keselamatan."
+          }
+        ],
+        "note": "Ini maklumat umum, bukan penilaian kesesuaian rawatan. H&C Care menyelaras rekod dan komunikasi. Doktor perlu mengesahkan label diluluskan semasa, kelayakan, risiko, ketersediaan dan kos setiap pesakit. Akses dan hasil tidak dijamin."
       },
     },
   },

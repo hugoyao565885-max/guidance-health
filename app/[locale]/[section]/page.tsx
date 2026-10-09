@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { brand, contact, isLocale, localeMeta, locales, localePath, siteUrl, type Locale } from "../../../lib/site";
-import { content, footerSectionKeys, mainSectionKeys, sectionKeys, type SectionKey } from "../../../lib/content";
+import { EnquiryForm } from "../../../components/enquiry-form";
+import { ContactSection, ExpertProfiles, Faq, SectionHeading, ServicePlans, SiteFooter, SiteHeader, TextLink } from "../../../components/patient-sections";
+import { content, sectionKeys, type SectionKey } from "../../../lib/content";
+import { carTSource, patientContent } from "../../../lib/patient-content";
+import { brand, isLocale, localeMeta, locales, localePath, siteUrl } from "../../../lib/site";
 
-type PageProps = {
-  params: Promise<{ locale: string; section: string }>;
-};
+type PageProps = { params: Promise<{ locale: string; section: string }> };
 
 function isSection(value: string): value is SectionKey {
   return sectionKeys.includes(value as SectionKey);
@@ -18,375 +18,49 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { locale: rawLocale, section: rawSection } = await params;
-  if (!isLocale(rawLocale) || !isSection(rawSection)) return {};
-  const locale = rawLocale;
-  const copy = content[locale];
-  const section = copy.sections[rawSection];
-  const url = `${siteUrl}${localePath(locale)}${rawSection}/`;
-
+  const { locale, section } = await params;
+  if (!isLocale(locale) || !isSection(section)) return {};
+  const copy = content[locale].sections[section];
+  const url = `${siteUrl}${localePath(locale)}${section}/`;
   return {
-    title: `${section.title} | ${brand.name}`,
-    description: section.body,
-    alternates: {
-      canonical: url,
-      languages: {
-        ...Object.fromEntries(locales.map((item) => [localeMeta[item].htmlLang, `${siteUrl}${localePath(item)}${rawSection}/`])),
-        "x-default": `${siteUrl}/en/${rawSection}/`,
-      },
-    },
+    title: `${copy.title} | ${brand.name}`, description: copy.body,
+    alternates: { canonical: url, languages: { ...Object.fromEntries(locales.map((item) => [localeMeta[item].htmlLang, `${siteUrl}${localePath(item)}${section}/`])), "x-default": `${siteUrl}/en/${section}/` } },
   };
 }
 
-function Header({ locale }: { locale: Locale }) {
-  const copy = content[locale];
-
-  return (
-    <header className="site-header">
-      <div className="container nav-wrap">
-        <Link href={localePath(locale)} className="brand">
-          <span>{brand.name}</span>
-          <small>{copy.hero.eyebrow}</small>
-        </Link>
-        <nav className="desktop-nav" aria-label="Primary navigation">
-          <Link href={localePath(locale)}>{copy.nav.home}</Link>
-          {mainSectionKeys.map((section) => (
-            <Link href={`${localePath(locale)}${section}/`} key={section}>
-              {copy.nav[section]}
-            </Link>
-          ))}
-        </nav>
-        <Link className="button button-dark small" href={`${localePath(locale)}register/`}>
-          {copy.nav.register}
-        </Link>
-      </div>
-    </header>
-  );
-}
-
-function Footer({ locale }: { locale: Locale }) {
-  const copy = content[locale];
-
-  return (
-    <footer className="site-footer">
-      <div className="container footer-grid">
-        <div>
-          <strong>{brand.name}</strong>
-          <p>{brand.legalName}</p>
-          <p>{copy.sections.disclaimer.body}</p>
-        </div>
-        <nav aria-label="Footer navigation">
-          {footerSectionKeys.map((section) => (
-            <Link href={`${localePath(locale)}${section}/`} key={section}>
-              {copy.nav[section]}
-            </Link>
-          ))}
-          <Link href={`${localePath(locale)}register/`}>{copy.nav.register}</Link>
-          <Link href={`${localePath(locale)}contact/`}>{copy.nav.contact}</Link>
-        </nav>
-      </div>
-    </footer>
-  );
-}
-
-function SectionHero({ locale, section }: { locale: Locale; section: SectionKey }) {
-  const copy = content[locale].sections[section];
-
-  return (
-    <section className="page-hero">
-      <div className="container">
-        <p className="eyebrow">{copy.eyebrow}</p>
-        <h1>{copy.title}</h1>
-        <p>{copy.body}</p>
-      </div>
-    </section>
-  );
-}
-
-function Cards({ cards }: { cards: Array<{ title: string; text: string }> }) {
-  return (
-    <div className="card-grid">
-      {cards.map((card) => (
-        <article className="info-card" key={card.title}>
-          <h3>{card.title}</h3>
-          <p>{card.text}</p>
-        </article>
-      ))}
-    </div>
-  );
-}
-
-function MembershipPlans({ plans }: { plans: Array<{ name: string; price: string; fit: string; items: string[] }> }) {
-  return (
-    <div className="membership-grid">
-      {plans.map((plan) => (
-        <article className="membership-card" key={plan.name}>
-          <span>{plan.name}</span>
-          <p className="membership-price">{plan.price}</p>
-          <h3>{plan.fit}</h3>
-          <ul>
-            {plan.items.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </article>
-      ))}
-    </div>
-  );
-}
-
-function MembershipModules({ title, modules, note }: { title: string; modules: Array<{ title: string; text: string }>; note: string }) {
-  return (
-    <div className="membership-modules">
-      <h3>{title}</h3>
-      <div className="module-grid">
-        {modules.map((item) => (
-          <article className="module-card" key={item.title}>
-            <h4>{item.title}</h4>
-            <p>{item.text}</p>
-          </article>
-        ))}
-      </div>
-      <div className="note-card">{note}</div>
-    </div>
-  );
-}
-
-function Questions({ title, questions }: { title: string; questions: string[] }) {
-  return (
-    <div className="questions-panel">
-      <h3>{title}</h3>
-      <ul>
-        {questions.map((question) => (
-          <li key={question}>{question}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-function LegalCards({ cards, note }: { cards: Array<{ title: string; text: string }>; note: string }) {
-  return (
-    <>
-      <Cards cards={cards} />
-      <div className="note-card">{note}</div>
-    </>
-  );
-}
-
-function RegisterIntake({ register }: { register: (typeof content)[Locale]["sections"]["register"] }) {
-  const mailHref = `mailto:${contact.email}?subject=${encodeURIComponent("H&C Care patient membership registration")}`;
-
-  return (
-    <>
-      <div className="portal-entry">
-        <div>
-          <p className="eyebrow">{register.eyebrow}</p>
-          <h2>{register.portalTitle}</h2>
-          <p>{register.portalText}</p>
-          <div className="cta-row">
-            <a href={mailHref} className="button button-dark">
-              {register.email}
-            </a>
-            <a href={contact.whatsappUrl} className="button button-light">
-              {register.whatsapp}
-            </a>
-          </div>
-        </div>
-        <div className="portal-card-grid">
-          {register.portalCards.map((card) => (
-            <article className="portal-card" key={card.title}>
-              <h3>{card.title}</h3>
-              <p>{card.text}</p>
-            </article>
-          ))}
-        </div>
-      </div>
-
-      <div className="register-layout">
-        <div>
-          <h2>{register.stepsTitle}</h2>
-          <Cards cards={register.steps} />
-          <div className="documents register-fields">
-            <h3>{register.fieldsTitle}</h3>
-            <ul>
-              {register.fields.map((field) => (
-                <li key={field}>{field}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        <aside className="documents register-checklist">
-          <h3>{register.documentsTitle}</h3>
-          <ul>
-            {register.documents.map((document) => (
-              <li key={document}>{document}</li>
-            ))}
-          </ul>
-        </aside>
-      </div>
-
-      <div className="secure-portal-note">
-        <h3>{register.secureTitle}</h3>
-        <ul>
-          {register.secureItems.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="register-consent">
-        <div>
-          <h3>{register.consentTitle}</h3>
-          <p>{register.consent}</p>
-        </div>
-        <div className="cta-row">
-          <a href={mailHref} className="button button-dark">
-            {register.email}
-          </a>
-          <a href={contact.whatsappUrl} className="button button-light">
-            {register.whatsapp}
-          </a>
-        </div>
-      </div>
-
-      <div className="note-card">{register.note}</div>
-    </>
-  );
+function ServiceList({ cards }: { cards: Array<{ title: string; text: string }> }) {
+  return <div className="service-list">{cards.map((card, index) => <article key={card.title}><span className="item-number">{String(index + 1).padStart(2, "0")}</span><div><h2>{card.title}</h2><p>{card.text}</p></div></article>)}</div>;
 }
 
 export default async function SectionPage({ params }: PageProps) {
-  const { locale: rawLocale, section: rawSection } = await params;
-  if (!isLocale(rawLocale) || !isSection(rawSection)) notFound();
-
-  const locale = rawLocale;
-  const section = rawSection;
-  const meta = localeMeta[locale];
+  const { locale, section } = await params;
+  if (!isLocale(locale) || !isSection(section)) notFound();
   const copy = content[locale];
+  const ui = patientContent[locale];
+  const page = copy.sections[section];
+  const path = localePath(locale);
+  const isLegal = section === "privacy" || section === "terms";
 
   return (
-    <div className="site-body" lang={meta.htmlLang} dir={meta.dir}>
-      <Header locale={locale} />
-      <main>
-        <SectionHero locale={locale} section={section} />
-        <section className="section">
-          <div className="container">
-            {section === "membership" ? (
-              <>
-                <MembershipPlans plans={copy.sections.membership.plans} />
-                <MembershipModules
-                  title={copy.sections.membership.modulesTitle}
-                  modules={copy.sections.membership.modules}
-                  note={copy.sections.membership.modulesNote}
-                />
-                <div className="note-card">{copy.sections.membership.note}</div>
-              </>
-            ) : null}
-
-            {section === "oncology" ? (
-              <>
-                <Cards cards={copy.sections.oncology.cards} />
-                <div className="note-card">{copy.sections.oncology.note}</div>
-              </>
-            ) : null}
-
-            {section === "mdt" ? (
-              <>
-                <Cards cards={copy.sections.mdt.cards} />
-                <Questions title={copy.sections.mdt.questionsTitle} questions={copy.sections.mdt.questions} />
-                <div className="note-card">{copy.sections.mdt.note}</div>
-              </>
-            ) : null}
-
-            {section === "experts" ? (
-              <>
-                <div className="expert-grid">
-                  {copy.sections.experts.people.map((person) => (
-                    <article className="expert-card" key={person.name}>
-                      <Image src={person.image} alt={person.name} width={520} height={560} />
-                      <div>
-                        <h3>{person.name}</h3>
-                        <p className="role">{person.role}</p>
-                        <p>{person.text}</p>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-                <div className="note-card">{copy.sections.experts.note}</div>
-              </>
-            ) : null}
-
-            {section === "hospitals" ? (
-              <div className="hospital-layout">
-                <div>
-                  <Cards cards={copy.sections.hospitals.cards} />
-                  <div className="note-card">{copy.sections.hospitals.note}</div>
-                </div>
-                <div className="hospital-media">
-                  <Image src="/images/patient-room.jpg" alt="International patient room in Guangzhou" width={900} height={600} />
-                  <Image src="/images/guangzhou-hospital-campus.jpg" alt="Hospital campus in Guangzhou" width={900} height={600} />
-                </div>
-              </div>
-            ) : null}
-
-            {section === "journey" ? (
-              <>
-                <div className="steps">
-                  {copy.sections.journey.steps.map((step, index) => (
-                    <article className="step-card" key={step.title}>
-                      <span>{String(index + 1).padStart(2, "0")}</span>
-                      <h3>{step.title}</h3>
-                      <p>{step.text}</p>
-                    </article>
-                  ))}
-                </div>
-                <div className="documents">
-                  <h3>{copy.sections.journey.documentsTitle}</h3>
-                  <ul>
-                    {copy.sections.journey.documents.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              </>
-            ) : null}
-
-            {section === "register" ? <RegisterIntake register={copy.sections.register} /> : null}
-
-            {section === "contact" ? (
-              <div className="contact-grid section-contact-grid">
-                <div>
-                  <h2>{copy.sections.contact.title}</h2>
-                  <p>{copy.sections.contact.body}</p>
-                  <div className="cta-row">
-                    <a href={`mailto:${contact.email}`} className="button button-dark">
-                      {copy.sections.contact.email}
-                    </a>
-                    <a href={contact.whatsappUrl} className="button button-light">
-                      {copy.sections.contact.whatsapp}
-                    </a>
-                  </div>
-                </div>
-                <aside className="contact-card">
-                  <strong>{contact.name}</strong>
-                  {contact.emails.map((email) => (
-                    <a key={email} href={`mailto:${email}`}>
-                      {email}
-                    </a>
-                  ))}
-                  <span>{contact.whatsapp}</span>
-                  <p>{copy.sections.contact.privacy}</p>
-                </aside>
-              </div>
-            ) : null}
-
-            {section === "privacy" ? <LegalCards cards={copy.sections.privacy.cards} note={copy.sections.privacy.note} /> : null}
-            {section === "terms" ? <LegalCards cards={copy.sections.terms.cards} note={copy.sections.terms.note} /> : null}
-          </div>
-        </section>
+    <div className="site-body">
+      <SiteHeader locale={locale} section={section} />
+      <main id="main-content">
+        <section className="page-hero"><div className="container"><p className="eyebrow">{page.eyebrow}</p><h1>{page.title}</h1><p>{page.body}</p></div></section>
+        <section className="section"><div className="container">
+          {section === "membership" ? <><ServicePlans locale={locale} /><div className="membership-modules"><h2>{copy.sections.membership.modulesTitle}</h2><ServiceList cards={copy.sections.membership.modules} /><p className="service-note">{copy.sections.membership.modulesNote}</p></div><div className="faq-layout section-inner"><SectionHeading {...ui.faq} /><Faq locale={locale} /></div></> : null}
+          {section === "oncology" ? <><ServiceList cards={copy.sections.oncology.cards} /><div className="source-note"><TextLink href={`${path}car-t/`}>{ui.carT.title}</TextLink></div><p className="service-note">{copy.sections.oncology.note}</p></> : null}
+          {section === "mdt" ? <><ServiceList cards={copy.sections.mdt.cards} /><div className="questions-panel"><h2>{copy.sections.mdt.questionsTitle}</h2><ul>{copy.sections.mdt.questions.map((question) => <li key={question}>{question}</li>)}</ul></div><p className="service-note">{copy.sections.mdt.note}</p></> : null}
+          {section === "experts" ? <><ExpertProfiles locale={locale} /><div className="section-inner"><SectionHeading {...copy.sections.clinicalTeam} /><ServiceList cards={copy.sections.clinicalTeam.cards} /></div><p className="service-note">{copy.sections.experts.note}</p></> : null}
+          {section === "hospitals" ? <div className="hospital-layout"><div><ServiceList cards={copy.sections.hospitals.cards} /><p className="service-note">{copy.sections.hospitals.note}</p></div><figure><Image src="/images/patient-room.jpg" alt={ui.roomAlt} width={1800} height={1200} sizes="(max-width: 900px) 100vw, 42vw" /><figcaption>{ui.roomAlt}</figcaption></figure></div> : null}
+          {section === "journey" ? <><ol className="journey-full">{copy.sections.journey.steps.map((step, index) => <li key={step.title}><span>{String(index + 1).padStart(2, "0")}</span><div><h2>{step.title}</h2><p>{step.text}</p></div></li>)}</ol><div className="documents section-inner"><h2>{copy.sections.journey.documentsTitle}</h2><ul>{copy.sections.journey.documents.map((document) => <li key={document}>{document}</li>)}</ul><TextLink href={`${path}register/`}>{ui.start}</TextLink></div></> : null}
+          {section === "register" ? <div className="enquiry-layout"><EnquiryForm locale={locale} copy={ui} /><aside className="record-checklist"><h2>{copy.sections.register.documentsTitle}</h2><p>{ui.enquiry.recordsIntro}</p><ul>{copy.sections.register.documents.map((document) => <li key={document}>{document}</li>)}</ul><p className="service-note">{ui.enquiry.identityNote}</p></aside></div> : null}
+          {section === "car-t" ? <><ServiceList cards={ui.carT.items} /><div className="source-note"><span>{ui.carT.published}</span><a href={carTSource} target="_blank" rel="noopener noreferrer">{ui.carT.source}</a></div><p className="service-note">{ui.carT.note}</p><TextLink href={`${path}register/`}>{ui.start}</TextLink></> : null}
+          {isLegal ? <><ServiceList cards={copy.sections[section].cards} /><p className="service-note">{copy.sections[section].note}</p></> : null}
+          {section === "contact" ? <div className="enquiry-layout"><EnquiryForm locale={locale} copy={ui} /><div><SectionHeading {...ui.journey} /><ol className="journey-full">{ui.journey.items.map((item, index) => <li key={item.title}><span>0{index + 1}</span><div><h3>{item.title}</h3><p>{item.text}</p></div></li>)}</ol></div></div> : null}
+        </div></section>
+        {isLegal ? null : <ContactSection locale={locale} />}
       </main>
-      <Footer locale={locale} />
+      <SiteFooter locale={locale} />
     </div>
   );
 }
