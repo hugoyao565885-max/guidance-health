@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { ArrowRight, ArrowUpRight, Check, ChevronDown, Mail, MessageCircle } from "lucide-react";
 import { content, type SectionKey } from "../lib/content";
 import { patientContent } from "../lib/patient-content";
-import { admissionTotal, formatServiceAmount, servicePrices } from "../lib/service-pricing";
+import { serviceCombinationTotal, formatServiceAmount, servicePrices } from "../lib/service-pricing";
 import { brand, contact, localePath, type Locale } from "../lib/site";
 import { SiteNavigation } from "./site-navigation";
 
@@ -62,8 +62,8 @@ export function ServicePlans({ locale, detailed = false }: { locale: Locale; det
         <h2 id={`${locale}-pricing-title`}>{pricing.title}</h2><p>{pricing.body}</p>
         <table className="pricing-table">
           <caption>{pricing.unit} · {servicePrices.currency}</caption>
-          <thead><tr><th scope="col">{pricing.cycleLabel}</th>{pricing.vehicles.map((vehicle) => <th scope="col" key={vehicle}>{vehicle}</th>)}</tr></thead>
-          <tbody>{[true, false].map((firstAdmission) => <tr key={String(firstAdmission)}><th scope="row">{firstAdmission ? pricing.firstLabel : pricing.repeatLabel}<small>{firstAdmission ? pricing.firstNote : pricing.repeatNote}</small></th>{(["fiveSeat", "business"] as const).map((vehicle) => <td key={vehicle}><ServiceAmount amount={admissionTotal(vehicle, firstAdmission)} locale={locale} /></td>)}</tr>)}</tbody>
+          <thead><tr><th scope="col">{pricing.combinationLabel}</th>{pricing.vehicles.map((vehicle) => <th scope="col" key={vehicle}>{vehicle}</th>)}</tr></thead>
+          <tbody>{[true, false].map((includePreArrival) => <tr key={String(includePreArrival)}><th scope="row">{includePreArrival ? pricing.allStagesLabel : pricing.inChinaAfterLabel}<small>{includePreArrival ? pricing.allStagesNote : pricing.inChinaAfterNote}</small></th>{(["fiveSeat", "business"] as const).map((vehicle) => <td key={vehicle}><ServiceAmount amount={serviceCombinationTotal(vehicle, includePreArrival)} locale={locale} /></td>)}</tr>)}</tbody>
         </table>
       </section>
       <p className="service-note">{ui.services.note}</p>

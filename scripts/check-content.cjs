@@ -25,17 +25,17 @@ function loadDictionary(file) {
 const { locales, localeMeta, contact, brand } = loadDictionary(path.join(root, "lib/site.ts"));
 const { content, sectionKeys } = loadDictionary(path.join(root, "lib/content.ts"));
 const { patientContent, carTSource } = loadDictionary(path.join(root, "lib/patient-content.ts"));
-const { serviceContent, servicePrices, admissionTotal } = loadDictionary(path.join(root, "lib/service-pricing.ts"));
+const { serviceContent, servicePrices, serviceCombinationTotal } = loadDictionary(path.join(root, "lib/service-pricing.ts"));
 assert.equal(new URL(carTSource).protocol, "https:");
 assert.deepEqual(contact.emails, ["info@hccareadvisory.com", "contact@hccareadvisory.com", "support@hccareadvisory.com"]);
 assert.equal(contact.whatsappUrl, "https://wa.me/85295813961");
 assert.equal(brand.zhLegalName, "康誠健康顧問有限公司");
 assert.ok(sectionKeys.includes("about"));
 assert.deepEqual(servicePrices, { currency: "CNY", quotedOn: "2026-10-10", preArrival: 2880, duringStay: { fiveSeat: 3580, business: 3730 }, afterDischarge: 1180 });
-assert.equal(admissionTotal("fiveSeat", true), 7640);
-assert.equal(admissionTotal("business", true), 7790);
-assert.equal(admissionTotal("fiveSeat", false), 4760);
-assert.equal(admissionTotal("business", false), 4910);
+assert.equal(serviceCombinationTotal("fiveSeat", true), 7640);
+assert.equal(serviceCombinationTotal("business", true), 7790);
+assert.equal(serviceCombinationTotal("fiveSeat", false), 4760);
+assert.equal(serviceCombinationTotal("business", false), 4910);
 
 for (const locale of locales) {
   const page = content[locale];
@@ -47,7 +47,11 @@ for (const locale of locales) {
   assert.deepEqual(ui.services.plans.map((plan) => plan.stage), ["preArrival", "duringStay", "afterDischarge"], `${locale}: admission stages`);
   assert.equal(ui.services.conditions.length, 6, `${locale}: service allowances`);
   assert.equal(ui.services.pricing.vehicles.length, 2, `${locale}: airport vehicle options`);
-  assert.ok(ui.services.pricing.firstNote && ui.services.pricing.repeatNote && ui.services.pricing.unit, `${locale}: repeat admission billing`);
+  assert.ok(ui.services.pricing.allStagesLabel && ui.services.pricing.inChinaAfterLabel && ui.services.pricing.allStagesNote && ui.services.pricing.inChinaAfterNote && ui.services.pricing.unit, `${locale}: optional service combinations`);
+  assert.match(ui.services.body, /separately|單獨|отдельно|منفصل|terpisah|berasingan/, `${locale}: stages can be purchased separately`);
+  assert.match(ui.services.pricing.body, /not required|並非必須|не обязательны|ليست باقات إلزامية|bukan paket wajib|bukan pakej wajib/, `${locale}: combination totals are examples, not mandatory bundles`);
+  assert.doesNotMatch(JSON.stringify(ui.services), /first-time|first admission|首次|нового пациента|Новый пациент|первой подготовке|المريض الجديد|التحضير الأولى|pertama kali|persiapan pertama|kali pertama|persediaan pertama/i, `${locale}: no first-time-only service wording`);
+  assert.doesNotMatch(JSON.stringify(ui.services), /Purchased for every|每次住院均需購買|Приобретается для каждой|تشترى لكل دخول|Dibeli untuk setiap|Dibeli setiap kemasukan/, `${locale}: stages are not compulsory`);
   assert.equal(page.sections.membership.body, ui.services.body, `${locale}: pricing metadata`);
   assert.deepEqual(page.sections.membership.plans, ui.services.plans, `${locale}: duplicated service copy diverged`);
   assert.deepEqual(page.sections.terms.cards.slice(0, 2), [ui.services.included, ui.services.excluded], `${locale}: package fee boundaries`);
