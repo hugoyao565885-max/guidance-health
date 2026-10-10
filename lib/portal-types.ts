@@ -1,0 +1,3 @@
+export type MemberProfile = { id: string; email: string; display_name: string; country: string; preferred_locale: string; created_at: string };
+export type PatientCase = { id: string; user_id: string; relationship: string; diagnosis: string; treatment_history: string; medications: string; symptoms: string; consent_version: string; status: string; updated_at: string };
+export type CaseDocument = { id: string; case_id: string; user_id: string; original_name: string; category: string; mime_type: string; byte_size: number; object_path: string; uploaded: boolean; created_at: string };

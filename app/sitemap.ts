@@ -12,7 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly" as const,
       priority: locale === "en" ? 1 : 0.9,
     },
-    ...sectionKeys.map((section) => ({
+    ...sectionKeys.filter((section) => section !== "register").map((section) => ({
       url: `${siteUrl}${localePath(locale)}${section}/`,
       lastModified: now,
       changeFrequency: "monthly" as const,

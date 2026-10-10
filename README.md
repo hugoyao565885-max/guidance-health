@@ -52,4 +52,34 @@ Service stages can be purchased separately or combined according to patient need
 
 The homepage only previews the company, oncology focus and experts, with contact actions. Pricing, full processes, treatment information and FAQ remain on their detail pages.
 
-The enquiry form opens an editable email or WhatsApp draft. It does not create an account, upload records, or store patient data. Authentication, private medical-record storage, access controls, and an approved consent workflow are prerequisites for a future patient portal. Do not add patient photographs or records to public assets without verified publication authorization and de-identification.
+The contact enquiry form still opens an editable email or WhatsApp draft and does not transmit data to the website. The separate member portal uses Supabase Auth, Postgres RLS, and private Storage. Never add patient photographs or records to public assets or GitHub.
+
+## Member portal setup
+
+The portal is disabled by default until backend provisioning and live tests are complete. No successful registration or upload is simulated.
+
+1. Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` in local and Vercel environment settings. These are public parameters. Do not use a secret or service-role key in this app.
+2. Run `supabase/migrations/202610100001_member_portal.sql` once in the project's SQL Editor. This creates tables, restricted RPC functions, RLS policies, and a private `patient-records` bucket. The SQL runs in a transaction and must not be partially applied.
+3. Keep email confirmation enabled and set the provider's minimum password length to 12. Set Auth Site URL to `https://guidance-health.vercel.app`; add exact production callback and approved localhost callback URLs to the redirect allowlist. Configure custom SMTP directly in Supabase. Default SMTP is restricted to project team addresses and is not a public registration delivery service.
+4. For cross-device confirmation, use an email template link to `{{ .SiteURL }}/auth/callback?token_hash={{ .TokenHash }}&type=email&next=/en/member/`. For recovery use `type=recovery&next=/en/reset-password/`. The standard PKCE `ConfirmationURL` flow is also supported when opened in the original browser. Email templates must not include medical data.
+5. Enable TOTP MFA in Supabase. Register `support@hccareadvisory.com`, verify its email, then run `supabase/authorize-admin.sql` as project owner. The admin allowlist is private, not user-editable metadata. Admin database and file reads require an `aal2` session. The support user sets up its own authenticator at `/{locale}/mfa/`.
+6. Complete synthetic-account tests below before setting `NEXT_PUBLIC_MEMBER_PORTAL_ENABLED=true` in Vercel and rebuilding. Use a separate test deployment for this validation; never weaken production protections or disable email verification.
+
+Portal routes: `/{locale}/register/`, `/login/`, `/forgot-password/`, `/reset-password/`, `/member/`, `/mfa/`, `/admin/`. These are dynamic, noindex and no-store, excluded from the sitemap. A member can save one case, submit it, upload or remove PDF/JPG/PNG files and download them through an authenticated endpoint. Downloads expire after 60 seconds and are served as attachments. Staff can list members, read cases and update coordination status. Passwords are handled by Supabase Auth and are never exposed to the staff backend.
+
+Uploads are limited to 10 MB per file, 20 reservations per member and 60 reservations across this initial project (at most 600 MB). Global reservation limits use a database advisory lock. Failed uploads can be removed by the owner. RLS checks verified users and active rows in `auth.sessions`, so signed-out sessions cannot continue reading records with an otherwise unexpired JWT. Signed download links already issued can remain usable for their 60-second lifetime. Large DICOM studies require a separately agreed secure channel. The Free plan has limited storage, may pause for inactivity and is not a blanket healthcare compliance certification. Review region, provider terms, retention, incident response and cross-border permissions before collecting real patient records.
+
+## Portal verification
+
+`npm run check:portal` covers dictionary parity, file signatures and sizes, route isolation and security configuration invariants. This does not replace live backend tests.
+
+`npm run test:portal-sql` applies the actual migration to disposable PGlite PostgreSQL with fixture Auth/Storage schemas. It exercises RLS, RPC ownership, consent, per-member/global quotas, MFA, revocation and audit. It does not exercise the live Supabase HTTP services or email delivery.
+
+- Verified email signup, login, logout and password recovery with real email delivery.
+- Two synthetic members: each can save/upload/read/remove its own data but cannot list/read/write/download the other's case or files, including direct REST/Storage requests.
+- Anonymous clients cannot read tables, call restricted RPCs or upload/read private objects.
+- A normal member cannot enter the admin backend, self-promote or call `admin_update_case`.
+- Support without MFA cannot read another member's records. After MFA it can view submitted cases and download records; audit entries are created.
+- Test invalid file types, oversized files, failed uploads, ownership spoofing and concurrent quota reservations.
+- Account data and auth cookies are never cached across requests; portal pages are not indexed. No medical payloads, passwords, tokens or signed URLs are written to logs.
+- Add operational retention/deletion handling, backups and quota monitoring before real-patient launch. Admin search filters the current 50-member page; use pagination for further members.
