@@ -83,4 +83,8 @@ for (const locale of locales) {
 }
 
 assert.ok(fs.existsSync(path.join(root, "public/images/patient-room.jpg")));
+const homepage = fs.readFileSync(path.join(root, "app/[locale]/page.tsx"), "utf8");
+assert.doesNotMatch(homepage, /ServicePlans|<Faq|journey-preview|deliverables-layout/, "Homepage should preview, not duplicate full detail pages");
+assert.match(homepage, /<CompanySummary locale=\{locale\} compact/, "Homepage company introduction should be compact");
+assert.match(homepage, /<ExpertProfiles locale=\{locale\} compact/, "Keep real expert portraits on the homepage");
 console.log(`Content checks passed for ${locales.length} languages and ${sectionKeys.length} page sections.`);

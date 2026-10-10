@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowUpRight, Check, ClipboardList, FileCheck2, MessageCircle, Route, Stethoscope } from "lucide-react";
-import { ContactSection, ExpertProfiles, Faq, SectionHeading, ServicePlans, SiteFooter, SiteHeader, TextLink } from "../../components/patient-sections";
+import { ArrowUpRight, Check, MessageCircle } from "lucide-react";
+import { ContactSection, ExpertProfiles, SectionHeading, SiteFooter, SiteHeader, TextLink } from "../../components/patient-sections";
 import { CompanySummary } from "../../components/company-profile";
 import { content } from "../../lib/content";
 import { patientContent } from "../../lib/patient-content";
@@ -37,7 +37,6 @@ export default async function LocalePage({ params }: PageProps) {
   const ui = patientContent[locale];
   const copy = content[locale];
   const path = localePath(locale);
-  const deliverableIcons = [ClipboardList, FileCheck2, Stethoscope, Route];
 
   return (
     <div className="site-body">
@@ -54,33 +53,18 @@ export default async function LocalePage({ params }: PageProps) {
         </section>
         <div className="trust-strip"><div className="container">{ui.hero.trust.map((item) => <span key={item}><Check size={17} aria-hidden="true" />{item}</span>)}</div></div>
 
-        <section className="section" id="experts"><div className="container">
-          <div className="heading-with-link"><SectionHeading {...ui.team} /><TextLink href={`${path}experts/`}>{copy.nav.experts}</TextLink></div>
-          <ExpertProfiles locale={locale} compact />
-          <div className="clinical-background"><Stethoscope size={22} aria-hidden="true" /><p>{copy.sections.clinicalTeam.cards[0].text}</p></div>
-        </div></section>
-
-        <CompanySummary locale={locale} />
+        <CompanySummary locale={locale} compact />
 
         <section className="section light-band" id="oncology"><div className="container">
           <SectionHeading {...ui.focus} />
           <div className="focus-grid">{ui.focus.items.map((item, index) => <article key={item.title}><span className="item-number">0{index + 1}</span><h3>{item.title}</h3><p>{item.text}</p><TextLink href={`${path}${index === 0 ? "mdt" : "oncology"}/`}>{ui.more}</TextLink></article>)}</div>
-          <Link className="pathway-link" href={`${path}car-t/`}><span>CLDN18.2 CAR-T</span><p>{ui.carT.title}</p><ArrowUpRight size={23} aria-hidden="true" /></Link>
         </div></section>
 
-        <section className="section" id="support"><div className="container deliverables-layout">
-          <SectionHeading {...ui.deliverables} />
-          <div className="deliverables-list">{ui.deliverables.items.map((item, index) => { const Icon = deliverableIcons[index]; return <article key={item.title}><Icon size={23} aria-hidden="true" /><div><h3>{item.title}</h3><p>{item.text}</p></div></article>; })}</div>
+        <section className="section" id="experts"><div className="container">
+          <div className="heading-with-link"><SectionHeading {...ui.team} /><TextLink href={`${path}experts/`}>{copy.nav.experts}</TextLink></div>
+          <ExpertProfiles locale={locale} compact />
         </div></section>
 
-        <section className="section light-band" id="journey"><div className="container">
-          <div className="heading-with-link"><SectionHeading {...ui.journey} /><TextLink href={`${path}journey/`}>{copy.nav.journey}</TextLink></div>
-          <ol className="journey-preview">{ui.journey.items.map((item, index) => <li key={item.title}><span>0{index + 1}</span><h3>{item.title}</h3><p>{item.text}</p></li>)}</ol>
-        </div></section>
-
-        <section className="section" id="membership"><div className="container"><SectionHeading {...ui.services} /><ServicePlans locale={locale} /><TextLink href={`${path}membership/`}>{copy.nav.membership}</TextLink></div></section>
-
-        <section className="section light-band" id="questions"><div className="container faq-layout"><SectionHeading {...ui.faq} /><Faq locale={locale} /></div></section>
         <ContactSection locale={locale} />
       </main>
       <SiteFooter locale={locale} />

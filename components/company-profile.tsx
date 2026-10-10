@@ -8,13 +8,13 @@ function CompanyItems({ items }: { items: Array<{ title: string; text: string }>
   return <div className="company-items">{items.map((item) => <article key={item.title}><h3>{item.title}</h3><p>{item.text}</p></article>)}</div>;
 }
 
-export function CompanySummary({ locale }: { locale: Locale }) {
+export function CompanySummary({ locale, compact = false }: { locale: Locale; compact?: boolean }) {
   const copy = aboutContent[locale];
   return (
     <section className="section light-band" id="about">
       <div className="container company-overview">
         <div className="section-header"><p className="eyebrow">{copy.eyebrow}</p><h2>{copy.summaryTitle}</h2><Link className="text-link" href={`${localePath(locale)}about/`}>{copy.link}<ArrowRight size={17} aria-hidden="true" /></Link></div>
-        <div className="company-copy"><p>{copy.body}</p><p>{copy.summary}</p><p className="company-value">{copy.value}</p></div>
+        <div className="company-copy">{compact ? <p>{copy.summary}</p> : <><p>{copy.body}</p><p>{copy.summary}</p><p className="company-value">{copy.value}</p></>}</div>
       </div>
     </section>
   );
