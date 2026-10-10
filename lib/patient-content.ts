@@ -1,4 +1,5 @@
 import type { Locale } from "./site";
+import { serviceContent, type ServiceContent } from "./service-pricing";
 
 type Item = { title: string; text: string };
 type Heading = { eyebrow: string; title: string; body: string };
@@ -16,7 +17,7 @@ export type PatientContent = {
   focus: Heading & { items: Item[] };
   deliverables: Heading & { items: Item[] };
   journey: Heading & { items: Item[] };
-  services: Heading & { quote: string; note: string; plans: Array<{ name: string; fit: string; items: string[] }>; modules: string[] };
+  services: ServiceContent;
   faq: Heading & { items: Item[] };
   contact: Heading & { labels: string[]; note: string };
   enquiry: Heading & {
@@ -57,18 +58,15 @@ export const patientContent: Record<Locale, PatientContent> = {
       { title: "Prepare the case together", text: "After confirming consent and the submission channel, gather the available reports and questions." },
       { title: "Agree on the next step", text: "Confirm specialist communication, service scope, and a written quote before deciding whether to proceed." },
     ] },
-    services: { eyebrow: "Services & support", title: "Choose support that fits your situation", body: "Start with an initial enquiry, a focused coordination task, or ongoing annual case support. We confirm the scope and quote with you before paid services begin.", quote: "Request a service proposal", note: "Coordination fees and medical expenses are separate. Hospital, physician, testing, treatment, travel, accommodation, and third-party interpreter fees are confirmed separately. The written proposal explains inclusions, timing, and cancellation arrangements.", plans: [
-      { name: "Initial pathway enquiry", fit: "For patients and families exploring care in China.", items: ["Discuss your coordination needs", "Understand the preparation process", "Receive a record checklist"] },
-      { name: "Focused coordination", fit: "For a defined specialist or hospital coordination task.", items: ["Prepare the case and treatment timeline", "Coordinate agreed appointments or communication", "Clarify the next practical steps"] },
-      { name: "Annual case support", fit: "For patients who need continuing coordination over time.", items: ["Maintain and update the case file", "Coordinate agreed reviews and follow-up", "Support family communication across stages"] },
-    ], modules: ["Lymphoma MDT coordination", "Recovery & follow-up support", "Surgical pathway coordination"] },
+    services: serviceContent["en"],
     faq: { eyebrow: "Before you decide", title: "Questions patients and families ask", body: "A few practical answers before your first enquiry.", items: [
       { title: "Can I contact you before travelling?", text: "Yes. Begin by email or WhatsApp. After initial contact, we confirm what records are needed and whether specialist or hospital communication is appropriate." },
       { title: "What if some reports are missing?", text: "You can still make an initial enquiry. We help identify missing documents; the receiving clinical team decides whether the available material is sufficient for review." },
       { title: "Can a family member contact you?", text: "Yes. Please tell us your relationship to the patient. We confirm authorization before sharing or coordinating sensitive medical records." },
-      { title: "Are hospital and treatment costs included?", text: "Medical costs are separate from our coordination fee. A written proposal will explain the agreed support, third-party costs, and payment arrangements before paid work begins." },
+      { title: "Are hospital and treatment costs included?", text: serviceContent["en"].included.text + " " + serviceContent["en"].excluded.text },
       { title: "Do you guarantee treatment or trial enrollment?", text: "No. Licensed clinicians and receiving institutions decide eligibility, acceptance, treatment, and research enrollment. We help with preparation and communication." },
-      { title: "Can you help after I return home?", text: "Follow-up communication, document updates, and review reminders can be included in an agreed service scope. Your treating clinicians remain responsible for medical advice." },
+      { title: "Can you help after I return home?", text: serviceContent["en"].conditions[4].text },
+      serviceContent["en"].conditions[5],
     ] },
     contact: { eyebrow: "Here for your next step", title: "Let's start with a conversation", body: "Tell us where you are and what support your family needs. We will discuss the appropriate records and contact channel with you before you send a full medical file.", labels: ["New patient enquiries", "Service coordination", "Existing patient support"], note: "Please do not send passport copies or a full medical file in your first message. Contact local emergency services for urgent medical help." },
     enquiry: { eyebrow: "Patient enquiry", title: "Start your care coordination enquiry", body: "A few basic details are enough to begin. You do not need to have every report ready or choose a service level yet.", formTitle: "Prepare your first message", name: "Name or initials (optional)", country: "Country or region", language: "Preferred language", role: "You are contacting us as", roles: ["The patient", "A family member or authorized representative"], interest: "Support you would like to discuss", undecided: "Not sure yet", consent: "I am the patient or have permission to share this information for a coordination enquiry.", privacy: "Read the privacy notice", note: "These buttons open an editable email draft or WhatsApp message. Nothing is uploaded or submitted to this website, and you must send the message in your chosen app. Please leave out medical reports, passport numbers, and urgent clinical instructions.", recordsIntro: "After initial contact and consent, use this checklist to gather available reports. We will confirm how to send them. Missing a document does not prevent an initial enquiry.", identityNote: "Identity documents are requested only when needed for a specific hospital or service arrangement, through a confirmed channel. A family representative may need patient authorization." },
@@ -97,18 +95,15 @@ export const patientContent: Record<Locale, PatientContent> = {
       { title: "一起準備個案", text: "確認授權與提交渠道後，再整理已有報告與需要醫生回答的問題。" },
       { title: "確認下一步安排", text: "了解專家溝通方式、服務範圍及書面報價後，再決定是否繼續。" },
     ] },
-    services: { eyebrow: "服務與支持", title: "按您的情況選擇協調支持", body: "可從初步諮詢、專項協調或年度個案支持開始。付費服務開始前，我們會與您確認範圍及書面報價。", quote: "諮詢獲取服務方案", note: "協調服務費與醫療費用分開。醫院、醫生、檢查、治療、出行、住宿及第三方翻譯費另行確認。書面方案會說明包含項目、時間安排及取消服務的處理方式。", plans: [
-      { name: "初步路徑諮詢", fit: "適合正在了解中國就醫的患者與家屬。", items: ["溝通協調需求", "了解資料準備流程", "獲取病歷資料清單"] },
-      { name: "專項協調服務", fit: "適合有明確專家或醫院協調任務的患者。", items: ["整理病情與治療時間線", "協調約定的預約或溝通", "釐清下一步實際安排"] },
-      { name: "年度個案支持", fit: "適合需要持續跟進與跨階段協調的患者。", items: ["維護與更新個案檔案", "協調約定的復評與隨訪", "支持不同階段的家屬溝通"] },
-    ], modules: ["淋巴瘤 MDT 協調", "康復與隨訪支持", "手術路徑協調"] },
+    services: serviceContent["zh-hant"],
     faq: { eyebrow: "決定前先了解", title: "患者與家屬常見問題", body: "初次聯絡前，您可能想先知道這些。", items: [
       { title: "還沒來中國，也可以先聯絡嗎？", text: "可以。先通過電郵或 WhatsApp 聯絡，我們會確認需要哪些資料，以及是否適合進一步與專家或醫院溝通。" },
       { title: "病歷報告不齊全怎麼辦？", text: "仍可先作初步諮詢。我們協助釐清缺失資料；現有資料是否足以評估，由接診醫療團隊判斷。" },
       { title: "家屬可以代為聯絡嗎？", text: "可以，請說明與患者的關係。在轉交或協調敏感病歷前，我們會確認患者授權。" },
-      { title: "服務費包含醫院和治療費嗎？", text: "醫療費用與協調服務費分開。付費服務前，書面方案會說明服務範圍、第三方費用及付款安排。" },
+      { title: "服務費包含醫院和治療費嗎？", text: serviceContent["zh-hant"].included.text + " " + serviceContent["zh-hant"].excluded.text },
       { title: "能保證獲得治療或臨床研究入組嗎？", text: "不能。資格、接診、治療和臨床研究入組由持牌醫生及接診機構決定。我們提供準備與溝通支持。" },
-      { title: "回國後還能繼續獲得支持嗎？", text: "隨訪溝通、資料更新和復查提醒可納入約定的服務範圍。醫療建議仍由接診醫生負責。" },
+      { title: "回國後還能繼續獲得支持嗎？", text: serviceContent["zh-hant"].conditions[4].text },
+      serviceContent["zh-hant"].conditions[5],
     ] },
     contact: { eyebrow: "為下一步做好準備", title: "先從一次溝通開始", body: "告訴我們您在哪裡，以及家庭需要什麼支持。在發送完整病歷前，我們會先與您確認所需資料及聯絡渠道。", labels: ["新患者諮詢", "服務協調", "現有患者支持"], note: "首封信息請勿附上護照副本或完整病歷。緊急醫療需要請聯絡所在地急救服務。" },
     enquiry: { eyebrow: "患者諮詢", title: "開始您的就醫協調諮詢", body: "先提供少量基本資料即可開始，不必等齊所有報告，也不必現在選定服務檔次。", formTitle: "準備您的首封信息", name: "姓名或縮寫（選填）", country: "所在國家或地區", language: "偏好語言", role: "您的聯絡身份", roles: ["患者本人", "家屬或獲授權代表"], interest: "希望了解的支持", undecided: "暫未確定", consent: "我是患者本人，或已獲允許為協調諮詢分享這些資料。", privacy: "閱讀私隱聲明", note: "按鈕會打開可編輯的電郵草稿或 WhatsApp 信息。資料不會上傳或提交至本網站，您仍需在所選應用中自行發送。請勿填寫病歷報告、護照號碼或緊急臨床指示。", recordsIntro: "初步聯絡並確認授權後，可按以下清單準備已有報告；我們會確認提交方式。資料暫缺不影響初步諮詢。", identityNote: "身份證明僅在具體醫院或服務安排需要時，經確認渠道另行索取。家屬代辦可能需要患者授權。" },
@@ -137,18 +132,15 @@ export const patientContent: Record<Locale, PatientContent> = {
       { title: "Подготовим документы вместе", text: "После подтверждения согласия и канала передачи соберите имеющиеся отчеты и вопросы." },
       { title: "Согласуем следующий шаг", text: "До решения о продолжении подтвердим общение со специалистом, объем услуг и письменное предложение." },
     ] },
-    services: { eyebrow: "Услуги и поддержка", title: "Поддержка с учетом вашей ситуации", body: "Первичное обращение, отдельная задача или годовое сопровождение. Объем и стоимость согласуются письменно до начала платных услуг.", quote: "Запросить предложение", note: "Координация и медицинские расходы оплачиваются отдельно. Стоимость больницы, врачей, обследований, лечения, поездки, проживания и стороннего перевода подтверждается отдельно. Письменное предложение описывает услуги, сроки и условия отмены.", plans: [
-      { name: "Первичное обращение", fit: "Для семей, изучающих помощь в Китае.", items: ["Обсуждение потребностей", "Порядок подготовки", "Список документов"] },
-      { name: "Отдельная координация", fit: "Для определенной задачи со специалистом или больницей.", items: ["Резюме и хронология случая", "Согласованная запись или коммуникация", "Следующие практические шаги"] },
-      { name: "Годовое сопровождение", fit: "Для длительной координационной поддержки.", items: ["Обновление файла случая", "Согласованные повторные обсуждения", "Связь с семьей на разных этапах"] },
-    ], modules: ["Координация MDT при лимфоме", "Поддержка восстановления и наблюдения", "Координация хирургического маршрута"] },
+    services: serviceContent["ru"],
     faq: { eyebrow: "Перед решением", title: "Вопросы пациентов и близких", body: "Практическая информация до первого обращения.", items: [
       { title: "Можно обратиться до поездки?", text: "Да, по email или WhatsApp. После первого контакта уточним документы и уместность общения со специалистом или больницей." },
       { title: "Что делать, если нет всех отчетов?", text: "Можно обратиться с имеющимися материалами. Мы уточним, чего не хватает; достаточность документов для оценки определяет принимающая клиническая команда." },
       { title: "Может обратиться родственник?", text: "Да. Укажите родство. Перед передачей медицинских документов потребуется подтверждение разрешения пациента." },
-      { title: "Включены ли расходы на лечение?", text: "Нет, медицинские расходы отделены от координации. Письменное предложение поясняет услуги, сторонние расходы и оплату до начала платной работы." },
+      { title: "Включены ли расходы на лечение?", text: serviceContent["ru"].included.text + " " + serviceContent["ru"].excluded.text },
       { title: "Гарантируете ли вы лечение или участие в исследовании?", text: "Нет. Критерии, прием, лечение и включение в исследование определяют врачи и учреждения. Мы помогаем с подготовкой и связью." },
-      { title: "Есть ли поддержка после возвращения?", text: "Обновление документов, напоминания и последующая связь могут входить в согласованный объем. Медицинские рекомендации остаются ответственностью лечащих врачей." },
+      { title: "Есть ли поддержка после возвращения?", text: serviceContent["ru"].conditions[4].text },
+      serviceContent["ru"].conditions[5],
     ] },
     contact: { eyebrow: "Следующий шаг", title: "Начнем с разговора", body: "Расскажите, где вы находитесь и какая поддержка нужна семье. До отправки полного медицинского файла мы уточним документы и канал связи.", labels: ["Первичное обращение", "Координация услуг", "Поддержка текущих пациентов"], note: "Не прикладывайте паспорт и полный медицинский файл к первому сообщению. При неотложном состоянии обращайтесь в местную экстренную службу." },
     enquiry: { eyebrow: "Обращение пациента", title: "Начните обращение по координации", body: "Для начала достаточно нескольких основных сведений. Не нужно ждать всех отчетов или заранее выбирать услугу.", formTitle: "Подготовьте первое сообщение", name: "Имя или инициалы (необязательно)", country: "Страна или регион", language: "Предпочтительный язык", role: "Вы обращаетесь как", roles: ["Пациент", "Родственник или уполномоченный представитель"], interest: "Интересующая поддержка", undecided: "Пока не знаю", consent: "Я пациент или имею разрешение передать эти сведения для координационного обращения.", privacy: "Уведомление о конфиденциальности", note: "Кнопки открывают редактируемый черновик email или сообщение WhatsApp. Сайт ничего не загружает и не отправляет; отправьте сообщение сами в выбранном приложении. Не указывайте медицинские отчеты, паспортные номера и срочные клинические инструкции.", recordsIntro: "После первого контакта и согласия подготовьте имеющиеся отчеты по этому списку. Мы подтвердим канал передачи. Отсутствие документа не мешает первичному обращению.", identityNote: "Документы личности запрашиваются только при необходимости для конкретной больницы или услуги, через подтвержденный канал. Представителю может понадобиться разрешение пациента." },
@@ -177,18 +169,15 @@ export const patientContent: Record<Locale, PatientContent> = {
       { title: "نعد الملف معا", text: "بعد تأكيد الموافقة وقناة الإرسال، اجمع التقارير المتاحة والأسئلة." },
       { title: "نتفق على الخطوة التالية", text: "أكد التواصل مع المختص ونطاق الخدمة وعرض السعر المكتوب قبل المتابعة." },
     ] },
-    services: { eyebrow: "الخدمات والدعم", title: "دعم يناسب حالتك", body: "استفسار أولي أو مهمة تنسيق محددة أو دعم سنوي. نؤكد النطاق وعرض السعر كتابيا قبل بدء الخدمات المدفوعة.", quote: "اطلب مقترح الخدمة", note: "رسوم التنسيق منفصلة عن النفقات الطبية. تؤكد تكاليف المستشفى والأطباء والفحوص والعلاج والسفر والإقامة والترجمة الخارجية بشكل منفصل. يوضح المقترح المكتوب الخدمات والتوقيت وترتيبات الإلغاء.", plans: [
-      { name: "استفسار أولي عن المسار", fit: "للعائلات التي تستكشف الرعاية في الصين.", items: ["مناقشة احتياجات التنسيق", "فهم خطوات التحضير", "قائمة السجلات المطلوبة"] },
-      { name: "تنسيق محدد", fit: "لمهمة واضحة مع مختص أو مستشفى.", items: ["إعداد ملخص الحالة وتاريخ العلاج", "تنسيق المواعيد أو التواصل المتفق عليه", "توضيح الخطوات العملية التالية"] },
-      { name: "دعم الحالة السنوي", fit: "للمرضى الذين يحتاجون تنسيقا مستمرا.", items: ["تحديث ملف الحالة", "تنسيق المراجعات والمتابعة المتفق عليها", "التواصل مع العائلة عبر المراحل"] },
-    ], modules: ["تنسيق MDT لللمفوما", "دعم التعافي والمتابعة", "تنسيق المسار الجراحي"] },
+    services: serviceContent["ar"],
     faq: { eyebrow: "قبل اتخاذ القرار", title: "أسئلة المرضى والعائلات", body: "إجابات عملية قبل استفسارك الأول.", items: [
       { title: "هل يمكن التواصل قبل السفر؟", text: "نعم، عبر البريد أو WhatsApp. نؤكد بعدها السجلات المطلوبة ومدى ملاءمة التواصل مع المختص أو المستشفى." },
       { title: "ماذا لو كانت بعض التقارير ناقصة؟", text: "يمكن البدء باستفسار أولي. نساعد في تحديد النواقص، ويقرر الفريق السريري المستقبِل كفاية المواد للتقييم." },
       { title: "هل يمكن للعائلة التواصل بالنيابة؟", text: "نعم. يرجى توضيح العلاقة بالمريض. نؤكد التفويض قبل مشاركة السجلات الطبية الحساسة." },
-      { title: "هل تشمل الرسوم العلاج والمستشفى؟", text: "النفقات الطبية منفصلة عن رسوم التنسيق. يوضح المقترح المكتوب الخدمات وتكاليف الأطراف الأخرى وترتيبات الدفع قبل العمل المدفوع." },
+      { title: "هل تشمل الرسوم العلاج والمستشفى؟", text: serviceContent["ar"].included.text + " " + serviceContent["ar"].excluded.text },
       { title: "هل تضمنون العلاج أو دخول الدراسة؟", text: "لا. يحدد الأطباء والمؤسسات الأهلية والقبول والعلاج والمشاركة البحثية. نساعد في التحضير والتواصل." },
-      { title: "هل يوجد دعم بعد العودة؟", text: "يمكن إدراج التواصل اللاحق وتحديث الوثائق والتذكير بالمراجعات ضمن النطاق المتفق عليه. تبقى النصيحة الطبية مسؤولية الأطباء المعالجين." },
+      { title: "هل يوجد دعم بعد العودة؟", text: serviceContent["ar"].conditions[4].text },
+      serviceContent["ar"].conditions[5],
     ] },
     contact: { eyebrow: "لخطوتك التالية", title: "لنبدأ بمحادثة", body: "أخبرنا بمكانك والدعم الذي تحتاجه عائلتك. نؤكد الوثائق وقناة التواصل قبل إرسال ملف طبي كامل.", labels: ["استفسارات المرضى الجدد", "تنسيق الخدمات", "دعم المرضى الحاليين"], note: "لا ترسل نسخة جواز السفر أو ملفا طبيا كاملا في الرسالة الأولى. للحالات العاجلة اتصل بخدمات الطوارئ المحلية." },
     enquiry: { eyebrow: "استفسار المريض", title: "ابدأ استفسار تنسيق الرعاية", body: "تكفي معلومات أساسية قليلة للبدء. لا يلزم اكتمال التقارير أو اختيار الخدمة الآن.", formTitle: "جهز رسالتك الأولى", name: "الاسم أو الأحرف الأولى (اختياري)", country: "البلد أو المنطقة", language: "اللغة المفضلة", role: "تتواصل بصفتك", roles: ["المريض", "فرد من العائلة أو ممثل مفوض"], interest: "الدعم الذي ترغب بمناقشته", undecided: "لم أحدد بعد", consent: "أنا المريض أو لدي إذن بمشاركة هذه المعلومات لاستفسار التنسيق.", privacy: "اقرأ إشعار الخصوصية", note: "تفتح الأزرار مسودة بريد قابلة للتعديل أو رسالة WhatsApp. لا يرفع الموقع أي معلومات ولا يرسلها؛ يجب إرسال الرسالة من التطبيق المختار. لا تدرج تقارير طبية أو أرقام جوازات أو تعليمات سريرية عاجلة.", recordsIntro: "بعد التواصل والموافقة، اجمع التقارير المتاحة وفق القائمة. سنؤكد طريقة إرسالها. نقص وثيقة لا يمنع الاستفسار الأولي.", identityNote: "تطلب وثائق الهوية فقط عند الحاجة لترتيب محدد مع مستشفى أو خدمة وعبر قناة مؤكدة. قد يحتاج ممثل العائلة إلى تفويض المريض." },
@@ -217,18 +206,15 @@ export const patientContent: Record<Locale, PatientContent> = {
       { title: "Siapkan kasus bersama", text: "Setelah persetujuan dan kanal pengiriman dikonfirmasi, kumpulkan laporan dan pertanyaan yang tersedia." },
       { title: "Sepakati langkah selanjutnya", text: "Konfirmasi komunikasi spesialis, lingkup layanan, dan penawaran tertulis sebelum melanjutkan." },
     ] },
-    services: { eyebrow: "Layanan dan dukungan", title: "Dukungan sesuai situasi Anda", body: "Mulai dari pertanyaan awal, tugas koordinasi tertentu, atau dukungan kasus tahunan. Lingkup dan penawaran dikonfirmasi sebelum layanan berbayar.", quote: "Minta proposal layanan", note: "Biaya koordinasi terpisah dari biaya medis. Rumah sakit, dokter, pemeriksaan, terapi, perjalanan, akomodasi, dan penerjemah pihak ketiga dikonfirmasi terpisah. Proposal tertulis menjelaskan cakupan, waktu, dan pembatalan.", plans: [
-      { name: "Pertanyaan jalur awal", fit: "Untuk keluarga yang menjajaki perawatan di China.", items: ["Bahas kebutuhan koordinasi", "Pahami proses persiapan", "Dapatkan daftar rekam medis"] },
-      { name: "Koordinasi terfokus", fit: "Untuk tugas spesialis atau rumah sakit yang jelas.", items: ["Ringkasan dan linimasa kasus", "Janji atau komunikasi sesuai kesepakatan", "Langkah praktis berikutnya"] },
-      { name: "Dukungan kasus tahunan", fit: "Untuk pasien yang memerlukan koordinasi berkelanjutan.", items: ["Perbarui berkas kasus", "Koordinasi evaluasi dan tindak lanjut", "Komunikasi keluarga lintas tahap"] },
-    ], modules: ["Koordinasi MDT limfoma", "Dukungan pemulihan dan tindak lanjut", "Koordinasi jalur operasi"] },
+    services: serviceContent["id"],
     faq: { eyebrow: "Sebelum memutuskan", title: "Pertanyaan pasien dan keluarga", body: "Jawaban praktis sebelum menghubungi kami.", items: [
       { title: "Bisa menghubungi sebelum bepergian?", text: "Ya, melalui email atau WhatsApp. Setelah kontak awal kami mengonfirmasi dokumen dan apakah komunikasi spesialis atau rumah sakit sesuai." },
       { title: "Bagaimana jika laporan belum lengkap?", text: "Anda tetap dapat bertanya. Kami mengidentifikasi dokumen yang kurang; tim klinis penerima menentukan kecukupan bahan untuk evaluasi." },
       { title: "Bolehkah keluarga mewakili pasien?", text: "Ya. Jelaskan hubungan dengan pasien. Izin pasien dikonfirmasi sebelum rekam medis sensitif dibagikan." },
-      { title: "Apakah biaya medis sudah termasuk?", text: "Biaya medis terpisah dari koordinasi. Proposal tertulis menjelaskan layanan, biaya pihak ketiga, dan pembayaran sebelum pekerjaan berbayar." },
+      { title: "Apakah biaya medis sudah termasuk?", text: serviceContent["id"].included.text + " " + serviceContent["id"].excluded.text },
       { title: "Apakah terapi atau masuk penelitian dijamin?", text: "Tidak. Dokter dan institusi menentukan kelayakan, penerimaan, terapi, dan keikutsertaan penelitian. Kami membantu persiapan dan komunikasi." },
-      { title: "Ada dukungan setelah pulang?", text: "Komunikasi lanjutan, pembaruan dokumen, dan pengingat dapat masuk dalam lingkup yang disepakati. Saran medis tetap tanggung jawab dokter yang merawat." },
+      { title: "Ada dukungan setelah pulang?", text: serviceContent["id"].conditions[4].text },
+      serviceContent["id"].conditions[5],
     ] },
     contact: { eyebrow: "Langkah berikutnya", title: "Mari mulai dengan percakapan", body: "Beri tahu lokasi Anda dan dukungan yang dibutuhkan keluarga. Kami mengonfirmasi dokumen dan kanal komunikasi sebelum Anda mengirim berkas medis lengkap.", labels: ["Pertanyaan pasien baru", "Koordinasi layanan", "Dukungan pasien aktif"], note: "Jangan lampirkan paspor atau berkas medis lengkap pada pesan pertama. Untuk keadaan mendesak hubungi layanan darurat setempat." },
     enquiry: { eyebrow: "Pertanyaan pasien", title: "Mulai pertanyaan koordinasi perawatan", body: "Beberapa informasi dasar cukup untuk memulai. Anda tidak perlu menunggu semua laporan atau memilih layanan sekarang.", formTitle: "Siapkan pesan pertama", name: "Nama atau inisial (opsional)", country: "Negara atau wilayah", language: "Bahasa pilihan", role: "Anda menghubungi sebagai", roles: ["Pasien", "Keluarga atau perwakilan berwenang"], interest: "Dukungan yang ingin dibahas", undecided: "Belum yakin", consent: "Saya pasien atau mendapat izin untuk membagikan informasi ini bagi pertanyaan koordinasi.", privacy: "Baca pemberitahuan privasi", note: "Tombol membuka draf email atau pesan WhatsApp yang dapat diedit. Situs tidak mengunggah atau mengirim data; Anda perlu mengirimnya melalui aplikasi pilihan. Jangan masukkan laporan medis, nomor paspor, atau instruksi klinis mendesak.", recordsIntro: "Setelah kontak awal dan persetujuan, kumpulkan laporan tersedia dengan daftar ini. Kami akan mengonfirmasi pengiriman. Dokumen yang kurang tidak menghalangi pertanyaan awal.", identityNote: "Identitas diminta hanya bila dibutuhkan untuk pengaturan rumah sakit atau layanan tertentu, melalui kanal terkonfirmasi. Perwakilan keluarga mungkin memerlukan izin pasien." },
@@ -257,18 +243,15 @@ export const patientContent: Record<Locale, PatientContent> = {
       { title: "Sediakan kes bersama", text: "Selepas persetujuan dan saluran penghantaran disahkan, kumpulkan laporan dan soalan yang tersedia." },
       { title: "Persetujui langkah seterusnya", text: "Sahkan komunikasi pakar, skop dan sebut harga bertulis sebelum meneruskan." },
     ] },
-    services: { eyebrow: "Perkhidmatan dan sokongan", title: "Sokongan mengikut keadaan anda", body: "Bermula dengan pertanyaan awal, tugas koordinasi tertentu atau sokongan kes tahunan. Skop dan sebut harga disahkan sebelum perkhidmatan berbayar.", quote: "Minta cadangan perkhidmatan", note: "Yuran koordinasi berasingan daripada kos perubatan. Hospital, doktor, ujian, rawatan, perjalanan, penginapan dan jurubahasa pihak ketiga disahkan berasingan. Cadangan bertulis menerangkan skop, masa dan pembatalan.", plans: [
-      { name: "Pertanyaan laluan awal", fit: "Untuk keluarga yang meneroka penjagaan di China.", items: ["Bincang keperluan koordinasi", "Fahami proses persediaan", "Terima senarai rekod perubatan"] },
-      { name: "Koordinasi khusus", fit: "Untuk tugas pakar atau hospital yang jelas.", items: ["Ringkasan dan garis masa kes", "Janji temu atau komunikasi dipersetujui", "Langkah praktikal seterusnya"] },
-      { name: "Sokongan kes tahunan", fit: "Untuk pesakit yang memerlukan koordinasi berterusan.", items: ["Kemas kini fail kes", "Koordinasi semakan dan susulan", "Komunikasi keluarga merentas tahap"] },
-    ], modules: ["Koordinasi MDT limfoma", "Sokongan pemulihan dan susulan", "Koordinasi laluan pembedahan"] },
+    services: serviceContent["ms"],
     faq: { eyebrow: "Sebelum membuat keputusan", title: "Soalan pesakit dan keluarga", body: "Jawapan praktikal sebelum menghubungi kami.", items: [
       { title: "Boleh menghubungi sebelum perjalanan?", text: "Ya, melalui e-mel atau WhatsApp. Selepas hubungan awal, kami sahkan dokumen dan kesesuaian komunikasi pakar atau hospital." },
       { title: "Bagaimana jika laporan belum lengkap?", text: "Anda masih boleh membuat pertanyaan. Kami mengenal pasti kekurangan; pasukan klinikal penerima menentukan kecukupan bahan untuk penilaian." },
       { title: "Bolehkah keluarga mewakili pesakit?", text: "Ya. Nyatakan hubungan dengan pesakit. Kebenaran disahkan sebelum rekod sensitif dikongsi." },
-      { title: "Adakah kos perubatan termasuk?", text: "Kos perubatan berasingan daripada koordinasi. Cadangan bertulis menerangkan perkhidmatan, kos pihak ketiga dan pembayaran sebelum kerja berbayar." },
+      { title: "Adakah kos perubatan termasuk?", text: serviceContent["ms"].included.text + " " + serviceContent["ms"].excluded.text },
       { title: "Adakah rawatan atau kemasukan kajian dijamin?", text: "Tidak. Doktor dan institusi menentukan kelayakan, penerimaan, rawatan dan penyertaan kajian. Kami membantu persediaan dan komunikasi." },
-      { title: "Ada sokongan selepas pulang?", text: "Komunikasi susulan, kemas kini dokumen dan peringatan boleh termasuk dalam skop dipersetujui. Nasihat perubatan kekal tanggungjawab doktor yang merawat." },
+      { title: "Ada sokongan selepas pulang?", text: serviceContent["ms"].conditions[4].text },
+      serviceContent["ms"].conditions[5],
     ] },
     contact: { eyebrow: "Langkah seterusnya", title: "Mari bermula dengan perbualan", body: "Beritahu lokasi dan sokongan yang keluarga perlukan. Kami sahkan dokumen dan saluran komunikasi sebelum fail perubatan penuh dihantar.", labels: ["Pertanyaan pesakit baharu", "Koordinasi perkhidmatan", "Sokongan pesakit sedia ada"], note: "Jangan lampirkan pasport atau fail perubatan penuh dalam mesej pertama. Untuk kecemasan hubungi perkhidmatan kecemasan tempatan." },
     enquiry: { eyebrow: "Pertanyaan pesakit", title: "Mulakan pertanyaan koordinasi penjagaan", body: "Beberapa maklumat asas mencukupi untuk bermula. Tidak perlu menunggu semua laporan atau memilih perkhidmatan sekarang.", formTitle: "Sediakan mesej pertama", name: "Nama atau singkatan (pilihan)", country: "Negara atau wilayah", language: "Bahasa pilihan", role: "Anda menghubungi sebagai", roles: ["Pesakit", "Ahli keluarga atau wakil diberi kuasa"], interest: "Sokongan untuk dibincangkan", undecided: "Belum pasti", consent: "Saya pesakit atau mempunyai kebenaran untuk berkongsi maklumat ini bagi pertanyaan koordinasi.", privacy: "Baca notis privasi", note: "Butang membuka draf e-mel atau mesej WhatsApp yang boleh disunting. Laman tidak memuat naik atau menghantar data; anda perlu menghantarnya melalui aplikasi pilihan. Jangan masukkan laporan perubatan, nombor pasport atau arahan klinikal segera.", recordsIntro: "Selepas hubungan awal dan persetujuan, kumpulkan laporan tersedia menggunakan senarai ini. Kami sahkan saluran penghantaran. Dokumen yang kurang tidak menghalang pertanyaan awal.", identityNote: "Dokumen identiti diminta hanya apabila diperlukan bagi hospital atau perkhidmatan tertentu, melalui saluran disahkan. Wakil keluarga mungkin memerlukan kebenaran pesakit." },

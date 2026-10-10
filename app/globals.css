@@ -123,6 +123,31 @@ summary::-webkit-details-marker { display: none; }
 .membership-card li { display: flex; align-items: flex-start; gap: 9px; font-size: var(--font-compact); color: var(--muted); }
 .membership-card li svg { color: var(--green); margin-top: 3px; }
 .membership-card > .text-link { margin-top: auto; padding-top: 8px; }
+.stage-pricing { width: 100%; margin-top: 24px; }
+.service-amount { display: inline-flex; align-items: baseline; gap: 8px; color: var(--green-dark); }
+.service-amount > span { font-size: var(--font-small); font-weight: 500; }
+.service-amount bdi { font-size: 28px; font-weight: 650; white-space: nowrap; }
+.stage-pricing dl { margin: 0; display: grid; gap: 12px; }
+.stage-pricing dl > div { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 5px 14px; }
+.stage-pricing dt { font-size: var(--font-compact); }
+.stage-pricing dd { margin: 0; }
+.stage-pricing dl bdi { font-size: 23px; }
+.price-unit { font-size: var(--font-small); margin-top: 8px; }
+.admission-pricing { margin-top: 40px; }
+.admission-pricing h2, .package-details h2 { font-size: 25px; }
+.admission-pricing > p { margin-top: 12px; max-width: 880px; }
+.pricing-table { width: 100%; border-collapse: collapse; table-layout: fixed; margin-top: 24px; }
+.pricing-table caption { text-align: start; color: var(--muted); font-size: var(--font-small); padding-bottom: 12px; }
+.pricing-table th, .pricing-table td { text-align: start; vertical-align: top; padding: 18px 20px; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
+.pricing-table thead { background: var(--paper); }
+.pricing-table thead th { font-size: var(--font-compact); font-weight: 600; }
+.pricing-table th:first-child { width: 46%; }
+.pricing-table tbody th { font-size: var(--font-body); font-weight: 600; }
+.pricing-table small { display: block; margin-top: 7px; color: var(--muted); font-size: var(--font-small); font-weight: 400; }
+.package-details { padding-top: 30px; margin-top: 38px; border-top: 1px solid var(--line); }
+.package-conditions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 48px; margin: 26px 0 0; }
+.package-conditions dt { font-size: 18px; font-weight: 600; }
+.package-conditions dd { margin: 10px 0 0; color: var(--muted); }
 .service-note { color: var(--muted); font-size: var(--font-small); line-height: 1.8; border-inline-start: 2px solid #bdcfc2; padding-inline-start: 16px; margin-block: 26px; max-width: 960px; }
 .membership-modules { margin-top: 56px; }
 .membership-modules > h2 { font-size: 25px; margin-bottom: 22px; }
@@ -227,11 +252,8 @@ figcaption { font-size: var(--font-small); color: var(--muted); margin-top: 12px
   .compact-experts .expert-portrait { height: 210px; }
   .expert-card h3 { font-size: 18px; }
   .membership-grid { grid-template-columns: 1fr; }
-  .membership-card { display: grid; grid-template-columns: .8fr 1.2fr; gap: 0 30px; }
-  .membership-card h3 { grid-column: 1; }
-  .membership-card > p { grid-column: 1; }
-  .membership-card ul { grid-column: 2; grid-row: 1/5; margin: 0; align-self: center; }
-  .membership-card > .text-link { margin-top: 20px; grid-column: 1; }
+  .membership-card { display: flex; }
+  .package-conditions { grid-template-columns: 1fr; }
   .enquiry-layout, .deliverables-layout, .faq-layout, .hospital-layout { grid-template-columns: 1fr; }
   .company-overview { grid-template-columns: 1fr; gap: 24px; }
   .deliverables-layout, .faq-layout, .hospital-layout { gap: 20px; }
@@ -283,6 +305,13 @@ figcaption { font-size: var(--font-small); color: var(--muted); margin-top: 12px
   .membership-card { display: flex; padding: 24px; }
   .membership-card ul { margin-block: 20px 24px; }
   .membership-card > .text-link { margin-top: auto; }
+  .admission-pricing { margin-top: 32px; }
+  .pricing-table th, .pricing-table td { padding: 14px 7px; }
+  .pricing-table th:first-child { width: 42%; }
+  .pricing-table .service-amount { display: flex; flex-direction: column; gap: 0; }
+  .pricing-table .service-amount bdi { font-size: 19px; }
+  .pricing-table tbody th { font-size: var(--font-compact); }
+  .admission-pricing h2, .package-details h2 { font-size: 23px; }
   .service-note { font-size: var(--font-small); }
   .contact-grid, .footer-grid { grid-template-columns: 1fr; gap: 34px; }
   .contact-grid .cta-row .button { flex: 1 1 140px; }

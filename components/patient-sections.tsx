@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { ArrowRight, ArrowUpRight, Check, ChevronDown, Mail, MessageCircle } from "lucide-react";
 import { content, type SectionKey } from "../lib/content";
 import { patientContent } from "../lib/patient-content";
+import { admissionTotal, formatServiceAmount, servicePrices } from "../lib/service-pricing";
 import { brand, contact, localePath, type Locale } from "../lib/site";
 import { SiteNavigation } from "./site-navigation";
 
@@ -35,20 +36,41 @@ export function ExpertProfiles({ locale, compact = false }: { locale: Locale; co
   );
 }
 
-export function ServicePlans({ locale }: { locale: Locale }) {
+function ServiceAmount({ amount, locale }: { amount: number; locale: Locale }) {
+  return <span className="service-amount"><span>{servicePrices.currency}</span><bdi>{formatServiceAmount(amount, locale)}</bdi></span>;
+}
+
+export function ServicePlans({ locale, detailed = false }: { locale: Locale; detailed?: boolean }) {
   const ui = patientContent[locale];
+  const pricing = ui.services.pricing;
   return (
     <>
       <div className="membership-grid">
         {ui.services.plans.map((plan, index) => (
           <article className="membership-card" key={plan.name}>
             <span className="plan-number">0{index + 1}</span><h3>{plan.name}</h3><p>{plan.fit}</p>
+            <div className="stage-pricing">
+              {plan.stage === "duringStay" ? <dl>{(["fiveSeat", "business"] as const).map((vehicle, vehicleIndex) => <div key={vehicle}><dt>{pricing.vehicles[vehicleIndex]}</dt><dd><ServiceAmount amount={servicePrices.duringStay[vehicle]} locale={locale} /></dd></div>)}</dl> : <ServiceAmount amount={servicePrices[plan.stage]} locale={locale} />}
+              <p className="price-unit">{pricing.unit}</p>
+            </div>
             <ul>{plan.items.map((item) => <li key={item}><Check size={16} aria-hidden="true" /><span>{item}</span></li>)}</ul>
             <Link className="text-link" href={`${localePath(locale)}register/?service=${index}`}>{ui.services.quote}<ArrowUpRight size={17} aria-hidden="true" /></Link>
           </article>
         ))}
       </div>
+      <section className="admission-pricing" aria-labelledby={`${locale}-pricing-title`}>
+        <h2 id={`${locale}-pricing-title`}>{pricing.title}</h2><p>{pricing.body}</p>
+        <table className="pricing-table">
+          <caption>{pricing.unit} · {servicePrices.currency}</caption>
+          <thead><tr><th scope="col">{pricing.cycleLabel}</th>{pricing.vehicles.map((vehicle) => <th scope="col" key={vehicle}>{vehicle}</th>)}</tr></thead>
+          <tbody>{[true, false].map((firstAdmission) => <tr key={String(firstAdmission)}><th scope="row">{firstAdmission ? pricing.firstLabel : pricing.repeatLabel}<small>{firstAdmission ? pricing.firstNote : pricing.repeatNote}</small></th>{(["fiveSeat", "business"] as const).map((vehicle) => <td key={vehicle}><ServiceAmount amount={admissionTotal(vehicle, firstAdmission)} locale={locale} /></td>)}</tr>)}</tbody>
+        </table>
+      </section>
       <p className="service-note">{ui.services.note}</p>
+      {detailed ? <>
+        <section className="package-details"><h2>{ui.services.conditionsTitle}</h2><dl className="package-conditions">{ui.services.conditions.map((item) => <div key={item.title}><dt>{item.title}</dt><dd>{item.text}</dd></div>)}</dl></section>
+        <section className="package-details"><h2>{ui.services.scopeTitle}</h2><dl className="package-conditions">{[ui.services.included, ui.services.excluded].map((item) => <div key={item.title}><dt>{item.title}</dt><dd>{item.text}</dd></div>)}</dl></section>
+      </> : null}
     </>
   );
 }

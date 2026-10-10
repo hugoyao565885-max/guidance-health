@@ -1,10 +1,10 @@
 import { brand, contact, type Locale } from "./site";
 import { aboutContent, type AboutContent } from "./about-content";
+import { serviceContent, type ServicePlan } from "./service-pricing";
 
 type Card = { title: string; text: string };
 type Step = { title: string; text: string };
 type Expert = { name: string; role: string; text: string; image: string };
-type MembershipPlan = { name: string; fit: string; items: string[] };
 type RegisterSection = {
   eyebrow: string;
   title: string;
@@ -41,7 +41,7 @@ export type SiteContent = {
       eyebrow: string;
       title: string;
       body: string;
-      plans: MembershipPlan[];
+      plans: ServicePlan[];
       modulesTitle: string;
       modules: Card[];
       modulesNote: string;
@@ -145,38 +145,10 @@ export const content: Record<Locale, SiteContent> = {
         ],
       },
       membership: {
-        "eyebrow": "Services & support",
-        "title": "Choose support that fits your situation",
-        "body": "Start with an initial enquiry, a focused coordination task, or ongoing annual case support. We confirm the scope and quote with you before paid services begin.",
-        "plans": [
-          {
-            "name": "Initial pathway enquiry",
-            "fit": "For patients and families exploring care in China.",
-            "items": [
-              "Discuss your coordination needs",
-              "Understand the preparation process",
-              "Receive a record checklist"
-            ]
-          },
-          {
-            "name": "Focused coordination",
-            "fit": "For a defined specialist or hospital coordination task.",
-            "items": [
-              "Prepare the case and treatment timeline",
-              "Coordinate agreed appointments or communication",
-              "Clarify the next practical steps"
-            ]
-          },
-          {
-            "name": "Annual case support",
-            "fit": "For patients who need continuing coordination over time.",
-            "items": [
-              "Maintain and update the case file",
-              "Coordinate agreed reviews and follow-up",
-              "Support family communication across stages"
-            ]
-          }
-        ],
+        "eyebrow": serviceContent["en"].eyebrow,
+        "title": serviceContent["en"].title,
+        "body": serviceContent["en"].body,
+        "plans": serviceContent["en"].plans,
         "modulesTitle": "Special support modules",
         "modules": [
           {
@@ -192,8 +164,8 @@ export const content: Record<Locale, SiteContent> = {
             "text": "Communication support when reassessment suggests that a surgical pathway may be discussed with appropriate teams."
           }
         ],
-        "modulesNote": "Support modules are coordination and advisory services, not medical packages or treatment commitments. Any clinical decision must be made by licensed physicians and receiving institutions.",
-        "note": "Coordination fees and medical expenses are separate. Hospital, physician, testing, treatment, travel, accommodation, and third-party interpreter fees are confirmed separately. The written proposal explains inclusions, timing, and cancellation arrangements."
+        "modulesNote": "These modules are not automatically included in the admission packages; scope and any additional fee are agreed separately in writing. They are coordination and advisory services, not treatment commitments. Clinical decisions remain with licensed physicians and receiving institutions.",
+        "note": serviceContent["en"].note
       },
       oncology: {
         "eyebrow": "Advanced oncology pathways",
@@ -426,13 +398,13 @@ export const content: Record<Locale, SiteContent> = {
         body:
           "Our service is case management and coordination. We are not a Hong Kong clinic, hospital, insurance product, emergency service, or provider of diagnosis or treatment.",
         cards: [
-          { title: "Included in membership", text: "Administrative case management, document organization, communication coordination, timeline reminders, family support, and pathway preparation." },
-          { title: "Not included", text: "Hospital fees, physician fees, medical tests, medicines, treatment, surgery, travel, accommodation, translation charged by third parties, or emergency services." },
+          serviceContent["en"].included,
+          serviceContent["en"].excluded,
           { title: "Medical decisions", text: "Diagnosis, treatment eligibility, admission, surgery, prescriptions, costs, and outcomes are decided by hospitals and licensed physicians." },
           { title: "No guarantees", text: "We do not guarantee acceptance by any hospital or doctor, treatment availability, surgical opportunity, outcome, survival, remission, or cost savings." },
         ],
         note:
-          "Formal service details should be confirmed in a written membership agreement before payment.",
+          serviceContent["en"].note,
       },
       disclaimer: {
         title: "Medical disclaimer",
@@ -535,38 +507,10 @@ export const content: Record<Locale, SiteContent> = {
         ],
       },
       membership: {
-        "eyebrow": "服務與支持",
-        "title": "按您的情況選擇協調支持",
-        "body": "可從初步諮詢、專項協調或年度個案支持開始。付費服務開始前，我們會與您確認範圍及書面報價。",
-        "plans": [
-          {
-            "name": "初步路徑諮詢",
-            "fit": "適合正在了解中國就醫的患者與家屬。",
-            "items": [
-              "溝通協調需求",
-              "了解資料準備流程",
-              "獲取病歷資料清單"
-            ]
-          },
-          {
-            "name": "專項協調服務",
-            "fit": "適合有明確專家或醫院協調任務的患者。",
-            "items": [
-              "整理病情與治療時間線",
-              "協調約定的預約或溝通",
-              "釐清下一步實際安排"
-            ]
-          },
-          {
-            "name": "年度個案支持",
-            "fit": "適合需要持續跟進與跨階段協調的患者。",
-            "items": [
-              "維護與更新個案檔案",
-              "協調約定的復評與隨訪",
-              "支持不同階段的家屬溝通"
-            ]
-          }
-        ],
+        "eyebrow": serviceContent["zh-hant"].eyebrow,
+        "title": serviceContent["zh-hant"].title,
+        "body": serviceContent["zh-hant"].body,
+        "plans": serviceContent["zh-hant"].plans,
         "modulesTitle": "專項支持模組",
         "modules": [
           {
@@ -582,8 +526,8 @@ export const content: Record<Locale, SiteContent> = {
             "text": "在復評結果提示可討論手術路徑時，協助與合適團隊進行溝通準備。"
           }
         ],
-        "modulesNote": "專項模組屬於協調與諮詢支持，不是醫療套餐或治療承諾。任何臨床決策均由持牌醫生及接診機構判斷。",
-        "note": "協調服務費與醫療費用分開。醫院、醫生、檢查、治療、出行、住宿及第三方翻譯費另行確認。書面方案會說明包含項目、時間安排及取消服務的處理方式。"
+        "modulesNote": "專項模組不自動包含在上述住院週期套餐內，範圍及可能的額外費用需另行書面確認。這些是協調與諮詢支持，不是治療承諾；臨床決策仍由持牌醫生及接診機構判斷。",
+        "note": serviceContent["zh-hant"].note
       },
       oncology: {
         "eyebrow": "前沿腫瘤治療路徑",
@@ -792,12 +736,12 @@ export const content: Record<Locale, SiteContent> = {
         title: "H&C Care 提供與不提供的服務",
         body: "我們提供的是個案管理與協調服務，不是香港診所、醫院、保險產品、急症服務，也不提供診斷或治療。",
         cards: [
-          { title: "會員包含", text: "行政個案管理、資料整理、溝通協調、時間線提醒、家屬支持及路徑準備。" },
-          { title: "不包含", text: "醫院費、醫生費、檢查、藥物、治療、手術、旅費、住宿、第三方翻譯或急症服務。" },
+          serviceContent["zh-hant"].included,
+          serviceContent["zh-hant"].excluded,
           { title: "醫療決定", text: "診斷、治療資格、入院、手術、處方、費用和結果均由醫院及持牌醫生決定。" },
           { title: "不作保證", text: "不保證任何醫院或醫生接收、不保證治療可及、手術機會、療效、生存、緩解或費用節省。" },
         ],
-        note: "正式服務細節應在付款前通過書面會員協議確認。",
+        note: serviceContent["zh-hant"].note,
       },
       disclaimer: {
         title: "醫療免責聲明",
@@ -899,38 +843,10 @@ export const content: Record<Locale, SiteContent> = {
         ],
       },
       membership: {
-        "eyebrow": "Услуги и поддержка",
-        "title": "Поддержка с учетом вашей ситуации",
-        "body": "Первичное обращение, отдельная задача или годовое сопровождение. Объем и стоимость согласуются письменно до начала платных услуг.",
-        "plans": [
-          {
-            "name": "Первичное обращение",
-            "fit": "Для семей, изучающих помощь в Китае.",
-            "items": [
-              "Обсуждение потребностей",
-              "Порядок подготовки",
-              "Список документов"
-            ]
-          },
-          {
-            "name": "Отдельная координация",
-            "fit": "Для определенной задачи со специалистом или больницей.",
-            "items": [
-              "Резюме и хронология случая",
-              "Согласованная запись или коммуникация",
-              "Следующие практические шаги"
-            ]
-          },
-          {
-            "name": "Годовое сопровождение",
-            "fit": "Для длительной координационной поддержки.",
-            "items": [
-              "Обновление файла случая",
-              "Согласованные повторные обсуждения",
-              "Связь с семьей на разных этапах"
-            ]
-          }
-        ],
+        "eyebrow": serviceContent["ru"].eyebrow,
+        "title": serviceContent["ru"].title,
+        "body": serviceContent["ru"].body,
+        "plans": serviceContent["ru"].plans,
         "modulesTitle": "Специальные модули поддержки",
         "modules": [
           {
@@ -946,8 +862,8 @@ export const content: Record<Locale, SiteContent> = {
             "text": "Поддержка коммуникации, когда повторная оценка позволяет обсуждать хирургический маршрут."
           }
         ],
-        "modulesNote": "Модули являются координационной и консультационной поддержкой, а не медицинскими пакетами или обещанием лечения.",
-        "note": "Координация и медицинские расходы оплачиваются отдельно. Стоимость больницы, врачей, обследований, лечения, поездки, проживания и стороннего перевода подтверждается отдельно. Письменное предложение описывает услуги, сроки и условия отмены."
+        "modulesNote": "Модули автоматически не включены в пакеты госпитализации; объем и возможная доплата согласуются отдельно письменно. Это координация и консультативная поддержка, а не обещание лечения. Медицинские решения принимают врачи и учреждения.",
+        "note": serviceContent["ru"].note
       },
       oncology: {
         "eyebrow": "Передовые онкологические маршруты",
@@ -1156,12 +1072,12 @@ export const content: Record<Locale, SiteContent> = {
         title: "Что H&C Care делает и не делает",
         body: "Мы предоставляем case management и координацию, а не медицинскую практику, страховку или экстренную помощь.",
         cards: [
-          { title: "Включено", text: "Организация документов, координация, напоминания и поддержка семьи." },
-          { title: "Не включено", text: "Медицинские, больничные, лекарственные, хирургические и дорожные расходы." },
+          serviceContent["ru"].included,
+          serviceContent["ru"].excluded,
           { title: "Медицинские решения", text: "Все решения принимают больницы и лицензированные врачи." },
           { title: "Нет гарантий", text: "Нет гарантии принятия, лечения, операции, результата или экономии." },
         ],
-        note: "Детали должны быть подтверждены письменным соглашением.",
+        note: serviceContent["ru"].note,
       },
       disclaimer: {
         title: "Медицинское уведомление",
@@ -1263,38 +1179,10 @@ export const content: Record<Locale, SiteContent> = {
         ],
       },
       membership: {
-        "eyebrow": "الخدمات والدعم",
-        "title": "دعم يناسب حالتك",
-        "body": "استفسار أولي أو مهمة تنسيق محددة أو دعم سنوي. نؤكد النطاق وعرض السعر كتابيا قبل بدء الخدمات المدفوعة.",
-        "plans": [
-          {
-            "name": "استفسار أولي عن المسار",
-            "fit": "للعائلات التي تستكشف الرعاية في الصين.",
-            "items": [
-              "مناقشة احتياجات التنسيق",
-              "فهم خطوات التحضير",
-              "قائمة السجلات المطلوبة"
-            ]
-          },
-          {
-            "name": "تنسيق محدد",
-            "fit": "لمهمة واضحة مع مختص أو مستشفى.",
-            "items": [
-              "إعداد ملخص الحالة وتاريخ العلاج",
-              "تنسيق المواعيد أو التواصل المتفق عليه",
-              "توضيح الخطوات العملية التالية"
-            ]
-          },
-          {
-            "name": "دعم الحالة السنوي",
-            "fit": "للمرضى الذين يحتاجون تنسيقا مستمرا.",
-            "items": [
-              "تحديث ملف الحالة",
-              "تنسيق المراجعات والمتابعة المتفق عليها",
-              "التواصل مع العائلة عبر المراحل"
-            ]
-          }
-        ],
+        "eyebrow": serviceContent["ar"].eyebrow,
+        "title": serviceContent["ar"].title,
+        "body": serviceContent["ar"].body,
+        "plans": serviceContent["ar"].plans,
         "modulesTitle": "وحدات دعم خاصة",
         "modules": [
           {
@@ -1310,8 +1198,8 @@ export const content: Record<Locale, SiteContent> = {
             "text": "دعم التواصل عندما تشير إعادة التقييم إلى إمكانية مناقشة المسار الجراحي."
           }
         ],
-        "modulesNote": "هذه الوحدات هي دعم تنسيقي واستشاري وليست حزمة طبية أو وعدا بالعلاج.",
-        "note": "رسوم التنسيق منفصلة عن النفقات الطبية. تؤكد تكاليف المستشفى والأطباء والفحوص والعلاج والسفر والإقامة والترجمة الخارجية بشكل منفصل. يوضح المقترح المكتوب الخدمات والتوقيت وترتيبات الإلغاء."
+        "modulesNote": "لا تشمل باقات الدخول هذه الوحدات تلقائيا؛ يؤكد نطاقها وأي رسوم إضافية باتفاق مكتوب منفصل. هي دعم تنسيقي واستشاري وليست وعدا بالعلاج. القرارات الطبية للأطباء والمؤسسات المعالجة.",
+        "note": serviceContent["ar"].note
       },
       oncology: {
         "eyebrow": "مسارات أورام متقدمة",
@@ -1520,12 +1408,12 @@ export const content: Record<Locale, SiteContent> = {
         title: "ما نقدمه وما لا نقدمه",
         body: "خدمتنا إدارة حالة وتنسيق وليست عيادة أو تأمينا أو طوارئ.",
         cards: [
-          { title: "يشمل", text: "تنظيم الوثائق والتنسيق والتذكيرات ودعم الأسرة." },
-          { title: "لا يشمل", text: "الرسوم الطبية والمستشفى والأدوية والجراحة والسفر." },
+          serviceContent["ar"].included,
+          serviceContent["ar"].excluded,
           { title: "قرارات طبية", text: "كل القرارات للطبيب والمستشفى." },
           { title: "لا ضمانات", text: "لا نضمن القبول أو العلاج أو الجراحة أو النتائج أو التوفير." },
         ],
-        note: "يجب تأكيد التفاصيل في اتفاق مكتوب.",
+        note: serviceContent["ar"].note,
       },
       disclaimer: {
         title: "إخلاء مسؤولية طبية",
@@ -1627,38 +1515,10 @@ export const content: Record<Locale, SiteContent> = {
         ],
       },
       membership: {
-        "eyebrow": "Layanan dan dukungan",
-        "title": "Dukungan sesuai situasi Anda",
-        "body": "Mulai dari pertanyaan awal, tugas koordinasi tertentu, atau dukungan kasus tahunan. Lingkup dan penawaran dikonfirmasi sebelum layanan berbayar.",
-        "plans": [
-          {
-            "name": "Pertanyaan jalur awal",
-            "fit": "Untuk keluarga yang menjajaki perawatan di China.",
-            "items": [
-              "Bahas kebutuhan koordinasi",
-              "Pahami proses persiapan",
-              "Dapatkan daftar rekam medis"
-            ]
-          },
-          {
-            "name": "Koordinasi terfokus",
-            "fit": "Untuk tugas spesialis atau rumah sakit yang jelas.",
-            "items": [
-              "Ringkasan dan linimasa kasus",
-              "Janji atau komunikasi sesuai kesepakatan",
-              "Langkah praktis berikutnya"
-            ]
-          },
-          {
-            "name": "Dukungan kasus tahunan",
-            "fit": "Untuk pasien yang memerlukan koordinasi berkelanjutan.",
-            "items": [
-              "Perbarui berkas kasus",
-              "Koordinasi evaluasi dan tindak lanjut",
-              "Komunikasi keluarga lintas tahap"
-            ]
-          }
-        ],
+        "eyebrow": serviceContent["id"].eyebrow,
+        "title": serviceContent["id"].title,
+        "body": serviceContent["id"].body,
+        "plans": serviceContent["id"].plans,
         "modulesTitle": "Modul dukungan khusus",
         "modules": [
           {
@@ -1674,8 +1534,8 @@ export const content: Record<Locale, SiteContent> = {
             "text": "Dukungan komunikasi bila evaluasi ulang menunjukkan jalur bedah dapat didiskusikan."
           }
         ],
-        "modulesNote": "Modul ini adalah dukungan koordinasi dan konsultasi, bukan paket medis atau janji terapi.",
-        "note": "Biaya koordinasi terpisah dari biaya medis. Rumah sakit, dokter, pemeriksaan, terapi, perjalanan, akomodasi, dan penerjemah pihak ketiga dikonfirmasi terpisah. Proposal tertulis menjelaskan cakupan, waktu, dan pembatalan."
+        "modulesNote": "Modul tidak otomatis termasuk paket rawat inap; lingkup dan biaya tambahan yang mungkin ada disepakati tertulis secara terpisah. Ini koordinasi dan konsultasi, bukan janji terapi. Keputusan medis tetap pada dokter dan institusi penerima.",
+        "note": serviceContent["id"].note
       },
       oncology: {
         "eyebrow": "Jalur onkologi lanjutan",
@@ -1884,12 +1744,12 @@ export const content: Record<Locale, SiteContent> = {
         title: "Apa yang H&C Care lakukan dan tidak lakukan",
         body: "Kami menyediakan case management dan koordinasi, bukan klinik, asuransi, atau layanan darurat.",
         cards: [
-          { title: "Termasuk", text: "Organisasi dokumen, koordinasi, pengingat, dan dukungan keluarga." },
-          { title: "Tidak termasuk", text: "Biaya medis, rumah sakit, obat, operasi, dan perjalanan." },
+          serviceContent["id"].included,
+          serviceContent["id"].excluded,
           { title: "Keputusan medis", text: "Semua keputusan dibuat rumah sakit dan dokter." },
           { title: "Tanpa jaminan", text: "Tidak menjamin penerimaan, terapi, operasi, hasil, atau penghematan biaya." },
         ],
-        note: "Detail harus dikonfirmasi dalam perjanjian tertulis.",
+        note: serviceContent["id"].note,
       },
       disclaimer: {
         title: "Penafian medis",
@@ -1991,38 +1851,10 @@ export const content: Record<Locale, SiteContent> = {
         ],
       },
       membership: {
-        "eyebrow": "Perkhidmatan dan sokongan",
-        "title": "Sokongan mengikut keadaan anda",
-        "body": "Bermula dengan pertanyaan awal, tugas koordinasi tertentu atau sokongan kes tahunan. Skop dan sebut harga disahkan sebelum perkhidmatan berbayar.",
-        "plans": [
-          {
-            "name": "Pertanyaan laluan awal",
-            "fit": "Untuk keluarga yang meneroka penjagaan di China.",
-            "items": [
-              "Bincang keperluan koordinasi",
-              "Fahami proses persediaan",
-              "Terima senarai rekod perubatan"
-            ]
-          },
-          {
-            "name": "Koordinasi khusus",
-            "fit": "Untuk tugas pakar atau hospital yang jelas.",
-            "items": [
-              "Ringkasan dan garis masa kes",
-              "Janji temu atau komunikasi dipersetujui",
-              "Langkah praktikal seterusnya"
-            ]
-          },
-          {
-            "name": "Sokongan kes tahunan",
-            "fit": "Untuk pesakit yang memerlukan koordinasi berterusan.",
-            "items": [
-              "Kemas kini fail kes",
-              "Koordinasi semakan dan susulan",
-              "Komunikasi keluarga merentas tahap"
-            ]
-          }
-        ],
+        "eyebrow": serviceContent["ms"].eyebrow,
+        "title": serviceContent["ms"].title,
+        "body": serviceContent["ms"].body,
+        "plans": serviceContent["ms"].plans,
         "modulesTitle": "Modul sokongan khusus",
         "modules": [
           {
@@ -2038,8 +1870,8 @@ export const content: Record<Locale, SiteContent> = {
             "text": "Sokongan komunikasi apabila penilaian semula menunjukkan laluan bedah boleh dibincangkan."
           }
         ],
-        "modulesNote": "Modul ini ialah sokongan koordinasi dan konsultasi, bukan pakej perubatan atau janji rawatan.",
-        "note": "Yuran koordinasi berasingan daripada kos perubatan. Hospital, doktor, ujian, rawatan, perjalanan, penginapan dan jurubahasa pihak ketiga disahkan berasingan. Cadangan bertulis menerangkan skop, masa dan pembatalan."
+        "modulesNote": "Modul tidak termasuk dalam pakej kemasukan secara automatik; skop dan sebarang caj tambahan dipersetujui berasingan secara bertulis. Ini koordinasi dan konsultasi, bukan janji rawatan. Keputusan perubatan kekal pada doktor dan institusi penerima.",
+        "note": serviceContent["ms"].note
       },
       oncology: {
         "eyebrow": "Laluan onkologi lanjutan",
@@ -2248,12 +2080,12 @@ export const content: Record<Locale, SiteContent> = {
         title: "Apa yang H&C Care lakukan dan tidak lakukan",
         body: "Kami menyediakan pengurusan kes dan koordinasi, bukan klinik, insurans atau kecemasan.",
         cards: [
-          { title: "Termasuk", text: "Organisasi dokumen, koordinasi, peringatan dan sokongan keluarga." },
-          { title: "Tidak termasuk", text: "Kos perubatan, hospital, ubat, pembedahan dan perjalanan." },
+          serviceContent["ms"].included,
+          serviceContent["ms"].excluded,
           { title: "Keputusan perubatan", text: "Semua keputusan dibuat hospital dan doktor." },
           { title: "Tiada jaminan", text: "Tidak menjamin penerimaan, rawatan, pembedahan, hasil atau penjimatan." },
         ],
-        note: "Butiran harus disahkan dalam perjanjian bertulis.",
+        note: serviceContent["ms"].note,
       },
       disclaimer: {
         title: "Penafian perubatan",

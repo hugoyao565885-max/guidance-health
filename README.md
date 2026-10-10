@@ -44,9 +44,10 @@ When a production custom domain is ready, update `siteUrl` in `lib/site.ts` and 
 - `lib/content.ts`: page dictionaries and specialist profiles.
 - `lib/patient-content.ts`: patient-facing homepage, enquiry, FAQ, and service copy.
 - `lib/about-content.ts`: company identity, patient challenges, coordination scope, team backgrounds, and service boundaries in six languages.
-- `npm run check:content`: checks all six dictionaries, contact channels, records lists, image paths, and unpublished-price rules.
+- `lib/service-pricing.ts`: CNY prices, calculated admission totals, and six-language package scope shared by the homepage, service page, enquiry choices, FAQ, and terms.
+- `npm run check:content`: checks all six dictionaries, contact channels, records lists, image paths, stage prices, admission totals, and private-cost exclusions.
 - `npm run build`: production build and TypeScript validation.
 
-Service prices are intentionally unpublished pending review. Keep the service descriptions in both dictionaries aligned when updating them.
+Service packages are priced per patient and hospital admission, not per year. First-time patients purchase all three stages: pre-arrival CNY 2,880, in-China CNY 3,580 (5-seat pickup) or CNY 3,730 (business vehicle), and after-discharge CNY 1,180. Totals are CNY 7,640 / 7,790. Subsequent admissions purchase only the in-China and after-discharge stages, totaling CNY 4,760 / 4,910. Published interpretation scope is Indonesian; other languages and services beyond the stated allowances require confirmation before payment. Do not publish internal cost worksheets or the source PDF, which includes private costing.
 
 The enquiry form opens an editable email or WhatsApp draft. It does not create an account, upload records, or store patient data. Authentication, private medical-record storage, access controls, and an approved consent workflow are prerequisites for a future patient portal. Do not add patient photographs or records to public assets without verified publication authorization and de-identification.
