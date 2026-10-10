@@ -22,12 +22,14 @@ function loadDictionary(file) {
   return module.exports;
 }
 
-const { locales, localeMeta, contact } = loadDictionary(path.join(root, "lib/site.ts"));
+const { locales, localeMeta, contact, brand } = loadDictionary(path.join(root, "lib/site.ts"));
 const { content, sectionKeys } = loadDictionary(path.join(root, "lib/content.ts"));
 const { patientContent, carTSource } = loadDictionary(path.join(root, "lib/patient-content.ts"));
 assert.equal(new URL(carTSource).protocol, "https:");
 assert.deepEqual(contact.emails, ["info@hccareadvisory.com", "contact@hccareadvisory.com", "support@hccareadvisory.com"]);
 assert.equal(contact.whatsappUrl, "https://wa.me/85295813961");
+assert.equal(brand.zhLegalName, "康誠健康顧問有限公司");
+assert.ok(sectionKeys.includes("about"));
 
 for (const locale of locales) {
   const page = content[locale];
@@ -42,6 +44,12 @@ for (const locale of locales) {
   assert.ok(page.sections.register.documents.length >= 11, `${locale}: records checklist`);
   assert.ok(ui.faq.items.length >= 6, `${locale}: FAQ`);
   assert.equal(ui.carT.items.length, 3, `${locale}: sourced patient information`);
+  assert.equal(page.sections.about.challenges.items.length, 6, `${locale}: patient challenges`);
+  assert.equal(page.sections.about.strengths.items.length, 3, `${locale}: company focus`);
+  assert.equal(page.sections.about.research.steps.length, 5, `${locale}: research coordination`);
+  assert.equal(page.sections.about.team.items.length, 3, `${locale}: clinical background`);
+  assert.ok(page.sections.about.body.includes(brand.legalName) && page.sections.about.body.includes(brand.zhLegalName), `${locale}: company identity`);
+  assert.ok(page.sections.about.boundaries.note && page.sections.about.research.note, `${locale}: clinical boundaries`);
   for (const section of sectionKeys) {
     assert.ok(page.nav[section] && page.sections[section].title && page.sections[section].body, `${locale}/${section}: missing copy`);
   }
@@ -51,6 +59,7 @@ for (const locale of locales) {
   const publicCopy = JSON.stringify([page, ui]);
   assert.doesNotMatch(publicCopy, /\bNK\b|输注|輸注|\binfusion\b|Clifford|祈福|Hugo Yao/i, `${locale}: restricted public copy`);
   assert.doesNotMatch(publicCopy, /USD\s*(300|980)|"price"\s*:/i, `${locale}: outdated price`);
+  assert.doesNotMatch(publicCopy, /H&C 健康顧問有限公司/, `${locale}: outdated company name`);
 }
 
 assert.ok(fs.existsSync(path.join(root, "public/images/patient-room.jpg")));

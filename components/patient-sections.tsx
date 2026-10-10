@@ -10,7 +10,7 @@ import { SiteNavigation } from "./site-navigation";
 export function SiteHeader({ locale, section }: { locale: Locale; section?: string }) {
   const copy = content[locale];
   const ui = patientContent[locale];
-  const sections: SectionKey[] = ["oncology", "experts", "membership", "journey", "contact"];
+  const sections: SectionKey[] = ["about", "oncology", "experts", "membership", "journey", "contact"];
   return <SiteNavigation locale={locale} section={section} labels={ui} links={sections.map((item) => ({ section: item, label: copy.nav[item] }))} />;
 }
 
@@ -85,7 +85,7 @@ export function ContactSection({ locale }: { locale: Locale }) {
 export function SiteFooter({ locale }: { locale: Locale }) {
   const copy = content[locale];
   const ui = patientContent[locale];
-  const links: SectionKey[] = ["mdt", "hospitals", "journey", "contact", "privacy", "terms"];
+  const links: SectionKey[] = ["about", "mdt", "hospitals", "journey", "contact", "privacy", "terms"];
   return (
     <>
       <footer className="site-footer"><div className="container footer-grid"><div><strong>{brand.name}</strong><p>{locale === "zh-hant" ? brand.zhLegalName : brand.legalName}</p><p>{copy.sections.disclaimer.body}</p></div><nav aria-label={ui.menu}>{links.map((section) => <Link key={section} href={`${localePath(locale)}${section}/`}>{copy.nav[section]}</Link>)}</nav></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} {brand.name}</span><a href={`mailto:${contact.email}`}>{contact.email}</a></div></footer>

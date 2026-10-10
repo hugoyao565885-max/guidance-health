@@ -10,6 +10,7 @@ Multilingual oncology coordination site for international patients considering c
 - `/ar/`
 - `/id/`
 - `/ms/`
+- `/{locale}/about/`
 - `/{locale}/oncology/`
 - `/{locale}/car-t/`
 - `/{locale}/membership/`
@@ -42,6 +43,7 @@ When a production custom domain is ready, update `siteUrl` in `lib/site.ts` and 
 
 - `lib/content.ts`: page dictionaries and specialist profiles.
 - `lib/patient-content.ts`: patient-facing homepage, enquiry, FAQ, and service copy.
+- `lib/about-content.ts`: company identity, patient challenges, coordination scope, team backgrounds, and service boundaries in six languages.
 - `npm run check:content`: checks all six dictionaries, contact channels, records lists, image paths, and unpublished-price rules.
 - `npm run build`: production build and TypeScript validation.
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowUpRight, Check, ClipboardList, FileCheck2, MessageCircle, Route, Stethoscope } from "lucide-react";
 import { ContactSection, ExpertProfiles, Faq, SectionHeading, ServicePlans, SiteFooter, SiteHeader, TextLink } from "../../components/patient-sections";
+import { CompanySummary } from "../../components/company-profile";
 import { content } from "../../lib/content";
 import { patientContent } from "../../lib/patient-content";
 import { brand, contact, isLocale, localeMeta, locales, localePath, siteUrl } from "../../lib/site";
@@ -58,6 +59,8 @@ export default async function LocalePage({ params }: PageProps) {
           <ExpertProfiles locale={locale} compact />
           <div className="clinical-background"><Stethoscope size={22} aria-hidden="true" /><p>{copy.sections.clinicalTeam.cards[0].text}</p></div>
         </div></section>
+
+        <CompanySummary locale={locale} />
 
         <section className="section light-band" id="oncology"><div className="container">
           <SectionHeading {...ui.focus} />

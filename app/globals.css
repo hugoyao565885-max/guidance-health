@@ -190,6 +190,21 @@ figcaption { font-size: var(--font-small); color: var(--muted); margin-top: 12px
 .record-checklist .service-note { margin-top: 22px; }
 .not-found { width: min(700px, calc(100% - 40px)); margin: 100px auto; }
 .not-found h1 { margin-block: 20px; }
+.company-overview { display: grid; grid-template-columns: 1fr 1.2fr; gap: 64px; align-items: start; }
+.company-overview .section-header { margin-bottom: 0; }
+.company-overview .text-link { margin-top: 24px; }
+.company-copy > p + p { margin-top: 18px; }
+.company-value { color: var(--green-dark); font-size: 22px; font-weight: 550; line-height: 1.6; margin-top: 20px; }
+.company-stage { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--line); }
+.company-profile h2 { font-size: 28px; }
+.company-stage > p, .company-stage > div > p { margin-top: 16px; max-width: 880px; }
+.company-items { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px 48px; margin-top: 30px; }
+.company-items h3 { font-size: 20px; }
+.company-items p { margin-top: 12px; }
+.company-research-steps { padding-inline-start: 24px; margin: 0; color: var(--muted); }
+.company-research-steps li { padding-inline-start: 6px; margin-bottom: 16px; }
+.company-research-steps li::marker { color: var(--green); font-weight: 600; }
+.company-boundaries { border-inline-start: 3px solid var(--green); padding-inline-start: 24px; }
 
 @media (max-width: 1250px) {
   .desktop-nav, .header-enquiry { display: none; }
@@ -218,6 +233,7 @@ figcaption { font-size: var(--font-small); color: var(--muted); margin-top: 12px
   .membership-card ul { grid-column: 2; grid-row: 1/5; margin: 0; align-self: center; }
   .membership-card > .text-link { margin-top: 20px; grid-column: 1; }
   .enquiry-layout, .deliverables-layout, .faq-layout, .hospital-layout { grid-template-columns: 1fr; }
+  .company-overview { grid-template-columns: 1fr; gap: 24px; }
   .deliverables-layout, .faq-layout, .hospital-layout { gap: 20px; }
   .contact-grid { gap: 40px; }
 }
@@ -290,6 +306,11 @@ figcaption { font-size: var(--font-small); color: var(--muted); margin-top: 12px
   .enquiry-form .cta-row .button { flex: 1 1 120px; padding-inline: 12px; }
   .enquiry-form h2 { font-size: 22px; }
   .enquiry-layout { gap: 36px; }
+  .company-items { grid-template-columns: 1fr; gap: 26px; }
+  .company-stage { margin-top: 36px; padding-top: 30px; }
+  .company-profile h2 { font-size: 24px; }
+  .company-value { font-size: 20px; }
+  .company-boundaries { padding-inline-start: 18px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

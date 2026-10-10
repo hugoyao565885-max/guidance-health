@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { EnquiryForm } from "../../../components/enquiry-form";
+import { CompanyProfile } from "../../../components/company-profile";
 import { ContactSection, ExpertProfiles, Faq, SectionHeading, ServicePlans, SiteFooter, SiteHeader, TextLink } from "../../../components/patient-sections";
 import { content, sectionKeys, type SectionKey } from "../../../lib/content";
 import { carTSource, patientContent } from "../../../lib/patient-content";
@@ -47,6 +48,7 @@ export default async function SectionPage({ params }: PageProps) {
       <main id="main-content">
         <section className="page-hero"><div className="container"><p className="eyebrow">{page.eyebrow}</p><h1>{page.title}</h1><p>{page.body}</p></div></section>
         <section className="section"><div className="container">
+          {section === "about" ? <CompanyProfile locale={locale} /> : null}
           {section === "membership" ? <><ServicePlans locale={locale} /><div className="membership-modules"><h2>{copy.sections.membership.modulesTitle}</h2><ServiceList cards={copy.sections.membership.modules} /><p className="service-note">{copy.sections.membership.modulesNote}</p></div><div className="faq-layout section-inner"><SectionHeading {...ui.faq} /><Faq locale={locale} /></div></> : null}
           {section === "oncology" ? <><ServiceList cards={copy.sections.oncology.cards} /><div className="source-note"><TextLink href={`${path}car-t/`}>{ui.carT.title}</TextLink></div><p className="service-note">{copy.sections.oncology.note}</p></> : null}
           {section === "mdt" ? <><ServiceList cards={copy.sections.mdt.cards} /><div className="questions-panel"><h2>{copy.sections.mdt.questionsTitle}</h2><ul>{copy.sections.mdt.questions.map((question) => <li key={question}>{question}</li>)}</ul></div><p className="service-note">{copy.sections.mdt.note}</p></> : null}

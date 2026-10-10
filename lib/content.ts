@@ -1,4 +1,5 @@
 import { brand, contact, type Locale } from "./site";
+import { aboutContent, type AboutContent } from "./about-content";
 
 type Card = { title: string; text: string };
 type Step = { title: string; text: string };
@@ -12,7 +13,7 @@ type RegisterSection = {
   documents: string[];
 };
 
-export const mainSectionKeys = ["membership", "oncology", "mdt", "experts", "hospitals", "journey", "register", "contact", "car-t"] as const;
+export const mainSectionKeys = ["about", "membership", "oncology", "mdt", "experts", "hospitals", "journey", "register", "contact", "car-t"] as const;
 export const footerSectionKeys = ["privacy", "terms"] as const;
 export const sectionKeys = [...mainSectionKeys, ...footerSectionKeys] as const;
 
@@ -33,6 +34,7 @@ export type SiteContent = {
     trust: Card[];
   };
   sections: {
+    about: AboutContent;
     pain: { eyebrow: string; title: string; body: string; cards: Card[] };
     focus: { eyebrow: string; title: string; body: string; cards: Card[] };
     membership: {
@@ -71,6 +73,7 @@ export const content: Record<Locale, SiteContent> = {
   en: {
     nav: {
       "home": "Home",
+      "about": aboutContent.en.label,
       "membership": "Services",
       "oncology": "Oncology Coordination",
       "mdt": "MDT Resources",
@@ -111,6 +114,7 @@ export const content: Record<Locale, SiteContent> = {
       ]
     },
     sections: {
+      about: aboutContent.en,
       pain: {
         eyebrow: "Patient challenges",
         title: "Why international cancer patients need trusted guidance in China",
@@ -462,6 +466,7 @@ export const content: Record<Locale, SiteContent> = {
   "zh-hant": {
     nav: {
       "home": "首頁",
+      "about": aboutContent["zh-hant"].label,
       "membership": "服務方案",
       "oncology": "腫瘤協調",
       "mdt": "MDT 資源",
@@ -501,6 +506,7 @@ export const content: Record<Locale, SiteContent> = {
       ]
     },
     sections: {
+      about: aboutContent["zh-hant"],
       pain: {
         eyebrow: "患者痛點",
         title: "為何國際腫瘤患者在中國就醫需要可信賴的引導",
@@ -824,6 +830,7 @@ export const content: Record<Locale, SiteContent> = {
   ru: {
     nav: {
       "home": "Главная",
+      "about": aboutContent.ru.label,
       "membership": "Услуги",
       "oncology": "Онкология",
       "mdt": "MDT",
@@ -863,6 +870,7 @@ export const content: Record<Locale, SiteContent> = {
       ]
     },
     sections: {
+      about: aboutContent.ru,
       pain: {
         eyebrow: "Проблемы пациента",
         title: "Почему международным пациентам нужна надежная навигация в Китае",
@@ -1186,6 +1194,7 @@ export const content: Record<Locale, SiteContent> = {
   ar: {
     nav: {
       "home": "الرئيسية",
+      "about": aboutContent.ar.label,
       "membership": "الخدمات",
       "oncology": "تنسيق الأورام",
       "mdt": "موارد MDT",
@@ -1225,6 +1234,7 @@ export const content: Record<Locale, SiteContent> = {
       ]
     },
     sections: {
+      about: aboutContent.ar,
       pain: {
         eyebrow: "تحديات المرضى",
         title: "لماذا يحتاج مرضى السرطان الدوليون إلى إرشاد موثوق في الصين",
@@ -1548,6 +1558,7 @@ export const content: Record<Locale, SiteContent> = {
   id: {
     nav: {
       "home": "Beranda",
+      "about": aboutContent.id.label,
       "membership": "Layanan",
       "oncology": "Koordinasi Onkologi",
       "mdt": "Sumber MDT",
@@ -1587,6 +1598,7 @@ export const content: Record<Locale, SiteContent> = {
       ]
     },
     sections: {
+      about: aboutContent.id,
       pain: {
         eyebrow: "Tantangan pasien",
         title: "Mengapa pasien kanker internasional membutuhkan panduan tepercaya di China",
@@ -1910,6 +1922,7 @@ export const content: Record<Locale, SiteContent> = {
   ms: {
     nav: {
       "home": "Utama",
+      "about": aboutContent.ms.label,
       "membership": "Perkhidmatan",
       "oncology": "Koordinasi Onkologi",
       "mdt": "Sumber MDT",
@@ -1949,6 +1962,7 @@ export const content: Record<Locale, SiteContent> = {
       ]
     },
     sections: {
+      about: aboutContent.ms,
       pain: {
         eyebrow: "Cabaran pesakit",
         title: "Mengapa pesakit kanser antarabangsa memerlukan panduan dipercayai di China",
