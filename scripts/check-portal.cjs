@@ -76,6 +76,12 @@ async function main() {
   assert.match(fs.readFileSync(path.join(root, "app/sitemap.ts"), "utf8"), /section !== "register"/);
   const authForm = fs.readFileSync(path.join(root, "components/portal/auth-form.tsx"), "utf8");
   assert.match(authForm, /const \{ error \} = await client\.auth\.resetPasswordForEmail\(email, \{ redirectTo: callback \}\);\s*if \(error\) throw error;/, "Do not report recovery email success when the provider rejects the request");
+  assert.ok(authForm.includes('/auth/callback?next='), "Email templates append token parameters to the callback's existing next query");
+  for (const [file, type] of [["confirm-sign-up.html", "email"], ["reset-password.html", "recovery"]]) {
+    const template = fs.readFileSync(path.join(root, "supabase/templates", file), "utf8");
+    assert.ok(template.includes(`{{ .RedirectTo }}&amp;token_hash={{ .TokenHash }}&amp;type=${type}`));
+    assert.doesNotMatch(template, /\{\{\s*\.(?:Data|Email|Token)\s*\}\}/, "Authentication templates must not include personal profile or record data");
+  }
   for (const file of ["components/portal/member-case.tsx", "components/portal/auth-form.tsx", "components/portal/admin-panel.tsx"]) {
     assert.doesNotMatch(fs.readFileSync(path.join(root, file), "utf8"), /console\.|localStorage|sessionStorage|service_role/);
   }
