@@ -44,7 +44,8 @@ export function AuthForm({ locale, mode, enabled }: { locale: Locale; mode: Auth
         router.replace(`/${locale}/member/`); router.refresh();
       } else if (mode === "forgot-password") {
         // The same result is shown whether or not an address exists.
-        await client.auth.resetPasswordForEmail(email, { redirectTo: callback });
+        const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo: callback });
+        if (error) throw error;
         setMessage(copy.resetSent); setComplete(true);
       } else {
         const { error } = await client.auth.updateUser({ password });
