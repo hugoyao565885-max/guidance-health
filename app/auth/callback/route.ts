@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { isLocale, siteUrl } from "../../../lib/site";
 import { serverClient } from "../../../lib/supabase/server";
 import { portalEnabled } from "../../../lib/supabase/config";
+import { authCallbackOrigin } from "../../../lib/portal-validation";
 
 export const dynamic = "force-dynamic";
 
@@ -10,7 +11,10 @@ export async function GET(request: NextRequest) {
   const parts = next.split("/");
   const locale = isLocale(parts[1]) ? parts[1] : "en";
   const target = parts[2] === "reset-password" ? `/${locale}/reset-password/` : `/${locale}/member/`;
-  const origin = process.env.NODE_ENV === "development" ? request.nextUrl.origin : siteUrl;
+  // Protected release tests must keep verification cookies on their own deployment.
+  const origin = process.env.NODE_ENV === "development"
+    ? request.nextUrl.origin
+    : authCallbackOrigin(request.nextUrl.origin, siteUrl, process.env.VERCEL_URL);
   let success = false;
   if (portalEnabled()) {
     const client = await serverClient();

@@ -18,7 +18,7 @@ function load(file) {
 async function main() {
   const { locales } = load(path.join(root, "lib/site.ts"));
   const { portalContent } = load(path.join(root, "lib/portal-content.ts"));
-  const { documentCategories, maxDocuments, maxFileBytes, validatedFileExtension, isUuid } = load(path.join(root, "lib/portal-validation.ts"));
+  const { documentCategories, maxDocuments, maxFileBytes, validatedFileExtension, isUuid, authCallbackOrigin } = load(path.join(root, "lib/portal-validation.ts"));
   const keys = Object.keys(portalContent.en).sort();
   for (const locale of locales) {
     const copy = portalContent[locale];
@@ -41,6 +41,15 @@ async function main() {
   assert.equal(await validatedFileExtension(new File([new Uint8Array(maxFileBytes + 1)], "large.pdf", { type: "application/pdf" })), null);
   assert.ok(isUuid("36c4dbbe-61a7-4e5b-aa93-aa074856de3c"));
   assert.equal(isUuid("../../another-member"), false);
+  const canonicalOrigin = "https://hccareadvisory.com";
+  const deploymentHost = "guidance-health-release-test.vercel.app";
+  assert.equal(authCallbackOrigin(canonicalOrigin, canonicalOrigin, deploymentHost), canonicalOrigin);
+  assert.equal(authCallbackOrigin(`https://${deploymentHost}`, canonicalOrigin, deploymentHost), `https://${deploymentHost}`);
+  assert.equal(authCallbackOrigin("https://evil.example", canonicalOrigin, deploymentHost), canonicalOrigin);
+  assert.equal(authCallbackOrigin(`https://${deploymentHost}.evil.example`, canonicalOrigin, deploymentHost), canonicalOrigin);
+  assert.equal(authCallbackOrigin("https://guidance-health.vercel.app", canonicalOrigin, deploymentHost), canonicalOrigin);
+  assert.equal(authCallbackOrigin(`http://${deploymentHost}`, canonicalOrigin, deploymentHost), canonicalOrigin);
+  assert.equal(authCallbackOrigin("http://localhost:3000", canonicalOrigin), canonicalOrigin);
 
   const sql = fs.readFileSync(path.join(root, "supabase/migrations/202610100001_member_portal.sql"), "utf8");
   for (const table of ["member_profiles", "patient_cases", "case_documents"]) assert.ok(sql.includes(`alter table public.${table} enable row level security;`));

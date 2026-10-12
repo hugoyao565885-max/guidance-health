@@ -16,3 +16,8 @@ export async function validatedFileExtension(file: File): Promise<"pdf" | "jpg" 
 export function isUuid(value: string) {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);
 }
+
+export function authCallbackOrigin(requestOrigin: string, canonicalOrigin: string, deploymentHost?: string) {
+  if (deploymentHost?.endsWith(".vercel.app") && requestOrigin === `https://${deploymentHost}`) return requestOrigin;
+  return canonicalOrigin;
+}
