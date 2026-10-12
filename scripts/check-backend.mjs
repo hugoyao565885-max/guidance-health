@@ -6,7 +6,8 @@ const settings = await fetch(`${url}/auth/v1/settings`, { headers, signal: Abort
 if (!settings.ok) throw new Error(`Supabase Auth unavailable (${settings.status})`);
 const auth = await settings.json();
 console.log(`Email auth: ${auth.external?.email === true}; email verification required: ${auth.mailer_autoconfirm === false}`);
-let ready = true;
+console.log(`New signups: ${auth.disable_signup === true ? "disabled" : "enabled"}`);
+let ready = auth.external?.email === true && auth.mailer_autoconfirm === false;
 for (const table of ["member_profiles", "patient_cases", "case_documents"]) {
   const response = await fetch(`${url}/rest/v1/${table}?select=id&limit=0`, { headers, signal: AbortSignal.timeout(15000) });
   const body = await response.json();

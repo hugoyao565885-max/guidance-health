@@ -25,7 +25,8 @@ async function main() {
     assert.deepEqual(Object.keys(copy).sort(), keys, `${locale}: portal dictionary parity`);
     assert.equal(copy.categories.length, documentCategories.length);
     for (const key of keys) assert.ok(copy[key].length, `${locale}/${key}: empty copy`);
-    assert.match(copy.dataNotice, /Tokyo|東京|Токио|طوكيو/, `${locale}: disclose the project's verified database region`);
+    assert.match(copy.dataNotice, /Singapore|新加坡|Сингапур|سنغافورة|Singapura/, `${locale}: disclose the project's verified database region`);
+    assert.doesNotMatch(copy.dataNotice, /Tokyo|東京|Токио|طوكيو/, `${locale}: remove the previous database region`);
     assert.doesNotMatch(JSON.stringify(copy), /\bNK\b|输注|輸注|\binfusion\b|Clifford|祈福|Hugo Yao/i);
   }
   assert.equal(maxDocuments, 20);
