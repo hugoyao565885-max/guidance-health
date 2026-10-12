@@ -1,4 +1,4 @@
-export const siteUrl = "https://guidance-health.vercel.app";
+export const siteUrl = "https://hccareadvisory.com";
 
 export const brand = {
   name: "H&C Care",

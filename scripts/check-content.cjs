@@ -22,11 +22,13 @@ function loadDictionary(file) {
   return module.exports;
 }
 
-const { locales, localeMeta, contact, brand } = loadDictionary(path.join(root, "lib/site.ts"));
+const { locales, localeMeta, contact, brand, siteUrl, alternates } = loadDictionary(path.join(root, "lib/site.ts"));
 const { content, sectionKeys } = loadDictionary(path.join(root, "lib/content.ts"));
 const { patientContent, carTSource } = loadDictionary(path.join(root, "lib/patient-content.ts"));
 const { serviceContent, servicePrices, serviceCombinationTotal } = loadDictionary(path.join(root, "lib/service-pricing.ts"));
 assert.equal(new URL(carTSource).protocol, "https:");
+assert.equal(siteUrl, "https://hccareadvisory.com");
+for (const locale of locales) assert.equal(alternates("/about/")[localeMeta[locale].htmlLang], `${siteUrl}/${locale}/about/`);
 assert.deepEqual(contact.emails, ["info@hccareadvisory.com", "contact@hccareadvisory.com", "support@hccareadvisory.com"]);
 assert.equal(contact.whatsappUrl, "https://wa.me/85295813961");
 assert.equal(brand.zhLegalName, "康誠健康顧問有限公司");
