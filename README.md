@@ -58,6 +58,8 @@ The contact enquiry form still opens an editable email or WhatsApp draft and doe
 
 The portal is disabled by default until backend provisioning and live tests are complete. No successful registration or upload is simulated.
 
+The current `member` project (`gxvnqlrwzyqcxlflswbe`) has its primary database in Tokyo, Japan (`ap-northeast-1`). The portal and privacy notice disclose this in all six languages. Update those notices if the hosting region changes. On 12 October 2026 the initial migration was applied to this project with the owner's confirmation; a live zero-row REST check confirmed all three member tables deny anonymous access. This is not a completed live member, Storage or email test, and the portal remains disabled.
+
 1. Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` in local and Vercel environment settings. These are public parameters. Do not use a secret or service-role key in this app.
 2. Run `supabase/migrations/202610100001_member_portal.sql` once in the project's SQL Editor. This creates tables, restricted RPC functions, RLS policies, and a private `patient-records` bucket. The SQL runs in a transaction and must not be partially applied.
 3. Keep email confirmation enabled and set the provider's minimum password length to 12. Set Auth Site URL to `https://guidance-health.vercel.app`; add exact production callback and approved localhost callback URLs to the redirect allowlist. Configure custom SMTP directly in Supabase. Default SMTP is restricted to project team addresses and is not a public registration delivery service.
@@ -68,6 +70,14 @@ The portal is disabled by default until backend provisioning and live tests are 
 Portal routes: `/{locale}/register/`, `/login/`, `/forgot-password/`, `/reset-password/`, `/member/`, `/mfa/`, `/admin/`. These are dynamic, noindex and no-store, excluded from the sitemap. A member can save one case, submit it, upload or remove PDF/JPG/PNG files and download them through an authenticated endpoint. Downloads expire after 60 seconds and are served as attachments. Staff can list members, read cases and update coordination status. Passwords are handled by Supabase Auth and are never exposed to the staff backend.
 
 Uploads are limited to 10 MB per file, 20 reservations per member and 60 reservations across this initial project (at most 600 MB). Global reservation limits use a database advisory lock. Failed uploads can be removed by the owner. RLS checks verified users and active rows in `auth.sessions`, so signed-out sessions cannot continue reading records with an otherwise unexpired JWT. Signed download links already issued can remain usable for their 60-second lifetime. Large DICOM studies require a separately agreed secure channel. The Free plan has limited storage, may pause for inactivity and is not a blanket healthcare compliance certification. Review region, provider terms, retention, incident response and cross-border permissions before collecting real patient records.
+
+### Email delivery
+
+The company currently receives email through Cloudflare Email Routing forwarded to Outlook. This is not an Exchange Online company mailbox SMTP configuration. Preserve the existing root-domain MX records and forwarding rules. Do not disable Microsoft security defaults or MFA, put an Outlook password into the app, or disable Supabase email confirmation to make signup appear to work.
+
+A dedicated transactional SMTP service is required for public verification and recovery emails. Resend offers a Supabase SMTP integration and a Free plan; adopting it and verifying a sending domain still require owner approval and setup. Prefer a separate sending subdomain such as `auth.hccareadvisory.com`, with a sender such as `no-reply@auth.hccareadvisory.com`. Add only the DNS values actually supplied by the provider, never replace the root-domain MX records, and avoid duplicate SPF records. The owner creates a least-privilege sending key and enters it directly into Supabase's SMTP password field; do not put it in chat, GitHub, browser screenshots or `NEXT_PUBLIC_` variables. Keep link/open tracking off for authentication emails. Do not enable paid overages or automatic upgrades. Verification emails contain account verification links, never diagnoses, patient names or uploaded medical records.
+
+References: [Supabase SMTP](https://supabase.com/docs/guides/auth/auth-smtp), [Resend Supabase integration](https://resend.com/docs/send-with-supabase-smtp), [Resend pricing](https://resend.com/pricing), [Cloudflare Email Service pricing](https://developers.cloudflare.com/email-service/platform/pricing/).
 
 ## Portal verification
 
