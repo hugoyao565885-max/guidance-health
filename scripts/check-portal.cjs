@@ -75,6 +75,24 @@ async function main() {
   assert.match(layout, /index: false/);
   assert.match(fs.readFileSync(path.join(root, "app/sitemap.ts"), "utf8"), /section !== "register"/);
   const authForm = fs.readFileSync(path.join(root, "components/portal/auth-form.tsx"), "utf8");
+  const memberCaseSource = fs.readFileSync(path.join(root, "components/portal/member-case.tsx"), "utf8");
+  const memberCaseAst = ts.createSourceFile("member-case.tsx", memberCaseSource, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const caseFunctions = new Map();
+  function collectCaseFunctions(node) {
+    if (ts.isFunctionDeclaration(node) && node.name) caseFunctions.set(node.name.text, node);
+    ts.forEachChild(node, collectCaseFunctions);
+  }
+  collectCaseFunctions(memberCaseAst);
+  assert.match(caseFunctions.get("readCaseData").getText(memberCaseAst), /if \(busy \|\| !form\.current\?\.reportValidity\(\)\) return null;/);
+  assert.equal((memberCaseSource.match(/new FormData\(/g) ?? []).length, 1, "Only read the DOM once, before disabling case inputs");
+  assert.doesNotMatch(caseFunctions.get("saveCase").getText(memberCaseAst), /form\.current|new FormData/, "Persist the captured snapshot instead of re-reading a disabled form");
+  for (const name of ["save", "uploadFiles", "submitCase"]) {
+    const source = caseFunctions.get(name).getText(memberCaseAst);
+    const snapshot = source.indexOf("const data = readCaseData();");
+    const busyAction = source.indexOf("await perform(");
+    assert.ok(snapshot >= 0 && snapshot < busyAction, `${name}: capture consent and case fields before becoming busy`);
+    assert.ok(source.includes("await saveCase(data)"), `${name}: pass the captured snapshot to persistence`);
+  }
   assert.match(authForm, /const submittedForm = event\.currentTarget;\s*const values = new FormData\(submittedForm\);/, "Capture the form before awaiting authentication");
   assert.match(authForm, /setMessage\(""\); setFailed\(false\); setShowPassword\(false\);/, "Hide passwords before submitting or reporting a mismatch");
   assert.match(authForm, /finally \{\s*submittedForm\.querySelectorAll<HTMLInputElement>\('input\[name="password"\], input\[name="confirmPassword"\]'\)\.forEach\(\(input\) => \{ input\.value = ""; \}\);/, "Clear both password fields after success or API failure");

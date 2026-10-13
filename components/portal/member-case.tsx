@@ -22,10 +22,15 @@ export function MemberCase({ locale, profile, initialCase, initialDocuments, che
   const [error, setError] = useState(false);
   const [progress, setProgress] = useState("");
 
-  async function saveCase() {
-    if (!form.current?.reportValidity()) return null;
+  function readCaseData() {
+    // Capture consent and values before the busy state disables the fieldset.
+    if (busy || !form.current?.reportValidity()) return null;
     const data = new FormData(form.current);
     if (data.get("healthConsent") !== "on") return null;
+    return data;
+  }
+
+  async function saveCase(data: FormData) {
     const client = browserClient();
     const { error: profileError } = await client.rpc("save_member_profile", { p_name: data.get("display_name"), p_country: data.get("country"), p_locale: data.get("preferred_locale") });
     if (profileError) throw profileError;
@@ -46,16 +51,19 @@ export function MemberCase({ locale, profile, initialCase, initialDocuments, che
 
   async function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    await perform(async () => { if (await saveCase()) setMessage(copy.saved); });
+    const data = readCaseData();
+    if (!data) return;
+    await perform(async () => { await saveCase(data); setMessage(copy.saved); });
   }
 
   async function uploadFiles() {
+    if (!files.length) return;
+    const data = readCaseData();
+    if (!data) return;
     await perform(async () => {
-      if (!files.length) return;
       const extensions = await Promise.all(files.map(validatedFileExtension));
       if (extensions.some((extension) => !extension) || documents.length + files.length > maxDocuments) { setMessage(copy.invalidFile); setError(true); return; }
-      const caseId = await saveCase();
-      if (!caseId) return;
+      const caseId = await saveCase(data);
       const client = browserClient();
       for (let index = 0; index < files.length; index++) {
         const file = files[index];
@@ -77,6 +85,18 @@ export function MemberCase({ locale, profile, initialCase, initialDocuments, che
       }
       setFiles([]); if (fileInput.current) fileInput.current.value = "";
       setMessage(copy.saved);
+    });
+  }
+
+  async function submitCase() {
+    const data = readCaseData();
+    if (!data) return;
+    await perform(async () => {
+      const id = await saveCase(data);
+      const { error: submitError } = await browserClient().rpc("submit_patient_case", { p_case: id });
+      if (submitError) throw submitError;
+      setPatientCase((current) => current ? { ...current, status: "submitted" } : current);
+      setMessage(copy.submitted);
     });
   }
 
@@ -112,12 +132,7 @@ export function MemberCase({ locale, profile, initialCase, initialDocuments, che
         <ul className="portal-document-list">{documents.map((document) => <li key={document.id}><div><strong>{document.original_name}</strong><small>{copy.categories[documentCategories.indexOf(document.category as typeof documentCategories[number])]} · {(document.byte_size / 1024 / 1024).toFixed(1)} MB{!document.uploaded ? ` · ${copy.draft}` : ""}</small></div><div className="portal-file-actions">{document.uploaded ? <a className="icon-button" href={`/api/member/documents/${document.id}/`} title={copy.download} aria-label={`${copy.download}: ${document.original_name}`}><Download size={18} /></a> : null}<button type="button" className="icon-button" title={copy.remove} aria-label={`${copy.remove}: ${document.original_name}`} disabled={busy} onClick={() => removeDocument(document)}><Trash2 size={18} /></button></div></li>)}</ul>
       </section>
       {message || progress ? <p className={`portal-notice${error ? " portal-error" : ""}`} role={error ? "alert" : "status"}>{progress || message}</p> : null}
-      <div className="portal-submit-row"><span className="portal-status">{caseStatusLabel(patientCase?.status ?? "draft", locale)}</span><button type="button" className="button button-dark" disabled={busy} onClick={() => perform(async () => {
-        const id = await saveCase(); if (!id) return;
-        const { error: submitError } = await browserClient().rpc("submit_patient_case", { p_case: id });
-        if (submitError) throw submitError;
-        setPatientCase((current) => current ? { ...current, status: "submitted" } : current); setMessage(copy.submitted);
-      })}><Send size={17} aria-hidden="true" />{busy ? copy.working : copy.submit}</button></div>
+      <div className="portal-submit-row"><span className="portal-status">{caseStatusLabel(patientCase?.status ?? "draft", locale)}</span><button type="button" className="button button-dark" disabled={busy} onClick={submitCase}><Send size={17} aria-hidden="true" />{busy ? copy.working : copy.submit}</button></div>
     </div>
     <aside className="portal-checklist"><h2>{copy.checklist}</h2><p>{copy.optional}</p><ul>{checklist.map((item) => <li key={item}>{item}</li>)}</ul></aside>
   </div>;
