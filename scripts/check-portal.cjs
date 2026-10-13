@@ -75,6 +75,10 @@ async function main() {
   assert.match(layout, /index: false/);
   assert.match(fs.readFileSync(path.join(root, "app/sitemap.ts"), "utf8"), /section !== "register"/);
   const authForm = fs.readFileSync(path.join(root, "components/portal/auth-form.tsx"), "utf8");
+  assert.match(authForm, /const submittedForm = event\.currentTarget;\s*const values = new FormData\(submittedForm\);/, "Capture the form before awaiting authentication");
+  assert.match(authForm, /setMessage\(""\); setFailed\(false\); setShowPassword\(false\);/, "Hide passwords before submitting or reporting a mismatch");
+  assert.match(authForm, /finally \{\s*submittedForm\.querySelectorAll<HTMLInputElement>\('input\[name="password"\], input\[name="confirmPassword"\]'\)\.forEach\(\(input\) => \{ input\.value = ""; \}\);/, "Clear both password fields after success or API failure");
+  assert.match(authForm, /aria-pressed=\{showPassword\} disabled=\{busy \|\| complete\}/, "Do not reveal password fields while a request is pending or completed");
   assert.match(authForm, /const \{ error \} = await client\.auth\.resetPasswordForEmail\(email, \{ redirectTo: callback \}\);\s*if \(error\) throw error;/, "Do not report recovery email success when the provider rejects the request");
   assert.ok(authForm.includes('/auth/callback?next='), "Email templates append token parameters to the callback's existing next query");
   for (const [file, type] of [["confirm-sign-up.html", "email"], ["reset-password.html", "recovery"]]) {
@@ -85,7 +89,7 @@ async function main() {
   for (const file of ["components/portal/member-case.tsx", "components/portal/auth-form.tsx", "components/portal/admin-panel.tsx"]) {
     assert.doesNotMatch(fs.readFileSync(path.join(root, file), "utf8"), /console\.|localStorage|sessionStorage|service_role/);
   }
-  console.log("Portal unit and configuration checks passed. Live RLS, SMTP and upload verification is still required.");
+  console.log("Portal unit and configuration checks passed. These checks do not establish live RLS, SMTP or upload behaviour.");
 }
 
 main().catch((error) => { console.error(error.message); process.exitCode = 1; });

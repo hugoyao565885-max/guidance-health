@@ -24,11 +24,12 @@ export function AuthForm({ locale, mode, enabled }: { locale: Locale; mode: Auth
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!enabled || busy) return;
-    const values = new FormData(event.currentTarget);
+    const submittedForm = event.currentTarget;
+    const values = new FormData(submittedForm);
     const email = String(values.get("email") ?? "").trim();
     const password = String(values.get("password") ?? "");
     const confirmation = String(values.get("confirmPassword") ?? "");
-    setMessage(""); setFailed(false);
+    setMessage(""); setFailed(false); setShowPassword(false);
     if ((mode === "register" || mode === "reset-password") && password !== confirmation) { setMessage(copy.mismatch); setFailed(true); return; }
     setBusy(true);
     try {
@@ -54,7 +55,10 @@ export function AuthForm({ locale, mode, enabled }: { locale: Locale; mode: Auth
         router.replace(`/${locale}/login/`); router.refresh();
       }
     } catch { setMessage(mode === "login" ? copy.invalidLogin : copy.error); setFailed(true); }
-    finally { setBusy(false); }
+    finally {
+      submittedForm.querySelectorAll<HTMLInputElement>('input[name="password"], input[name="confirmPassword"]').forEach((input) => { input.value = ""; });
+      setBusy(false);
+    }
   }
 
   return <div className="portal-auth-layout">
@@ -63,7 +67,7 @@ export function AuthForm({ locale, mode, enabled }: { locale: Locale; mode: Auth
       {!enabled ? <p className="portal-notice" role="status">{copy.unavailable}</p> : null}
       <form onSubmit={handleSubmit} className="portal-form">
         {mode !== "reset-password" ? <label>{copy.email}<input name="email" type="email" dir="ltr" autoComplete="email" maxLength={254} required disabled={busy || complete} /></label> : null}
-        {hasPassword ? <label>{copy.password}<div className="password-field"><input name="password" type={showPassword ? "text" : "password"} dir="ltr" autoComplete={mode === "login" ? "current-password" : "new-password"} minLength={mode === "login" ? undefined : 12} maxLength={128} required disabled={busy || complete} /><button type="button" className="icon-button" title={copy.password} aria-label={copy.password} aria-pressed={showPassword} onClick={() => setShowPassword(!showPassword)}>{showPassword ? <EyeOff size={18} /> : <Eye size={18} />}</button></div>{mode !== "login" ? <small>{copy.passwordNote}</small> : null}</label> : null}
+        {hasPassword ? <label>{copy.password}<div className="password-field"><input name="password" type={showPassword ? "text" : "password"} dir="ltr" autoComplete={mode === "login" ? "current-password" : "new-password"} minLength={mode === "login" ? undefined : 12} maxLength={128} required disabled={busy || complete} /><button type="button" className="icon-button" title={copy.password} aria-label={copy.password} aria-pressed={showPassword} disabled={busy || complete} onClick={() => setShowPassword(!showPassword)}>{showPassword ? <EyeOff size={18} /> : <Eye size={18} />}</button></div>{mode !== "login" ? <small>{copy.passwordNote}</small> : null}</label> : null}
         {mode === "register" || mode === "reset-password" ? <label>{copy.confirmPassword}<input name="confirmPassword" type={showPassword ? "text" : "password"} dir="ltr" autoComplete="new-password" minLength={12} maxLength={128} required disabled={busy || complete} /></label> : null}
         {mode === "register" ? <><div className="portal-legal-links"><Link href={`/${locale}/privacy/`}>{copy.privacy}</Link><Link href={`/${locale}/terms/`}>{copy.terms}</Link></div><label className="portal-checkbox"><input name="consent" type="checkbox" required disabled={busy || complete} /><span>{copy.consent}</span></label></> : null}
         {message ? <p className={`portal-notice${failed ? " portal-error" : ""}`} role={failed ? "alert" : "status"}>{message}</p> : null}
