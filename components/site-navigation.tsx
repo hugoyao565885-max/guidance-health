@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight, ChevronDown, Globe2, Menu, UserRound, X } from "lucide-react";
 import { useRef, type KeyboardEvent } from "react";
 import { brand, localeMeta, localePath, locales, type Locale } from "../lib/site";
@@ -32,8 +33,7 @@ export function SiteNavigation({ locale, section = "", labels, links }: Navigati
     <header className="site-header">
       <div className="container nav-wrap">
         <Link href={localePath(locale)} className="brand" onClick={closeMenus} aria-label={`${brand.name} home`}>
-          <span>H&C<span className="brand-care"> Care</span></span>
-          <small>{brand.legalName}</small>
+          <Image className="brand-logo" src="/brand/hccare-logo.webp" alt={brand.legalName} width={1280} height={405} sizes="(max-width: 400px) 128px, (max-width: 600px) 150px, 224px" priority />
         </Link>
         <nav className="desktop-nav" aria-label={labels.menu}>
           {links.map((link) => (
