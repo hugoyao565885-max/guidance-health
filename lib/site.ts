@@ -38,6 +38,14 @@ export function localePath(locale: Locale) {
   return `/${locale}/`;
 }
 
+export function pagePath(locale: Locale, section = "") {
+  const path = section.replace(/^\/+|\/+$/g, "");
+  return `/${locale}${path ? `/${path}` : ""}`;
+}
+
 export function alternates(path = "") {
-  return Object.fromEntries(locales.map((locale) => [localeMeta[locale].htmlLang, `${siteUrl}/${locale}${path}`]));
+  return {
+    ...Object.fromEntries(locales.map((locale) => [localeMeta[locale].htmlLang, `${siteUrl}${pagePath(locale, path)}`])),
+    "x-default": `${siteUrl}${pagePath("en", path)}`,
+  };
 }

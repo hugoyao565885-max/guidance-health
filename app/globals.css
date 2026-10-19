@@ -176,6 +176,29 @@ summary::-webkit-details-marker { display: none; }
 .page-hero { background: var(--paper); padding-block: 48px; border-bottom: 1px solid var(--line); }
 .page-hero h1 { font-size: 40px; max-width: 900px; margin-top: 14px; }
 .page-hero p:last-child { max-width: 800px; font-size: var(--font-body); margin-top: 20px; }
+.breadcrumbs { margin-bottom: 22px; font-size: var(--font-small); color: var(--muted); }
+.breadcrumbs ol { display: flex; flex-wrap: wrap; gap: 6px 12px; list-style: none; padding: 0; margin: 0; }
+.breadcrumbs li + li::before { content: "/"; margin-inline-end: 12px; color: var(--muted); }
+.breadcrumbs a { color: var(--green); text-underline-offset: 3px; }
+.patient-guide { max-width: 860px; }
+.guide-byline { display: flex; flex-wrap: wrap; gap: 8px 28px; color: var(--muted); font-size: var(--font-small); margin-bottom: 36px; }
+.guide-sections { display: grid; gap: 30px; }
+.guide-sections > section { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 18px; padding-top: 24px; border-top: 1px solid var(--line); }
+.guide-sections h2, .guide-questions h2, .guide-related h2 { font-size: 24px; }
+.guide-sections p { margin-top: 14px; }
+.guide-questions, .guide-related { margin-top: 44px; }
+.guide-questions h2 { margin-bottom: 22px; }
+.guide-sources { margin-block: 32px; font-size: var(--font-small); }
+.guide-sources h2 { font-size: 18px; }
+.guide-sources ul { padding-inline-start: 22px; }
+.guide-sources a { color: var(--green); overflow-wrap: anywhere; }
+.guide-related ul { padding: 0; margin: 20px 0 28px; list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 30px; }
+.guide-related a { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding-block: 16px; border-top: 1px solid var(--line); color: var(--green); text-underline-offset: 4px; }
+@media (max-width: 600px) {
+  .guide-related ul { grid-template-columns: 1fr; }
+  .guide-sections > section { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .guide-sections h2, .guide-questions h2, .guide-related h2 { font-size: 22px; }
+}
 .service-list { display: grid; grid-template-columns: 1fr 1fr; gap: 30px 56px; }
 .service-list article { display: flex; gap: 22px; border-top: 1px solid var(--line); padding-top: 24px; }
 .service-list .item-number { padding-top: 4px; }

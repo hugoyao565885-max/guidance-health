@@ -22,17 +22,53 @@ function loadDictionary(file) {
   return module.exports;
 }
 
-const { locales, localeMeta, contact, brand, siteUrl, alternates } = loadDictionary(path.join(root, "lib/site.ts"));
+const { locales, localeMeta, contact, brand, siteUrl, alternates, pagePath } = loadDictionary(path.join(root, "lib/site.ts"));
+const { publicMetadata, organizationData, publicPageUpdates } = loadDictionary(path.join(root, "lib/seo.ts"));
+const { patientGuides, guidesUpdated } = loadDictionary(path.join(root, "lib/patient-guides.ts"));
+const sitemap = loadDictionary(path.join(root, "app/sitemap.ts")).default();
+const robots = loadDictionary(path.join(root, "app/robots.ts")).default();
 const { content, sectionKeys } = loadDictionary(path.join(root, "lib/content.ts"));
 const { patientContent, carTSource } = loadDictionary(path.join(root, "lib/patient-content.ts"));
 const { serviceContent, servicePrices, serviceCombinationTotal } = loadDictionary(path.join(root, "lib/service-pricing.ts"));
 assert.equal(new URL(carTSource).protocol, "https:");
 assert.equal(siteUrl, "https://hccareadvisory.com");
-for (const locale of locales) assert.equal(alternates("/about/")[localeMeta[locale].htmlLang], `${siteUrl}/${locale}/about/`);
+for (const locale of locales) assert.equal(alternates("/about/")[localeMeta[locale].htmlLang], `${siteUrl}/${locale}/about`);
 assert.deepEqual(contact.emails, ["info@hccareadvisory.com", "contact@hccareadvisory.com", "support@hccareadvisory.com"]);
 assert.equal(contact.whatsappUrl, "https://wa.me/85295813961");
 assert.equal(brand.zhLegalName, "康誠健康顧問有限公司");
 assert.ok(sectionKeys.includes("about"));
+const publicSections = ["", ...sectionKeys.filter((section) => section !== "register"), "records"];
+assert.deepEqual(Object.keys(publicPageUpdates).sort(), [...publicSections].sort());
+assert.equal(sitemap.length, locales.length * publicSections.length);
+assert.equal(new Set(sitemap.map((item) => item.url)).size, sitemap.length);
+assert.equal(organizationData()["@type"], "Organization");
+assert.equal(organizationData().legalName, brand.legalName);
+for (const locale of locales) {
+  for (const section of publicSections) {
+    const path = pagePath(locale, section);
+    assert.equal(pagePath(locale, `/${section}/`), path);
+    assert.ok(!path.endsWith("/"));
+    const metadata = publicMetadata(locale, section, "Title", "Description");
+    assert.equal(metadata.alternates.canonical, `${siteUrl}${path}`);
+    assert.equal(metadata.alternates.languages[localeMeta[locale].htmlLang], metadata.alternates.canonical);
+    assert.equal(Object.keys(metadata.alternates.languages).length, 7);
+    assert.equal(metadata.openGraph.url, metadata.alternates.canonical);
+    assert.ok(sitemap.some((entry) => entry.url === metadata.alternates.canonical && /^\d{4}-\d{2}-\d{2}$/.test(entry.lastModified)));
+  }
+  for (const key of ["mdt", "journey", "records"]) {
+    const guide = patientGuides[locale].guides[key];
+    assert.ok(guide.title && guide.description && guide.sections.length >= 4);
+    assert.equal(publicPageUpdates[key], guidesUpdated);
+    for (const section of guide.related) assert.ok(publicSections.includes(section));
+    for (const source of guide.sources) assert.equal(new URL(source.url).protocol, "https:");
+  }
+  if (locale !== "zh-hant") assert.doesNotMatch(JSON.stringify(patientGuides[locale]), /\p{Script=Han}/u, `${locale}: untranslated Chinese text`);
+  assert.doesNotMatch(JSON.stringify(patientGuides[locale]), /\bNK\b|输注|輸注|\binfusion\b|Clifford|祈福|Hugo Yao/i);
+  for (const rule of robots.rules.disallow) {
+    const matches = new RegExp(`^${rule.replace(/[.*+?^{}()|[\]\\]/g, "\\$&")}`).test(`/${locale}/membership`);
+    assert.equal(matches, false, "Private member rule must not block public membership pricing");
+  }
+}
 assert.deepEqual(servicePrices, { currency: "CNY", quotedOn: "2026-10-10", preArrival: 2880, duringStay: { fiveSeat: 3580, business: 3730 }, afterDischarge: 1180 });
 assert.equal(serviceCombinationTotal("fiveSeat", true), 7640);
 assert.equal(serviceCombinationTotal("business", true), 7790);

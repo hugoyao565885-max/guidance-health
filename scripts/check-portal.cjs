@@ -73,7 +73,8 @@ async function main() {
   const layout = fs.readFileSync(path.join(root, "app/[locale]/(portal)/layout.tsx"), "utf8");
   assert.match(layout, /dynamic = "force-dynamic"/);
   assert.match(layout, /index: false/);
-  assert.match(fs.readFileSync(path.join(root, "app/sitemap.ts"), "utf8"), /section !== "register"/);
+  const sitemap = load(path.join(root, "app/sitemap.ts")).default();
+  for (const entry of sitemap) assert.doesNotMatch(new URL(entry.url).pathname, /\/(?:register|login|member|admin|mfa|forgot-password|reset-password)(?:\/|$)/, "Account pages must stay out of the sitemap");
   const authForm = fs.readFileSync(path.join(root, "components/portal/auth-form.tsx"), "utf8");
   const memberCaseSource = fs.readFileSync(path.join(root, "components/portal/member-case.tsx"), "utf8");
   const memberCaseAst = ts.createSourceFile("member-case.tsx", memberCaseSource, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);

@@ -5,7 +5,8 @@ import { ArrowRight, ArrowUpRight, Check, ChevronDown, Mail, MessageCircle } fro
 import { content, type SectionKey } from "../lib/content";
 import { patientContent } from "../lib/patient-content";
 import { serviceCombinationTotal, formatServiceAmount, servicePrices } from "../lib/service-pricing";
-import { brand, contact, localePath, type Locale } from "../lib/site";
+import { brand, contact, pagePath, type Locale } from "../lib/site";
+import { patientGuides } from "../lib/patient-guides";
 import { SiteNavigation } from "./site-navigation";
 
 export function SiteHeader({ locale, section }: { locale: Locale; section?: string }) {
@@ -54,7 +55,7 @@ export function ServicePlans({ locale, detailed = false }: { locale: Locale; det
               <p className="price-unit">{pricing.unit}</p>
             </div>
             <ul>{plan.items.map((item) => <li key={item}><Check size={16} aria-hidden="true" /><span>{item}</span></li>)}</ul>
-            <Link className="text-link" href={`${localePath(locale)}register/?service=${index}`}>{ui.services.quote}<ArrowUpRight size={17} aria-hidden="true" /></Link>
+            <Link className="text-link" href={`${pagePath(locale, "register")}?service=${index}`}>{ui.services.quote}<ArrowUpRight size={17} aria-hidden="true" /></Link>
           </article>
         ))}
       </div>
@@ -93,7 +94,7 @@ export function ContactSection({ locale }: { locale: Locale }) {
   return (
     <section className="section contact-section" id="contact">
       <div className="container contact-grid">
-        <div><SectionHeading {...ui.contact} /><div className="cta-row"><Link href={`${localePath(locale)}register/`} className="button button-dark">{ui.start}<ArrowUpRight size={18} aria-hidden="true" /></Link><a href={contact.whatsappUrl} className="button button-light" target="_blank" rel="noopener noreferrer"><MessageCircle size={18} aria-hidden="true" />{ui.whatsapp}</a></div></div>
+        <div><SectionHeading {...ui.contact} /><div className="cta-row"><Link href={pagePath(locale, "register")} className="button button-dark">{ui.start}<ArrowUpRight size={18} aria-hidden="true" /></Link><a href={contact.whatsappUrl} className="button button-light" target="_blank" rel="noopener noreferrer"><MessageCircle size={18} aria-hidden="true" />{ui.whatsapp}</a></div></div>
         <address className="contact-details">
           {contact.emails.map((email, index) => <div key={email}><span>{ui.contact.labels[index]}</span><a href={`mailto:${email}`}><Mail size={17} aria-hidden="true" />{email}</a></div>)}
           <a className="contact-phone" href={contact.whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={17} aria-hidden="true" /><bdi>{contact.whatsapp}</bdi></a>
@@ -110,8 +111,8 @@ export function SiteFooter({ locale }: { locale: Locale }) {
   const links: SectionKey[] = ["about", "mdt", "hospitals", "journey", "contact", "privacy", "terms"];
   return (
     <>
-      <footer className="site-footer"><div className="container footer-grid"><div><Link className="footer-brand" href={localePath(locale)}><Image src="/brand/hccare-logo.webp" alt={brand.legalName} width={1280} height={405} sizes="(max-width: 400px) 248px, 296px" /></Link><p>{locale === "zh-hant" ? brand.zhLegalName : brand.legalName}</p><p>{copy.sections.disclaimer.body}</p></div><nav aria-label={ui.menu}>{links.map((section) => <Link key={section} href={`${localePath(locale)}${section}/`}>{copy.nav[section]}</Link>)}</nav></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} {brand.name}</span><a href={`mailto:${contact.email}`}>{contact.email}</a></div></footer>
-      <div className="mobile-contact-bar"><Link href={`${localePath(locale)}register/`}><ArrowUpRight size={18} aria-hidden="true" />{ui.start}</Link><a href={contact.whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={19} aria-hidden="true" />{ui.whatsapp}</a></div>
+      <footer className="site-footer"><div className="container footer-grid"><div><Link className="footer-brand" href={pagePath(locale)}><Image src="/brand/hccare-logo.webp" alt={brand.legalName} width={1280} height={405} sizes="(max-width: 400px) 248px, 296px" /></Link><p>{locale === "zh-hant" ? brand.zhLegalName : brand.legalName}</p><p>{copy.sections.disclaimer.body}</p></div><nav aria-label={ui.menu}>{links.map((section) => <Link key={section} href={pagePath(locale, section)}>{copy.nav[section]}</Link>)}<Link href={pagePath(locale, "records")}>{patientGuides[locale].recordsLink}</Link></nav></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} {brand.name}</span><a href={`mailto:${contact.email}`}>{contact.email}</a></div></footer>
+      <div className="mobile-contact-bar"><Link href={pagePath(locale, "register")}><ArrowUpRight size={18} aria-hidden="true" />{ui.start}</Link><a href={contact.whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={19} aria-hidden="true" />{ui.whatsapp}</a></div>
     </>
   );
 }

@@ -6,7 +6,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/api/member/", "/auth/", ...locales.flatMap((locale) => ["register", "login", "member", "admin", "mfa", "forgot-password", "reset-password"].map((page) => `/${locale}/${page}/`))],
+      // Login/registration pages remain crawlable so their noindex can be read.
+      disallow: ["/api/member/", "/auth/", ...locales.flatMap((locale) => ["member", "admin", "mfa"].flatMap((page) => [`/${locale}/${page}$`, `/${locale}/${page}/`]))],
     },
     sitemap: `${siteUrl}/sitemap.xml`,
   };
