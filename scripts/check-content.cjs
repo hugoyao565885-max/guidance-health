@@ -96,7 +96,12 @@ for (const locale of locales) {
   for (const plan of ui.services.plans) assert.ok(plan.items.length >= 3, `${locale}/${plan.stage}: service scope`);
   assert.doesNotMatch(JSON.stringify(ui.services.plans), /Annual case support|年度個案支持|Годовое сопровождение|دعم الحالة السنوي|Dukungan kasus tahunan|Sokongan kes tahunan/i, `${locale}: obsolete annual plans`);
   assert.equal(page.sections.membership.modules.length, 3, `${locale}: support modules`);
-  assert.equal(page.sections.experts.people.length, 3, `${locale}: expert profiles`);
+  assert.equal(page.sections.experts.people.length, 4, `${locale}: expert profiles`);
+  const peng = page.sections.experts.people[3];
+  assert.equal(peng.image, "/images/peng-roujun.webp", `${locale}: fourth expert portrait`);
+  assert.ok(peng.affiliation && peng.text && peng.role && peng.source.label, `${locale}: sourced expert profile`);
+  assert.equal(peng.source.url, "https://www.sysucc.org.cn/node/3765", `${locale}: official profile source`);
+  assert.doesNotMatch(peng.text, /CAR-T|lymphoma|淋巴瘤|лимфом|اللمفوما|limfoma/i, `${locale}: do not expand beyond verified clinical specialties`);
   assert.equal(ui.contact.labels.length, contact.emails.length, `${locale}: contact labels`);
   assert.ok(page.sections.register.documents.length >= 11, `${locale}: records checklist`);
   assert.ok(ui.faq.items.length >= 6, `${locale}: FAQ`);
@@ -122,6 +127,9 @@ for (const locale of locales) {
 
 assert.ok(fs.existsSync(path.join(root, "public/images/patient-room.jpg")));
 const homepage = fs.readFileSync(path.join(root, "app/[locale]/page.tsx"), "utf8");
+const expertComponent = fs.readFileSync(path.join(root, "components/patient-sections.tsx"), "utf8");
+assert.match(expertComponent, /compact \? people\.slice\(0, 3\) : people/, "Keep homepage to three expert previews");
+assert.doesNotMatch(expertComponent, /href=\{person\.source/, "Official expert sources are for verification, not outbound profile links");
 assert.doesNotMatch(homepage, /ServicePlans|<Faq|journey-preview|deliverables-layout/, "Homepage should preview, not duplicate full detail pages");
 assert.match(homepage, /<CompanySummary locale=\{locale\} compact/, "Homepage company introduction should be compact");
 assert.match(homepage, /<ExpertProfiles locale=\{locale\} compact/, "Keep real expert portraits on the homepage");

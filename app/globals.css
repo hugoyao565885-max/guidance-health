@@ -78,7 +78,8 @@ summary::-webkit-details-marker { display: none; }
 .text-link { display: inline-flex; align-items: center; gap: 10px; color: var(--green); text-decoration: none; font-size: var(--font-compact); font-weight: 600; }
 .text-link:hover { text-decoration: underline; text-underline-offset: 5px; }
 [dir="rtl"] .text-link > svg { transform: scaleX(-1); }
-.expert-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.expert-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.expert-grid.compact-experts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .expert-card { min-width: 0; }
 .expert-portrait { margin: 0; height: 320px; overflow: hidden; background: #eef2ef; border-radius: 4px; }
 .expert-card img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
@@ -87,7 +88,13 @@ summary::-webkit-details-marker { display: none; }
 .expert-card h3 { font-size: 21px; }
 .expert-card p { font-size: var(--font-body); margin-top: 12px; }
 .expert-card .role { font-size: var(--font-small); color: var(--green); line-height: 1.7; }
+.expert-card .expert-affiliation { font-weight: 600; }
 .compact-experts .expert-portrait { height: 255px; }
+@media (min-width: 1101px) {
+  .expert-grid:not(.compact-experts) .expert-card { display: grid; grid-template-columns: 160px minmax(0, 1fr); align-items: start; gap: 24px; }
+  .expert-grid:not(.compact-experts) .expert-portrait { width: 160px; height: 240px; }
+  .expert-grid:not(.compact-experts) .expert-card > div { padding-top: 0; }
+}
 .clinical-background { display: flex; align-items: flex-start; gap: 16px; margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line); }
 .clinical-background > svg { color: var(--green); margin-top: 3px; }
 .clinical-background p { font-size: var(--font-compact); max-width: 850px; }
@@ -394,7 +401,7 @@ button:disabled { cursor: not-allowed; opacity: .55; }
   .section-header > p:last-child { font-size: var(--font-body); margin-top: 14px; }
   .heading-with-link { display: block; }
   .heading-with-link > .text-link { margin: -8px 0 24px; }
-  .expert-grid { grid-template-columns: 1fr; gap: 30px; }
+  .expert-grid, .expert-grid.compact-experts { grid-template-columns: 1fr; gap: 30px; }
   .compact-experts .expert-card { display: grid; grid-template-columns: 102px minmax(0, 1fr); gap: 18px; }
   .compact-experts .expert-portrait { height: 132px; width: 102px; }
   .compact-experts .expert-card > div { padding-top: 6px; }

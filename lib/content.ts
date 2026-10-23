@@ -4,7 +4,7 @@ import { serviceContent, type ServicePlan } from "./service-pricing";
 
 type Card = { title: string; text: string };
 type Step = { title: string; text: string };
-type Expert = { name: string; role: string; text: string; image: string };
+type Expert = { name: string; role: string; text: string; image: string; affiliation?: string; source?: { label: string; url: string } };
 type RegisterSection = {
   eyebrow: string;
   title: string;
@@ -67,7 +67,10 @@ const experts = {
   cai: "/images/cai-qichun.jpg",
   huang: "/images/huang-huiqiang.jpg",
   xie: "/images/xie-guoming.png",
+  peng: "/images/peng-roujun.webp",
 };
+
+const pengSource = "https://www.sysucc.org.cn/node/3765";
 
 export const content: Record<Locale, SiteContent> = {
   en: {
@@ -255,9 +258,17 @@ export const content: Record<Locale, SiteContent> = {
             image: experts.xie,
             text: "Senior medical oncologist with more than 40 years of clinical experience in chemotherapy, immunotherapy, targeted therapy, endocrine therapy, and precision treatment planning for solid tumors.",
           },
+          {
+            name: "Dr. Peng Roujun",
+            role: "Chief Physician · PhD Supervisor · Comprehensive Oncology",
+            affiliation: "Sun Yat-sen University Cancer Center",
+            image: experts.peng,
+            text: "Focuses on medical and multidisciplinary care for breast and gynecologic cancers, including ovarian, endometrial, and cervical cancer.",
+            source: { label: "Official hospital profile", url: pengSource },
+          },
         ],
         note:
-          "Doctor information is provided as clinical background for Guangzhou-related pathways. It is not an offer of diagnosis, treatment, or prescribing services in Hong Kong.",
+          "Profiles are provided as clinical background, not as evidence of employment by or endorsement of H&C Care by these doctors or hospitals. Consultation availability must be confirmed with the receiving institution. This is not an offer of diagnosis, treatment, or prescribing services in Hong Kong.",
       },
       hospitals: {
         eyebrow: "Guangzhou setting",
@@ -601,8 +612,9 @@ export const content: Record<Locale, SiteContent> = {
           { name: "蔡綺純醫生", role: "主任醫師 · 腫瘤中心主任 · 碩士生導師", image: experts.cai, text: "長期從事淋巴瘤、精準免疫治療、細胞治療、靶向藥轉化及個體化腫瘤診療。" },
           { name: "黃慧強教授", role: "主任醫師 · 教授 · 博士生導師 · 幹細胞移植病區主任", image: experts.huang, text: "專注淋巴瘤及血液腫瘤，在少見淋巴瘤亞型、系統治療和自體造血幹細胞移植方面經驗豐富。" },
           { name: "謝國明醫生", role: "主任醫師 · 腫瘤科 · 實體瘤內科治療", image: experts.xie, text: "從事腫瘤診療四十餘年，擅長實體瘤化療、免疫治療、靶向治療、內分泌治療及個體化精準治療規劃。" },
+          { name: "彭柔君醫生", role: "主任醫師 · 博士生導師 · 綜合科", affiliation: "中山大學腫瘤防治中心", image: experts.peng, text: "專注乳腺癌與婦科腫瘤的內科及多學科綜合診療，包括卵巢癌、子宮內膜癌和宮頸癌。", source: { label: "醫院官方專家資料", url: pengSource } },
         ],
-        note: "醫生資料僅作廣州相關路徑的臨床背景介紹，不構成在香港提供診斷、治療或處方服務。",
+        note: "以上資料僅作臨床背景介紹，不代表所列醫生受僱於 H&C Care，亦不表示醫生或所屬醫院為公司背書。能否安排諮詢須向接診機構確認，不構成在香港提供診斷、治療或處方服務。",
       },
       hospitals: {
         eyebrow: "廣州場景",
@@ -937,8 +949,9 @@ export const content: Record<Locale, SiteContent> = {
           { name: "Д-р Цай Цичунь", role: "Chief Physician · Oncology Center Director", image: experts.cai, text: "Опытный онколог в области лимфомы, иммунотерапии, клеточной терапии и индивидуализированной онкологии." },
           { name: "Профессор Хуан Хуйцян", role: "Chief Physician · Professor · PhD Supervisor", image: experts.huang, text: "Специалист по лимфоме и гематологическим опухолям, системной терапии и трансплантации стволовых клеток." },
           { name: "Д-р Се Гомин", role: "Chief Physician · Solid Tumor Medical Oncology", image: experts.xie, text: "Медицинский онколог с более чем 40-летним опытом в терапии солидных опухолей." },
+          { name: "Д-р Пэн Жоужунь", role: "Chief Physician · Научный руководитель докторантов · Комплексная онкология", affiliation: "Онкологический центр Университета Сунь Ятсена", image: experts.peng, text: "Специализируется на лекарственном и комплексном лечении рака молочной железы и гинекологических опухолей, включая рак яичников, эндометрия и шейки матки.", source: { label: "Профиль на сайте больницы", url: pengSource } },
         ],
-        note: "Информация о врачах является клиническим фоном, а не предложением диагностики или лечения в Гонконге.",
+        note: "Профили представлены для ознакомления с клинической специализацией. Они не означают, что врачи работают в H&C Care или что врачи и больницы поддерживают компанию. Возможность консультации подтверждает принимающее учреждение. Это не предложение диагностики, лечения или назначения лекарств в Гонконге.",
       },
       hospitals: {
         eyebrow: "Среда Гуанчжоу",
@@ -1273,8 +1286,9 @@ export const content: Record<Locale, SiteContent> = {
           { name: "د. تساي تشيتشون", role: "Chief Physician · Oncology Center Director", image: experts.cai, text: "اختصاصي أورام ذو خبرة في اللمفوما والعلاج المناعي والخلوي والفردي." },
           { name: "البروفيسور هوانغ هويتشيانغ", role: "Chief Physician · Professor · PhD Supervisor", image: experts.huang, text: "اختصاصي لمفوما وأورام دم مع خبرة في العلاج الجهازي وزراعة الخلايا الجذعية." },
           { name: "د. شيه غوومينغ", role: "Chief Physician · Solid Tumor Medical Oncology", image: experts.xie, text: "اختصاصي أورام طبية بخبرة تزيد عن 40 عاما في علاج الأورام الصلبة." },
+          { name: "د. بنغ روجون", role: "طبيبة بدرجة Chief Physician · مشرفة دكتوراه · قسم الأورام الشامل", affiliation: "مركز السرطان بجامعة صن يات سن", image: experts.peng, text: "تركز على العلاج الدوائي والرعاية متعددة التخصصات لسرطان الثدي والأورام النسائية، بما فيها سرطان المبيض وبطانة الرحم وعنق الرحم.", source: { label: "الملف الرسمي على موقع المستشفى", url: pengSource } },
         ],
-        note: "معلومات الأطباء خلفية سريرية وليست عرضا للتشخيص أو العلاج في هونغ كونغ.",
+        note: "هذه الملفات للتعريف بالخلفية السريرية، ولا تعني أن الأطباء موظفون لدى H&C Care أو أنهم أو مستشفياتهم يزكون الشركة. تؤكد المؤسسة المستقبلة إمكانية الاستشارة. هذه المعلومات ليست عرضا للتشخيص أو العلاج أو وصف الأدوية في هونغ كونغ.",
       },
       hospitals: {
         eyebrow: "بيئة قوانغتشو",
@@ -1609,8 +1623,9 @@ export const content: Record<Locale, SiteContent> = {
           { name: "Dr. Cai Qichun", role: "Chief Physician · Oncology Center Director", image: experts.cai, text: "Onkolog senior dengan pengalaman dalam limfoma, imunoterapi, terapi sel, dan perawatan individual." },
           { name: "Prof. Huang Huiqiang", role: "Chief Physician · Professor · PhD Supervisor", image: experts.huang, text: "Spesialis limfoma dan keganasan hematologi dengan pengalaman terapi sistemik dan transplantasi sel punca." },
           { name: "Dr. Xie Guoming", role: "Chief Physician · Solid Tumor Medical Oncology", image: experts.xie, text: "Onkolog medis dengan pengalaman lebih dari 40 tahun dalam tumor padat." },
+          { name: "Dr. Peng Roujun", role: "Chief Physician · Pembimbing Doktoral · Onkologi Komprehensif", affiliation: "Pusat Kanker Universitas Sun Yat-sen", image: experts.peng, text: "Berfokus pada terapi medis dan perawatan multidisiplin kanker payudara serta kanker ginekologi, termasuk kanker ovarium, endometrium, dan serviks.", source: { label: "Profil resmi rumah sakit", url: pengSource } },
         ],
-        note: "Informasi dokter adalah latar klinis, bukan tawaran diagnosis atau terapi di Hong Kong.",
+        note: "Profil ini menjelaskan latar klinis, bukan bukti bahwa dokter bekerja untuk H&C Care atau bahwa dokter maupun rumah sakit mendukung perusahaan. Ketersediaan konsultasi harus dikonfirmasi oleh fasilitas penerima. Ini bukan tawaran diagnosis, pengobatan, atau peresepan di Hong Kong.",
       },
       hospitals: {
         eyebrow: "Lingkungan Guangzhou",
@@ -1945,8 +1960,9 @@ export const content: Record<Locale, SiteContent> = {
           { name: "Dr. Cai Qichun", role: "Chief Physician · Oncology Center Director", image: experts.cai, text: "Pakar onkologi kanan dengan pengalaman limfoma, imunoterapi, terapi sel dan rawatan individu." },
           { name: "Prof. Huang Huiqiang", role: "Chief Physician · Professor · PhD Supervisor", image: experts.huang, text: "Pakar limfoma dan keganasan hematologi dengan pengalaman terapi sistemik dan transplantasi sel stem." },
           { name: "Dr. Xie Guoming", role: "Chief Physician · Solid Tumor Medical Oncology", image: experts.xie, text: "Pakar onkologi perubatan dengan pengalaman lebih 40 tahun dalam tumor pepejal." },
+          { name: "Dr. Peng Roujun", role: "Chief Physician · Penyelia Kedoktoran · Onkologi Komprehensif", affiliation: "Pusat Kanser Universiti Sun Yat-sen", image: experts.peng, text: "Memfokuskan rawatan perubatan dan penjagaan pelbagai disiplin bagi kanser payudara serta kanser ginekologi, termasuk kanser ovari, endometrium dan serviks.", source: { label: "Profil rasmi hospital", url: pengSource } },
         ],
-        note: "Maklumat doktor ialah latar klinikal, bukan tawaran diagnosis atau rawatan di Hong Kong.",
+        note: "Profil ini menerangkan latar klinikal, bukan bukti bahawa doktor bekerja untuk H&C Care atau bahawa doktor mahupun hospital menyokong syarikat. Ketersediaan konsultasi perlu disahkan oleh institusi penerima. Ini bukan tawaran diagnosis, rawatan atau preskripsi di Hong Kong.",
       },
       hospitals: {
         eyebrow: "Persekitaran Guangzhou",

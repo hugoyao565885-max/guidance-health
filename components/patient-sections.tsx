@@ -25,12 +25,20 @@ export function TextLink({ href, children }: { href: string; children: ReactNode
 }
 
 export function ExpertProfiles({ locale, compact = false }: { locale: Locale; compact?: boolean }) {
+  const people = content[locale].sections.experts.people;
   return (
     <div className={`expert-grid${compact ? " compact-experts" : ""}`}>
-      {content[locale].sections.experts.people.map((person) => (
+      {(compact ? people.slice(0, 3) : people).map((person) => (
         <article className="expert-card" key={person.name}>
-          <figure className="expert-portrait"><Image className={person.image === "/images/xie-guoming.png" ? "portrait-closeup" : undefined} src={person.image} alt={person.name} width={520} height={560} sizes={compact ? "(max-width: 600px) 102px, (max-width: 1100px) 30vw, 350px" : "(max-width: 600px) 90vw, 350px"} /></figure>
-          <div><h3>{person.name}</h3><p className="role">{person.role}</p>{!compact ? <p>{person.text}</p> : null}</div>
+          <figure className="expert-portrait"><Image className={person.image === "/images/xie-guoming.png" ? "portrait-closeup" : undefined} src={person.image} alt={person.name} width={520} height={560} sizes={compact ? "(max-width: 600px) 102px, (max-width: 1100px) 30vw, 350px" : "(max-width: 600px) 90vw, (max-width: 1100px) 44vw, 160px"} /></figure>
+          <div>
+            <h3>{person.name}</h3>
+            <p className="role">{person.role}</p>
+            {!compact ? <>
+              {person.affiliation ? <p className="expert-affiliation">{person.affiliation}</p> : null}
+              <p>{person.text}</p>
+            </> : null}
+          </div>
         </article>
       ))}
     </div>
