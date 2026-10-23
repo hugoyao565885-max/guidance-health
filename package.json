@@ -15,13 +15,13 @@
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.117.3",
     "lucide-react": "^1.53.0",
-    "next": "^15.5.27",
+    "next": "^15.5.28",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.8",
-    "@next/swc-wasm-nodejs": "15.5.27",
+    "@next/swc-wasm-nodejs": "15.5.28",
     "@types/node": "^22.15.29",
     "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
