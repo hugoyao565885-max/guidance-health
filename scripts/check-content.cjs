@@ -97,8 +97,14 @@ for (const locale of locales) {
   assert.doesNotMatch(JSON.stringify(ui.services.plans), /Annual case support|年度個案支持|Годовое сопровождение|دعم الحالة السنوي|Dukungan kasus tahunan|Sokongan kes tahunan/i, `${locale}: obsolete annual plans`);
   assert.equal(page.sections.membership.modules.length, 3, `${locale}: support modules`);
   assert.equal(page.sections.experts.people.length, 4, `${locale}: expert profiles`);
+  assert.deepEqual(page.sections.experts.people.map((expert) => expert.image), [
+    "/images/huang-huiqiang.jpg",
+    "/images/cai-qichun.jpg",
+    "/images/xie-guoming.png",
+    "/images/peng-roujun-clean.webp",
+  ], `${locale}: Huang first, followed by Cai, Xie, and Peng`);
   const peng = page.sections.experts.people[3];
-  assert.equal(peng.image, "/images/peng-roujun.webp", `${locale}: fourth expert portrait`);
+  assert.equal(peng.image, "/images/peng-roujun-clean.webp", `${locale}: fourth expert portrait`);
   assert.ok(peng.affiliation && peng.text && peng.role && peng.source.label, `${locale}: sourced expert profile`);
   assert.equal(peng.source.url, "https://www.sysucc.org.cn/node/3765", `${locale}: official profile source`);
   assert.doesNotMatch(peng.text, /CAR-T|lymphoma|淋巴瘤|лимфом|اللمفوما|limfoma/i, `${locale}: do not expand beyond verified clinical specialties`);
