@@ -30,7 +30,7 @@ const sitemap = loadDictionary(path.join(root, "app/sitemap.ts")).default();
 const robots = loadDictionary(path.join(root, "app/robots.ts")).default();
 const { content, sectionKeys } = loadDictionary(path.join(root, "lib/content.ts"));
 const { patientContent, carTSource } = loadDictionary(path.join(root, "lib/patient-content.ts"));
-const { serviceContent, servicePrices, serviceCombinationTotal } = loadDictionary(path.join(root, "lib/service-pricing.ts"));
+const { serviceContent, serviceBasePrices, serviceExchangeRate, serviceCnyPerUsd, servicePrices, serviceCombinationTotal, formatServiceAmount } = loadDictionary(path.join(root, "lib/service-pricing.ts"));
 assert.equal(new URL(carTSource).protocol, "https:");
 assert.equal(siteUrl, "https://hccareadvisory.com");
 for (const locale of locales) assert.equal(alternates("/about/")[localeMeta[locale].htmlLang], `${siteUrl}/${locale}/about`);
@@ -74,11 +74,24 @@ for (const locale of locales) {
     assert.equal(matches, false, "Private member rule must not block public membership pricing");
   }
 }
-assert.deepEqual(servicePrices, { currency: "CNY", quotedOn: "2026-10-10", preArrival: 2880, duringStay: { fiveSeat: 3580, business: 3730 }, afterDischarge: 1180 });
-assert.equal(serviceCombinationTotal("fiveSeat", true), 7640);
-assert.equal(serviceCombinationTotal("business", true), 7790);
-assert.equal(serviceCombinationTotal("fiveSeat", false), 4760);
-assert.equal(serviceCombinationTotal("business", false), 4910);
+assert.deepEqual(serviceBasePrices, { currency: "CNY", quotedOn: "2026-10-10", preArrival: 2880, duringStay: { fiveSeat: 3580, business: 3730 }, afterDischarge: 1180 }, "Keep the original quote unchanged");
+assert.equal(serviceExchangeRate.asOf, "2026-10-23");
+assert.equal(serviceExchangeRate.usdPerEur, 1.1193);
+assert.equal(serviceExchangeRate.cnyPerEur, 7.4660);
+assert.equal(new URL(serviceExchangeRate.sourceUrl).hostname, "www.ecb.europa.eu");
+assert.equal(serviceCnyPerUsd, serviceExchangeRate.cnyPerEur / serviceExchangeRate.usdPerEur);
+assert.equal(serviceCnyPerUsd.toFixed(5), "6.67024");
+assert.deepEqual(servicePrices, { currency: "USD", quotedOn: "2026-10-10", preArrival: 432, duringStay: { fiveSeat: 537, business: 559 }, afterDischarge: 177 });
+assert.equal(serviceCombinationTotal("fiveSeat", true), 1146);
+assert.equal(serviceCombinationTotal("business", true), 1168);
+assert.equal(serviceCombinationTotal("fiveSeat", false), 714);
+assert.equal(serviceCombinationTotal("business", false), 736);
+for (const vehicle of ["fiveSeat", "business"]) {
+  assert.equal(servicePrices.duringStay[vehicle], Math.round(serviceBasePrices.duringStay[vehicle] / serviceCnyPerUsd));
+  assert.equal(serviceCombinationTotal(vehicle, false), servicePrices.duringStay[vehicle] + servicePrices.afterDischarge);
+  assert.equal(serviceCombinationTotal(vehicle, true), servicePrices.preArrival + serviceCombinationTotal(vehicle, false), "Totals must add the displayed stage estimates");
+}
+for (const stage of ["preArrival", "afterDischarge"]) assert.equal(servicePrices[stage], Math.round(serviceBasePrices[stage] / serviceCnyPerUsd));
 
 for (const locale of locales) {
   const page = content[locale];
@@ -104,6 +117,10 @@ for (const locale of locales) {
   assert.equal(localeMeta[locale].dir, locale === "ar" ? "rtl" : "ltr");
   assert.equal(ui.services.plans.length, 3, `${locale}: service count`);
   assert.deepEqual(ui.services, serviceContent[locale], `${locale}: shared pricing copy`);
+  assert.match(ui.services.eyebrow, /USD/, `${locale}: dollar pricing heading`);
+  assert.match(ui.services.note, /USD/, `${locale}: reference pricing and settlement notice`);
+  assert.ok(ui.services.exchange.label && ui.services.exchange.note && ui.services.exchange.source, `${locale}: translated exchange-rate disclosure`);
+  assert.equal(formatServiceAmount(1146, locale), new Intl.NumberFormat(localeMeta[locale].htmlLang, { maximumFractionDigits: 0 }).format(1146), `${locale}: localized USD amounts`);
   assert.deepEqual(ui.services.plans.map((plan) => plan.stage), ["preArrival", "duringStay", "afterDischarge"], `${locale}: admission stages`);
   assert.equal(ui.services.conditions.length, 6, `${locale}: service allowances`);
   assert.equal(ui.services.pricing.vehicles.length, 2, `${locale}: airport vehicle options`);

@@ -10,6 +10,7 @@ export type ServiceContent = {
   body: string;
   quote: string;
   note: string;
+  exchange: { label: string; note: string; source: string };
   plans: ServicePlan[];
   modules: string[];
   pricing: {
@@ -30,12 +31,37 @@ export type ServiceContent = {
   excluded: Item;
 };
 
-export const servicePrices = {
+export const serviceBasePrices = {
   currency: "CNY",
   quotedOn: "2026-10-10",
   preArrival: 2880,
   duringStay: { fiveSeat: 3580, business: 3730 },
   afterDischarge: 1180,
+} as const;
+
+export const serviceExchangeRate = {
+  asOf: "2026-10-23",
+  usdPerEur: 1.1193,
+  cnyPerEur: 7.4660,
+  sourceUrl: "https://www.ecb.europa.eu/stats/exchange/eurofxref/shared/pdf/2026/10/20261023.pdf",
+} as const;
+
+export const serviceCnyPerUsd = serviceExchangeRate.cnyPerEur / serviceExchangeRate.usdPerEur;
+
+// Keep the original quote intact; combine rounded stage estimates so visible totals add up.
+function toReferenceUsd(cny: number) {
+  return Math.round(cny / serviceCnyPerUsd);
+}
+
+export const servicePrices = {
+  currency: "USD",
+  quotedOn: serviceBasePrices.quotedOn,
+  preArrival: toReferenceUsd(serviceBasePrices.preArrival),
+  duringStay: {
+    fiveSeat: toReferenceUsd(serviceBasePrices.duringStay.fiveSeat),
+    business: toReferenceUsd(serviceBasePrices.duringStay.business),
+  },
+  afterDischarge: toReferenceUsd(serviceBasePrices.afterDischarge),
 } as const;
 
 export function serviceCombinationTotal(vehicle: keyof typeof servicePrices.duringStay, includePreArrival: boolean) {
@@ -48,11 +74,12 @@ export function formatServiceAmount(amount: number, locale: Locale) {
 
 export const serviceContent: Record<Locale, ServiceContent> = {
   en: {
-    eyebrow: "Service packages · CNY",
+    eyebrow: "Service packages · USD",
     title: "Choose the stages of support you need",
     body: "Pre-arrival, in-China and after-discharge support can be purchased separately or combined according to your needs. You do not have to purchase all three stages. Services apply to one agreed hospital admission cycle, not an annual membership.",
     quote: "Enquire about this stage",
-    note: "Prices are in Chinese yuan (CNY), per patient and per hospital admission cycle. Confirm the staff arrangements, language coverage, dates, payment and cancellation terms in writing before payment. Included services are not charged twice; additional services require an agreed quote. We coordinate care; licensed clinicians provide assessment and medical advice.",
+    note: "USD amounts are reference estimates, per patient and per hospital admission cycle. The final amount and settlement currency are confirmed in the written quote. Confirm the staff arrangements, language coverage, dates, payment and cancellation terms in writing before payment. Included services are not charged twice; additional services require an agreed quote. We coordinate care; licensed clinicians provide assessment and medical advice.",
+    exchange: { label: "USD reference estimate", note: "Converted from the original CNY quote using the dated reference rate below, not a live rate. Each stage is rounded to the nearest US dollar; combination totals add the displayed stage estimates. Exchange rates and payment-provider charges may affect the final amount.", source: "European Central Bank reference rates" },
     plans: [
       { stage: "preArrival", name: "Before coming to China", fit: "Case preparation and travel readiness; available as a separate stage.", items: ["Create a case file, organize and translate the agreed records, and request missing documents", "Coordinate specialist record assessment and one online consultation, including that consultation fee and Indonesian interpretation", "Help arrange a medical institution's invitation letter and confirm arrival dates and flights"] },
       { stage: "duringStay", name: "During your stay in China", fit: "Hospital and daily-life coordination; choose one airport pickup vehicle option.", items: ["One one-way Guangzhou airport pickup, including tolls, parking and driver fees", "Hospital accompaniment: 24 cumulative hours; Indonesian medical interpretation: 24 cumulative hours, recorded separately", "Daily-life assistance and admission coordination over 7 days, by agreed schedule", "One accompanied inter-hospital round trip including transport; accompaniment and interpretation use the same hour allowances"] },
@@ -74,11 +101,12 @@ export const serviceContent: Record<Locale, ServiceContent> = {
     excluded: { title: "Not included unless expressly agreed", text: "Other medical consultations, hospital care, tests, medicines, treatment, surgery, emergency services, accommodation, meals, flights, visa fees, airport drop-off and services beyond the stated allowances. Additional fees must be confirmed before the added service begins." },
   },
   "zh-hant": {
-    eyebrow: "服務套餐 · 人民幣",
+    eyebrow: "服務套餐 · 美元 USD",
     title: "三階段服務，按需要選購",
     body: "來華前、來華期間及治療後離院服務，可按實際需要單獨購買或組合購買，無須一次購買全部三階段。服務以約定的一次住院週期為範圍，不是年度會員費。",
     quote: "諮詢這個階段",
-    note: "報價以人民幣（CNY）計算，按每位患者、每次住院週期收取。付款前以書面確認人員安排、語言範圍、服務日期、付款及取消條款。已包含的服務不重複收費；新增服務先確認報價。公司負責協調，醫療評估及建議由執業醫生提供。",
+    note: "頁面金額為美元（USD）參考換算價，按每位患者、每次住院週期計算。最終金額及結算幣種以書面報價確認。付款前以書面確認人員安排、語言範圍、服務日期、付款及取消條款。已包含的服務不重複收費；新增服務先確認報價。公司負責協調，醫療評估及建議由執業醫生提供。",
+    exchange: { label: "美元參考換算價", note: "按下列日期的參考匯率由原人民幣報價換算，並非即時匯率。各階段四捨五入至整美元，組合總價為頁面各階段金額相加。匯率變動及支付機構費用可能影響最終金額。", source: "歐洲中央銀行參考匯率" },
     plans: [
       { stage: "preArrival", name: "來華前", fit: "建檔評估與來華準備，可單獨選購。", items: ["建立患者檔案，整理及翻譯約定病歷，溝通補充資料", "協調專科醫生病歷評估及一次線上面診，包含該次面診費與印尼語翻譯", "協助醫療機構邀請函辦理，確認抵達日期及航班"] },
       { stage: "duringStay", name: "來華期間", fit: "在華就醫與生活協調；接機車型二選一。", items: ["廣州機場單程接機一次，包含高速費、停車費及司機費", "醫院陪診累計 24 小時，醫患溝通印尼語翻譯累計 24 小時，分別計時", "生活協助及住院協調 7 日，按約定排班提供", "跨院陪同及往返交通一次，陪診與翻譯時數計入上述對應額度"] },
@@ -100,11 +128,12 @@ export const serviceContent: Record<Locale, ServiceContent> = {
     excluded: { title: "除非另有明確約定，否則不包含", text: "其他面診、醫院診療、檢查、藥物、治療、手術、急症服務、住宿、餐飲、機票、簽證、送機及超出額度的服務。新增費用須在額外服務開始前確認。" },
   },
   ru: {
-    eyebrow: "Пакеты услуг · CNY",
+    eyebrow: "Пакеты услуг · USD",
     title: "Выберите нужные этапы поддержки",
     body: "Подготовку до приезда, поддержку в Китае и после выписки можно приобрести отдельно или сочетать по потребностям. Покупать все три этапа не обязательно. Услуги относятся к одному согласованному циклу госпитализации, а не годовому абонементу.",
     quote: "Узнать об этом этапе",
-    note: "Цены указаны в китайских юанях (CNY) на пациента и один цикл госпитализации. До оплаты письменно подтвердите персонал, язык, даты, оплату и отмену. Включенные услуги не оплачиваются повторно; дополнительные услуги требуют согласованной цены. Мы координируем, а медицинскую оценку и рекомендации дают лицензированные врачи.",
+    note: "Суммы в долларах США (USD) являются ориентировочными, на пациента и один цикл госпитализации. Итоговая сумма и валюта оплаты подтверждаются в письменном предложении. До оплаты письменно подтвердите персонал, язык, даты, оплату и отмену. Включенные услуги не оплачиваются повторно; дополнительные услуги требуют согласованной цены. Мы координируем, а медицинскую оценку и рекомендации дают лицензированные врачи.",
+    exchange: { label: "Ориентировочно в USD", note: "Пересчитано из исходной цены в CNY по справочному курсу на указанную ниже дату, не в реальном времени. Каждый этап округлен до целого доллара США; итог складывается из показанных сумм этапов. Колебания курса и комиссии платежного провайдера могут повлиять на итоговую сумму.", source: "Справочные курсы Европейского центрального банка" },
     plans: [
       { stage: "preArrival", name: "До приезда в Китай", fit: "Подготовка случая и поездки; можно приобрести отдельно.", items: ["Создание файла, систематизация и перевод согласованных документов, запрос недостающих сведений", "Координация оценки специалистом и одной онлайн-консультации, включая ее стоимость и индонезийский перевод", "Помощь с приглашением от медицинского учреждения, датой приезда и рейсом"] },
       { stage: "duringStay", name: "Во время пребывания", fit: "Координация больницы и быта; выберите один вариант трансфера.", items: ["Один трансфер из аэропорта Гуанчжоу, включая платные дороги, парковку и водителя", "Сопровождение в больнице: суммарно 24 часа; индонезийский медицинский перевод: отдельно 24 часа", "Бытовая помощь и координация госпитализации на 7 дней по согласованному графику", "Одна поездка между больницами туда и обратно с транспортом; сопровождение и перевод расходуют указанные часы"] },
@@ -126,11 +155,12 @@ export const serviceContent: Record<Locale, ServiceContent> = {
     excluded: { title: "Не включено без отдельного соглашения", text: "Другие консультации, больничное лечение, обследования, лекарства, операции, экстренная помощь, жилье, питание, авиабилеты, визы, трансфер в аэропорт и услуги сверх лимитов. Доплаты подтверждаются до начала дополнительных услуг." },
   },
   ar: {
-    eyebrow: "باقات الخدمات · CNY",
+    eyebrow: "باقات الخدمات · USD",
     title: "اختر مراحل الدعم التي تحتاجها",
     body: "يمكن شراء دعم ما قبل القدوم وأثناء الإقامة في الصين وما بعد الخروج بشكل منفصل أو معا حسب حاجتك. لا يلزم شراء المراحل الثلاث كلها. الخدمات لدورة دخول واحدة متفق عليها وليست عضوية سنوية.",
     quote: "استفسر عن هذه المرحلة",
-    note: "الأسعار باليوان الصيني (CNY) لكل مريض ولكل دورة دخول إلى المستشفى. يجب تأكيد الموظفين واللغة والتواريخ والدفع والإلغاء كتابيا قبل الدفع. لا تفرض رسوم مرتين على الخدمات المشمولة؛ الخدمات الإضافية تتطلب سعرا متفقا عليه. نقدم التنسيق ويقدم الأطباء المرخصون التقييم والنصيحة الطبية.",
+    note: "المبالغ بالدولار الأمريكي (USD) تقديرية لكل مريض ولكل دورة دخول إلى المستشفى. يؤكد المبلغ النهائي وعملة الدفع في العرض المكتوب. يجب تأكيد الموظفين واللغة والتواريخ والدفع والإلغاء كتابيا قبل الدفع. لا تفرض رسوم مرتين على الخدمات المشمولة؛ الخدمات الإضافية تتطلب سعرا متفقا عليه. نقدم التنسيق ويقدم الأطباء المرخصون التقييم والنصيحة الطبية.",
+    exchange: { label: "تقدير بالدولار الأمريكي", note: "تم التحويل من السعر الأصلي باليوان الصيني حسب السعر المرجعي في التاريخ المبين أدناه، وليس بسعر مباشر. تقرب كل مرحلة إلى أقرب دولار أمريكي وتجمع مبالغ المراحل المعروضة لحساب الإجمالي. قد تؤثر تغيرات الصرف ورسوم مزود الدفع في المبلغ النهائي.", source: "أسعار الصرف المرجعية للبنك المركزي الأوروبي" },
     plans: [
       { stage: "preArrival", name: "قبل القدوم إلى الصين", fit: "تجهيز الملف والاستعداد للسفر؛ يمكن شراء المرحلة منفصلة.", items: ["إنشاء ملف وتنظيم وترجمة الوثائق المتفق عليها وطلب المعلومات الناقصة", "تنسيق تقييم المختص واستشارة واحدة عبر الإنترنت تشمل رسومها والترجمة الإندونيسية", "المساعدة في خطاب دعوة من مؤسسة طبية وتأكيد موعد الوصول والرحلة"] },
       { stage: "duringStay", name: "أثناء الإقامة في الصين", fit: "تنسيق المستشفى والمعيشة؛ اختر نوع سيارة الاستقبال.", items: ["استقبال واحد باتجاه واحد من مطار غوانغجو يشمل رسوم الطرق والمواقف والسائق", "مرافقة بالمستشفى لمدة 24 ساعة تراكمية وترجمة طبية إندونيسية لمدة 24 ساعة منفصلة", "مساعدة معيشية وتنسيق الدخول لمدة 7 أيام حسب الجدول المتفق عليه", "رحلة واحدة بين مستشفيين ذهابا وإيابا تشمل النقل؛ تحتسب المرافقة والترجمة من الساعات المحددة"] },
@@ -152,11 +182,12 @@ export const serviceContent: Record<Locale, ServiceContent> = {
     excluded: { title: "غير مشمول دون اتفاق صريح", text: "الاستشارات الأخرى ورعاية المستشفى والفحوص والأدوية والعلاج والجراحة والطوارئ والإقامة والطعام والطيران والتأشيرة والنقل إلى المطار والخدمات فوق الحدود. تؤكد الرسوم الإضافية قبل بدء الخدمة الإضافية." },
   },
   id: {
-    eyebrow: "Paket layanan · CNY",
+    eyebrow: "Paket layanan · USD",
     title: "Pilih tahap dukungan yang Anda perlukan",
     body: "Dukungan sebelum datang, selama di China, dan setelah keluar rumah sakit dapat dibeli terpisah atau digabung sesuai kebutuhan. Anda tidak harus membeli ketiga tahap. Layanan berlaku untuk satu siklus rawat inap yang disepakati, bukan keanggotaan tahunan.",
     quote: "Tanyakan tahap ini",
-    note: "Harga dalam yuan China (CNY), per pasien dan per siklus rawat inap. Konfirmasikan staf, bahasa, tanggal, pembayaran dan pembatalan secara tertulis sebelum membayar. Layanan yang sudah termasuk tidak ditagih dua kali; layanan tambahan memerlukan harga yang disepakati. Kami mengoordinasikan; penilaian dan saran medis diberikan dokter berizin.",
+    note: "Jumlah dalam dolar AS (USD) merupakan perkiraan, per pasien dan per siklus rawat inap. Jumlah akhir dan mata uang pembayaran dikonfirmasi dalam penawaran tertulis. Konfirmasikan staf, bahasa, tanggal, pembayaran dan pembatalan secara tertulis sebelum membayar. Layanan yang sudah termasuk tidak ditagih dua kali; layanan tambahan memerlukan harga yang disepakati. Kami mengoordinasikan; penilaian dan saran medis diberikan dokter berizin.",
+    exchange: { label: "Perkiraan dalam USD", note: "Dikonversi dari harga asli CNY menggunakan kurs referensi pada tanggal di bawah, bukan kurs langsung. Setiap tahap dibulatkan ke dolar AS terdekat; total kombinasi menjumlahkan perkiraan tahap yang ditampilkan. Perubahan kurs dan biaya penyedia pembayaran dapat memengaruhi jumlah akhir.", source: "Kurs referensi Bank Sentral Eropa" },
     plans: [
       { stage: "preArrival", name: "Sebelum datang ke China", fit: "Persiapan kasus dan perjalanan; dapat dibeli terpisah.", items: ["Membuat berkas pasien, menyusun dan menerjemahkan dokumen yang disepakati, serta meminta dokumen yang kurang", "Koordinasi penilaian spesialis dan satu konsultasi daring, termasuk biaya konsultasi tersebut dan penerjemahan bahasa Indonesia", "Bantuan surat undangan dari institusi medis dan konfirmasi tanggal kedatangan serta penerbangan"] },
       { stage: "duringStay", name: "Selama berada di China", fit: "Koordinasi rumah sakit dan kehidupan sehari-hari; pilih kendaraan penjemputan.", items: ["Satu penjemputan searah dari bandara Guangzhou, termasuk tol, parkir dan pengemudi", "Pendampingan rumah sakit: total 24 jam; penerjemahan medis bahasa Indonesia: total 24 jam, dicatat terpisah", "Bantuan kehidupan sehari-hari dan koordinasi rawat inap selama 7 hari sesuai jadwal", "Satu perjalanan antar-rumah-sakit pulang-pergi termasuk transportasi; waktu pendampingan dan terjemahan memakai kuota yang sama"] },
@@ -178,11 +209,12 @@ export const serviceContent: Record<Locale, ServiceContent> = {
     excluded: { title: "Tidak termasuk kecuali disepakati jelas", text: "Konsultasi lainnya, perawatan rumah sakit, tes, obat, terapi, operasi, layanan darurat, penginapan, makan, tiket pesawat, visa, antar ke bandara dan layanan di luar kuota. Biaya tambahan dikonfirmasi sebelum layanan tambahan dimulai." },
   },
   ms: {
-    eyebrow: "Pakej perkhidmatan · CNY",
+    eyebrow: "Pakej perkhidmatan · USD",
     title: "Pilih peringkat sokongan yang diperlukan",
     body: "Sokongan sebelum datang, semasa di China dan selepas keluar hospital boleh dibeli berasingan atau digabung mengikut keperluan. Anda tidak perlu membeli ketiga-tiga peringkat. Perkhidmatan untuk satu kitaran kemasukan yang dipersetujui, bukan keahlian tahunan.",
     quote: "Tanya tentang peringkat ini",
-    note: "Harga dalam yuan China (CNY), setiap pesakit dan setiap kitaran kemasukan. Sahkan kakitangan, bahasa, tarikh, pembayaran dan pembatalan secara bertulis sebelum membayar. Perkhidmatan termasuk tidak dicaj dua kali; tambahan memerlukan harga dipersetujui. Kami menyelaras; penilaian dan nasihat perubatan diberi doktor berlesen.",
+    note: "Amaun dalam dolar AS (USD) ialah anggaran, bagi setiap pesakit dan setiap kitaran kemasukan. Amaun akhir dan mata wang bayaran disahkan dalam sebut harga bertulis. Sahkan kakitangan, bahasa, tarikh, pembayaran dan pembatalan secara bertulis sebelum membayar. Perkhidmatan termasuk tidak dicaj dua kali; tambahan memerlukan harga dipersetujui. Kami menyelaras; penilaian dan nasihat perubatan diberi doktor berlesen.",
+    exchange: { label: "Anggaran dalam USD", note: "Ditukar daripada harga asal CNY menggunakan kadar rujukan pada tarikh di bawah, bukan kadar langsung. Setiap peringkat dibundarkan kepada dolar AS terdekat; jumlah gabungan menambah anggaran peringkat yang dipaparkan. Perubahan kadar dan caj penyedia bayaran mungkin mempengaruhi amaun akhir.", source: "Kadar rujukan Bank Pusat Eropah" },
     plans: [
       { stage: "preArrival", name: "Sebelum datang ke China", fit: "Persediaan kes dan perjalanan; boleh dibeli berasingan.", items: ["Membuka fail, menyusun dan menterjemah dokumen dipersetujui serta meminta maklumat yang kurang", "Menyelaras penilaian pakar dan satu konsultasi dalam talian, termasuk yurannya dan terjemahan bahasa Indonesia", "Membantu surat jemputan institusi perubatan serta mengesahkan tarikh ketibaan dan penerbangan"] },
       { stage: "duringStay", name: "Semasa berada di China", fit: "Koordinasi hospital dan kehidupan harian; pilih kenderaan jemputan.", items: ["Satu jemputan sehala dari lapangan terbang Guangzhou termasuk tol, parkir dan pemandu", "Pengiring hospital: jumlah 24 jam; terjemahan perubatan bahasa Indonesia: jumlah 24 jam, direkod berasingan", "Bantuan harian dan koordinasi kemasukan selama 7 hari mengikut jadual", "Satu perjalanan antara hospital pergi balik termasuk pengangkutan; masa pengiring dan terjemahan menggunakan kuota yang sama"] },

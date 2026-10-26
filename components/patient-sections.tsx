@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { ArrowRight, ArrowUpRight, Check, ChevronDown, Mail, MessageCircle } from "lucide-react";
 import { content, type SectionKey } from "../lib/content";
 import { patientContent } from "../lib/patient-content";
-import { serviceCombinationTotal, formatServiceAmount, servicePrices } from "../lib/service-pricing";
+import { serviceCombinationTotal, formatServiceAmount, servicePrices, serviceExchangeRate, serviceCnyPerUsd } from "../lib/service-pricing";
 import { brand, contact, pagePath, type Locale } from "../lib/site";
 import { patientGuides } from "../lib/patient-guides";
 import { SiteNavigation } from "./site-navigation";
@@ -60,17 +60,22 @@ export function ServicePlans({ locale, detailed = false }: { locale: Locale; det
             <span className="plan-number">0{index + 1}</span><h3>{plan.name}</h3><p>{plan.fit}</p>
             <div className="stage-pricing">
               {plan.stage === "duringStay" ? <dl>{(["fiveSeat", "business"] as const).map((vehicle, vehicleIndex) => <div key={vehicle}><dt>{pricing.vehicles[vehicleIndex]}</dt><dd><ServiceAmount amount={servicePrices.duringStay[vehicle]} locale={locale} /></dd></div>)}</dl> : <ServiceAmount amount={servicePrices[plan.stage]} locale={locale} />}
-              <p className="price-unit">{pricing.unit}</p>
+              <p className="price-unit">{ui.services.exchange.label} · {pricing.unit}</p>
             </div>
             <ul>{plan.items.map((item) => <li key={item}><Check size={16} aria-hidden="true" /><span>{item}</span></li>)}</ul>
             <Link className="text-link" href={`${pagePath(locale, "register")}?service=${index}`}>{ui.services.quote}<ArrowUpRight size={17} aria-hidden="true" /></Link>
           </article>
         ))}
       </div>
+      <p className="service-note">
+        {ui.services.exchange.note}<br />
+        <bdi dir="ltr"><time dateTime={serviceExchangeRate.asOf}>{serviceExchangeRate.asOf}</time> · 1 USD ≈ {serviceCnyPerUsd.toFixed(5)} CNY</bdi>
+        {" · "}<a href={serviceExchangeRate.sourceUrl} target="_blank" rel="noopener noreferrer">{ui.services.exchange.source}</a>
+      </p>
       <section className="admission-pricing" aria-labelledby={`${locale}-pricing-title`}>
         <h2 id={`${locale}-pricing-title`}>{pricing.title}</h2><p>{pricing.body}</p>
         <table className="pricing-table">
-          <caption>{pricing.unit} · {servicePrices.currency}</caption>
+          <caption>{pricing.unit} · {ui.services.exchange.label}</caption>
           <thead><tr><th scope="col">{pricing.combinationLabel}</th>{pricing.vehicles.map((vehicle) => <th scope="col" key={vehicle}>{vehicle}</th>)}</tr></thead>
           <tbody>{[true, false].map((includePreArrival) => <tr key={String(includePreArrival)}><th scope="row">{includePreArrival ? pricing.allStagesLabel : pricing.inChinaAfterLabel}<small>{includePreArrival ? pricing.allStagesNote : pricing.inChinaAfterNote}</small></th>{(["fiveSeat", "business"] as const).map((vehicle) => <td key={vehicle}><ServiceAmount amount={serviceCombinationTotal(vehicle, includePreArrival)} locale={locale} /></td>)}</tr>)}</tbody>
         </table>

@@ -48,11 +48,13 @@ Publication review on 12 October 2026 confirmed the Vercel team's active plan is
 - `lib/content.ts`: page dictionaries and specialist profiles.
 - `lib/patient-content.ts`: patient-facing homepage, enquiry, FAQ, and service copy.
 - `lib/about-content.ts`: company identity, patient challenges, coordination scope, team backgrounds, and service boundaries in six languages.
-- `lib/service-pricing.ts`: CNY prices, calculated admission totals, and six-language package scope shared by the service page, enquiry choices, FAQ, and terms.
+- `lib/service-pricing.ts`: original CNY quote, dated ECB conversion to USD reference prices, calculated admission totals, and six-language package scope shared by the service page, enquiry choices, FAQ, and terms.
 - `npm run check:content`: checks all six dictionaries, contact channels, records lists, image paths, stage prices, admission totals, and private-cost exclusions.
 - `npm run build`: production build and TypeScript validation.
 
 Service stages can be purchased separately or combined according to patient needs, per patient and hospital admission rather than per year. Pre-arrival costs CNY 2,880, in-China CNY 3,580 (5-seat pickup) or CNY 3,730 (business vehicle), and after-discharge CNY 1,180. The three-stage totals of CNY 7,640 / 7,790 and in-China plus after-discharge totals of CNY 4,760 / 4,910 are combination examples, not required bundles. For subsequent admissions, patients select and purchase only the stages they need for the new cycle with newly agreed dates and allowances. Do not present pre-arrival support as first-time-only. Published interpretation scope is Indonesian; other languages and services beyond the stated allowances require confirmation before payment. Do not publish internal cost worksheets or the source PDF, which includes private costing.
+
+The public page displays USD reference estimates, not the base CNY amounts. The ECB reference rates dated 2026-10-23 are USD 1.1193 and CNY 7.4660 per EUR (about CNY 6.67024 per USD). Each stage is rounded to the nearest whole dollar: USD 432, USD 537 / 559, and USD 177. Combination totals sum these displayed stage amounts: USD 1,146 / 1,168 for all stages and USD 714 / 736 for in-China plus after-discharge. These are not live rates or a change to the original quote. The page discloses the date, source and rounding, with final amount and settlement currency confirmed in writing. To refresh the conversion, update the dated rate snapshot and source in `serviceExchangeRate`, then update the assertions and this note; do not manually alter the derived stage prices or combination totals.
 
 The homepage only previews the company, oncology focus and experts, with contact actions. Pricing, full processes, treatment information and FAQ remain on their detail pages.
 
