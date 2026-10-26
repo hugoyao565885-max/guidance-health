@@ -116,7 +116,7 @@ export function ContactSection({ locale }: { locale: Locale }) {
 export function SiteFooter({ locale }: { locale: Locale }) {
   const copy = content[locale];
   const ui = patientContent[locale];
-  const links: SectionKey[] = ["about", "mdt", "hospitals", "journey", "contact", "privacy", "terms"];
+  const links: SectionKey[] = ["about", "research", "mdt", "hospitals", "journey", "contact", "privacy", "terms"];
   return (
     <>
       <footer className="site-footer"><div className="container footer-grid"><div><Link className="footer-brand" href={pagePath(locale)}><Image src="/brand/hccare-logo.webp" alt={brand.legalName} width={1280} height={405} sizes="(max-width: 400px) 248px, 296px" /></Link><p>{locale === "zh-hant" ? brand.zhLegalName : brand.legalName}</p><p>{copy.sections.disclaimer.body}</p></div><nav aria-label={ui.menu}>{links.map((section) => <Link key={section} href={pagePath(locale, section)}>{copy.nav[section]}</Link>)}<Link href={pagePath(locale, "records")}>{patientGuides[locale].recordsLink}</Link></nav></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} {brand.name}</span><a href={`mailto:${contact.email}`}>{contact.email}</a></div></footer>

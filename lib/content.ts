@@ -1,6 +1,7 @@
 import { brand, contact, type Locale } from "./site";
 import { aboutContent, type AboutContent } from "./about-content";
 import { serviceContent, type ServicePlan } from "./service-pricing";
+import { researchContent, type ResearchContent } from "./research-content";
 
 type Card = { title: string; text: string };
 type Step = { title: string; text: string };
@@ -13,7 +14,7 @@ type RegisterSection = {
   documents: string[];
 };
 
-export const mainSectionKeys = ["about", "membership", "oncology", "mdt", "experts", "hospitals", "journey", "register", "contact", "car-t"] as const;
+export const mainSectionKeys = ["about", "membership", "oncology", "research", "mdt", "experts", "hospitals", "journey", "register", "contact", "car-t"] as const;
 export const footerSectionKeys = ["privacy", "terms"] as const;
 export const sectionKeys = [...mainSectionKeys, ...footerSectionKeys] as const;
 
@@ -35,6 +36,7 @@ export type SiteContent = {
   };
   sections: {
     about: AboutContent;
+    research: ResearchContent;
     pain: { eyebrow: string; title: string; body: string; cards: Card[] };
     focus: { eyebrow: string; title: string; body: string; cards: Card[] };
     membership: {
@@ -77,6 +79,7 @@ export const content: Record<Locale, SiteContent> = {
     nav: {
       "home": "Home",
       "about": aboutContent.en.label,
+      "research": researchContent.en.label,
       "membership": "Services",
       "oncology": "Oncology Coordination",
       "mdt": "MDT Resources",
@@ -118,6 +121,7 @@ export const content: Record<Locale, SiteContent> = {
     },
     sections: {
       about: aboutContent.en,
+      research: researchContent.en,
       pain: {
         eyebrow: "Patient challenges",
         title: "Why international cancer patients need trusted guidance in China",
@@ -450,6 +454,7 @@ export const content: Record<Locale, SiteContent> = {
     nav: {
       "home": "首頁",
       "about": aboutContent["zh-hant"].label,
+      "research": researchContent["zh-hant"].label,
       "membership": "服務方案",
       "oncology": "腫瘤協調",
       "mdt": "MDT 資源",
@@ -490,6 +495,7 @@ export const content: Record<Locale, SiteContent> = {
     },
     sections: {
       about: aboutContent["zh-hant"],
+      research: researchContent["zh-hant"],
       pain: {
         eyebrow: "患者痛點",
         title: "為何國際腫瘤患者在中國就醫需要可信賴的引導",
@@ -787,6 +793,7 @@ export const content: Record<Locale, SiteContent> = {
     nav: {
       "home": "Главная",
       "about": aboutContent.ru.label,
+      "research": researchContent.ru.label,
       "membership": "Услуги",
       "oncology": "Онкология",
       "mdt": "MDT",
@@ -827,6 +834,7 @@ export const content: Record<Locale, SiteContent> = {
     },
     sections: {
       about: aboutContent.ru,
+      research: researchContent.ru,
       pain: {
         eyebrow: "Проблемы пациента",
         title: "Почему международным пациентам нужна надежная навигация в Китае",
@@ -1124,6 +1132,7 @@ export const content: Record<Locale, SiteContent> = {
     nav: {
       "home": "الرئيسية",
       "about": aboutContent.ar.label,
+      "research": researchContent.ar.label,
       "membership": "الخدمات",
       "oncology": "تنسيق الأورام",
       "mdt": "موارد MDT",
@@ -1164,6 +1173,7 @@ export const content: Record<Locale, SiteContent> = {
     },
     sections: {
       about: aboutContent.ar,
+      research: researchContent.ar,
       pain: {
         eyebrow: "تحديات المرضى",
         title: "لماذا يحتاج مرضى السرطان الدوليون إلى إرشاد موثوق في الصين",
@@ -1461,6 +1471,7 @@ export const content: Record<Locale, SiteContent> = {
     nav: {
       "home": "Beranda",
       "about": aboutContent.id.label,
+      "research": researchContent.id.label,
       "membership": "Layanan",
       "oncology": "Koordinasi Onkologi",
       "mdt": "Sumber MDT",
@@ -1501,6 +1512,7 @@ export const content: Record<Locale, SiteContent> = {
     },
     sections: {
       about: aboutContent.id,
+      research: researchContent.id,
       pain: {
         eyebrow: "Tantangan pasien",
         title: "Mengapa pasien kanker internasional membutuhkan panduan tepercaya di China",
@@ -1798,6 +1810,7 @@ export const content: Record<Locale, SiteContent> = {
     nav: {
       "home": "Utama",
       "about": aboutContent.ms.label,
+      "research": researchContent.ms.label,
       "membership": "Perkhidmatan",
       "oncology": "Koordinasi Onkologi",
       "mdt": "Sumber MDT",
@@ -1838,6 +1851,7 @@ export const content: Record<Locale, SiteContent> = {
     },
     sections: {
       about: aboutContent.ms,
+      research: researchContent.ms,
       pain: {
         eyebrow: "Cabaran pesakit",
         title: "Mengapa pesakit kanser antarabangsa memerlukan panduan dipercayai di China",

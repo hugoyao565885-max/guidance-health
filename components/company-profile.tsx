@@ -28,7 +28,7 @@ export function CompanyProfile({ locale }: { locale: Locale }) {
       <section className="company-stage"><h2>{copy.challenges.title}</h2><p>{copy.challenges.body}</p><CompanyItems items={copy.challenges.items} /></section>
       <section className="company-stage"><h2>{copy.servicesTitle}</h2><p>{copy.servicesBody}</p><CompanyItems items={content[locale].sections.focus.cards} /></section>
       <section className="company-stage"><h2>{copy.strengths.title}</h2><CompanyItems items={copy.strengths.items} /></section>
-      <section className="company-stage company-overview"><div><h2>{copy.research.title}</h2><p>{copy.research.body}</p></div><div><ol className="company-research-steps">{copy.research.steps.map((step) => <li key={step}>{step}</li>)}</ol><p className="service-note">{copy.research.note}</p></div></section>
+      <section className="company-stage company-overview"><div><h2>{copy.research.title}</h2><p>{copy.research.body}</p><Link className="text-link" href={pagePath(locale, "research")}>{content[locale].sections.research.title}<ArrowRight size={17} aria-hidden="true" /></Link></div><div><ol className="company-research-steps">{copy.research.steps.map((step) => <li key={step}>{step}</li>)}</ol><p className="service-note">{copy.research.note}</p></div></section>
       <section className="company-stage"><h2>{copy.team.title}</h2><p>{copy.team.body}</p><CompanyItems items={copy.team.items} /><p className="service-note">{copy.team.note}</p></section>
       <aside className="company-stage company-boundaries"><h2>{copy.boundaries.title}</h2><p>{copy.boundaries.body}</p><p>{copy.boundaries.note}</p></aside>
     </div>
