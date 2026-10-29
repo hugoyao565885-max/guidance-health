@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { useRef, useState, type FormEvent } from "react";
-import { Download, Send, Save, Trash2, Upload } from "lucide-react";
+import { Send, Save, Upload } from "lucide-react";
 import { browserClient } from "../../lib/supabase/client";
 import { portalContent, caseStatusLabel } from "../../lib/portal-content";
 import { documentCategories, maxDocuments, validatedFileExtension } from "../../lib/portal-validation";
 import type { MemberProfile, PatientCase, CaseDocument } from "../../lib/portal-types";
 import { locales, localeMeta, type Locale } from "../../lib/site";
+import { DocumentList } from "./document-list";
 
 export function MemberCase({ locale, profile, initialCase, initialDocuments, checklist }: { locale: Locale; profile: MemberProfile; initialCase: PatientCase | null; initialDocuments: CaseDocument[]; checklist: string[] }) {
   const copy = portalContent[locale];
@@ -101,6 +102,7 @@ export function MemberCase({ locale, profile, initialCase, initialDocuments, che
   }
 
   async function removeDocument(document: CaseDocument) {
+    if (document.source === "team") return;
     if (!window.confirm(copy.confirmRemove)) return;
     await perform(async () => {
       const client = browserClient();
@@ -129,7 +131,10 @@ export function MemberCase({ locale, profile, initialCase, initialDocuments, che
       <section className="portal-upload-section"><div className="portal-section-heading"><h2>{copy.uploads}</h2><span>{documents.length} / {maxDocuments}</span></div>
         <p>{copy.fileNote}</p>
         <div className="portal-upload-controls"><label>{copy.category}<select value={category} onChange={(event) => setCategory(event.target.value)} disabled={busy}>{documentCategories.map((item, index) => <option key={item} value={item}>{copy.categories[index]}</option>)}</select></label><label>{copy.chooseFiles}<input ref={fileInput} type="file" accept="application/pdf,image/jpeg,image/png" multiple disabled={busy} onChange={(event) => setFiles(Array.from(event.target.files ?? []))} /></label><button type="button" className="button button-light" onClick={uploadFiles} disabled={busy || !files.length}><Upload size={17} aria-hidden="true" />{copy.upload}</button></div>
-        <ul className="portal-document-list">{documents.map((document) => <li key={document.id}><div><strong>{document.original_name}</strong><small>{copy.categories[documentCategories.indexOf(document.category as typeof documentCategories[number])]} · {(document.byte_size / 1024 / 1024).toFixed(1)} MB{!document.uploaded ? ` · ${copy.draft}` : ""}</small></div><div className="portal-file-actions">{document.uploaded ? <a className="icon-button" href={`/api/member/documents/${document.id}/`} title={copy.download} aria-label={`${copy.download}: ${document.original_name}`}><Download size={18} /></a> : null}<button type="button" className="icon-button" title={copy.remove} aria-label={`${copy.remove}: ${document.original_name}`} disabled={busy} onClick={() => removeDocument(document)}><Trash2 size={18} /></button></div></li>)}</ul>
+        <DocumentList locale={locale} documents={documents.filter((document) => document.source !== "team")} busy={busy} onRemove={removeDocument} />
+      </section>
+      <section className="portal-upload-section"><h2>{copy.teamDocuments}</h2><p>{copy.teamDocumentsNote}</p>
+        {documents.some((document) => document.source === "team" && document.uploaded) ? <DocumentList locale={locale} documents={documents.filter((document) => document.source === "team" && document.uploaded)} /> : <p>{copy.noTeamDocuments}</p>}
       </section>
       {message || progress ? <p className={`portal-notice${error ? " portal-error" : ""}`} role={error ? "alert" : "status"}>{progress || message}</p> : null}
       <div className="portal-submit-row"><span className="portal-status">{caseStatusLabel(patientCase?.status ?? "draft", locale)}</span><button type="button" className="button button-dark" disabled={busy} onClick={submitCase}><Send size={17} aria-hidden="true" />{busy ? copy.working : copy.submit}</button></div>

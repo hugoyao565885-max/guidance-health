@@ -117,6 +117,14 @@ References: [Supabase SMTP](https://supabase.com/docs/guides/auth/auth-smtp), [R
 
 `npm run test:portal-sql` applies the actual migration to disposable PGlite PostgreSQL with fixture Auth/Storage schemas. It exercises RLS, RPC ownership, consent, per-member/global quotas, MFA, revocation and audit. It does not exercise the live Supabase HTTP services or email delivery.
 
+### Team documents (2026-10-29)
+
+Apply `supabase/migrations/202610290001_team_documents.sql` to the existing Singapore project before deploying the team-upload UI. It preserves existing patient uploads, adds source/uploader metadata, and exposes `admin_reserve_case_document` only to verified MFA administrators through database checks. It does not add administrators, change the storage region, or make the bucket public. Patients see only their own completed team files and cannot delete or overwrite them. Admins can remove team files, but this change does not grant deletion of patient uploads. Reservations, publication, removal and downloads are audited. Existing per-account (20 files), global (60 files) and 10 MB/file quotas remain in place and include both sources.
+
+In the administrator area, select a patient, check the displayed patient account, choose files and confirm patient sharing before uploading. Files become visible to that patient's account after the upload is finalized. Internal notes must not be uploaded here. Patients find them under the team-documents section on their case page after refreshing. Files remain behind the existing authenticated, audited download endpoint with 60-second signed links. No notification emails or third-party document sharing are added.
+
+`npm run test:portal-components` renders the actual member/admin components with synthetic props in all six languages. `-- --output-dir /private/tmp/hccare-portal-ui` also generates local-only HTML fixtures for visual review; never deploy those fixtures. SQL tests cover pending-file visibility, cross-account access, admin MFA, team-file immutability for patients, quotas and audit. Live administrator upload and recipient download must still be checked with approved synthetic test data after the migration.
+
 The following are live-release acceptance requirements, not claims that these tests have already passed:
 
 - Verify email signup, login, logout and password recovery with real email delivery.

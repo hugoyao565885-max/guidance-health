@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Download, Search, Save } from "lucide-react";
+import { Search, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { portalContent, caseStatusLabel } from "../../lib/portal-content";
 import { browserClient } from "../../lib/supabase/client";
-import { documentCategories } from "../../lib/portal-validation";
+import { AdminDocuments } from "./admin-documents";
 import type { MemberProfile, PatientCase, CaseDocument } from "../../lib/portal-types";
 import type { Locale } from "../../lib/site";
 
@@ -28,6 +28,6 @@ export function AdminPanel({ locale, members, cases, documents, selectedCase, pa
       setBusy(true); setMessage("");
       try { const { error } = await browserClient().rpc("admin_update_case", { p_case: selectedCase.id, p_status: status }); if (error) throw error; setMessage(copy.saved); router.refresh(); }
       catch { setMessage(copy.error); } finally { setBusy(false); }
-    }}><Save size={17} aria-hidden="true" />{busy ? copy.working : copy.update}</button></div>{message ? <p className="portal-notice" role="status">{message}</p> : null}<h3>{copy.documents}</h3><ul className="portal-document-list">{documents.filter((item) => item.uploaded).map((document) => <li key={document.id}><div><strong>{document.original_name}</strong><small>{copy.categories[documentCategories.indexOf(document.category as typeof documentCategories[number])]}</small></div><a className="icon-button" href={`/api/member/documents/${document.id}/`} title={copy.download} aria-label={`${copy.download}: ${document.original_name}`}><Download size={18} /></a></li>)}</ul></> : <p>{copy.noCases}</p>}</section>
+    }}><Save size={17} aria-hidden="true" />{busy ? copy.working : copy.update}</button></div>{message ? <p className="portal-notice" role="status">{message}</p> : null}<AdminDocuments key={selectedCase.id} locale={locale} caseId={selectedCase.id} recipient={selectedMember?.email ?? selectedCase.user_id} initialDocuments={documents} /></> : <p>{copy.noCases}</p>}</section>
   </div>;
 }

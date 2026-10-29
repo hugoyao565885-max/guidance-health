@@ -105,7 +105,18 @@ async function main() {
     assert.ok(template.includes(`{{ .RedirectTo }}&amp;token_hash={{ .TokenHash }}&amp;type=${type}`));
     assert.doesNotMatch(template, /\{\{\s*\.(?:Data|Email|Token)\s*\}\}/, "Authentication templates must not include personal profile or record data");
   }
-  for (const file of ["components/portal/member-case.tsx", "components/portal/auth-form.tsx", "components/portal/admin-panel.tsx"]) {
+  const teamSql = fs.readFileSync(path.join(root, "supabase/migrations/202610290001_team_documents.sql"), "utf8");
+  assert.match(teamSql, /if not private\.is_admin\(\) then raise exception/);
+  assert.match(teamSql, /d\.source='team' and d\.uploaded_by=auth\.uid\(\) and private\.is_admin\(\)/);
+  assert.match(teamSql, /source='patient' or uploaded/);
+  assert.doesNotMatch(teamSql, /service_role|raw_user_meta_data|disable row level security/);
+  const teamUpload = fs.readFileSync(path.join(root, "components/portal/admin-documents.tsx"), "utf8");
+  assert.match(teamUpload, /admin_reserve_case_document/);
+  assert.match(teamUpload, /document\.case_id !== caseId \|\| document\.source !== "team"/);
+  assert.match(teamUpload, /!confirmed/);
+  assert.match(teamUpload, /upsert: false/);
+  assert.match(memberCaseSource, /if \(document\.source === "team"\) return;/);
+  for (const file of ["components/portal/member-case.tsx", "components/portal/auth-form.tsx", "components/portal/admin-panel.tsx", "components/portal/admin-documents.tsx", "components/portal/document-list.tsx"]) {
     assert.doesNotMatch(fs.readFileSync(path.join(root, file), "utf8"), /console\.|localStorage|sessionStorage|service_role/);
   }
   console.log("Portal unit and configuration checks passed. These checks do not establish live RLS, SMTP or upload behaviour.");

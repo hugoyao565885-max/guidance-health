@@ -307,8 +307,9 @@ button:disabled { cursor: not-allowed; opacity: .55; }
 .portal-form textarea { resize: vertical; }
 .portal-form small { font-size: var(--font-small); font-weight: 400; color: var(--muted); }
 .portal-form .button { justify-self: start; }
-.portal-form .portal-checkbox { display: flex; align-items: flex-start; gap: 12px; font-weight: 400; }
+.portal-form .portal-checkbox, .portal-upload-controls .portal-checkbox { display: flex; align-items: flex-start; gap: 12px; font-weight: 400; }
 .portal-checkbox input { flex-shrink: 0; width: 18px; height: 18px; margin: 4px 0 0; accent-color: var(--green); }
+.portal-upload-controls .portal-checkbox input { width: 18px; min-height: 18px; padding: 0; }
 .password-field { position: relative; }
 .portal-form .password-field input { padding-inline-end: 54px; }
 .password-field .icon-button { position: absolute; inset-inline-end: 4px; top: 3px; border: 0; background: transparent; }
