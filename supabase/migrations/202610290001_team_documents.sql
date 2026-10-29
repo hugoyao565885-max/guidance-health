@@ -3,7 +3,7 @@ begin;
 alter table public.case_documents
   add column source text not null default 'patient' check (source in ('patient','team')),
   add column uploaded_by uuid references auth.users(id) on delete set null;
-update public.case_documents set uploaded_by=user_id;
+-- Historical uploader identity remains unset; no backfill of existing file records.
 
 -- Only the database chooses the recipient, uploader and source of a team document.
 create function public.admin_reserve_case_document(p_case uuid,p_name text,p_category text,p_mime text,p_bytes bigint)

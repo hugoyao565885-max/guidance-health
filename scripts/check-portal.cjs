@@ -110,6 +110,7 @@ async function main() {
   assert.match(teamSql, /d\.source='team' and d\.uploaded_by=auth\.uid\(\) and private\.is_admin\(\)/);
   assert.match(teamSql, /source='patient' or uploaded/);
   assert.doesNotMatch(teamSql, /service_role|raw_user_meta_data|disable row level security/);
+  assert.doesNotMatch(teamSql, /update public\.case_documents set uploaded_by=user_id/i, "Do not backfill historical records during a permissions migration");
   const teamUpload = fs.readFileSync(path.join(root, "components/portal/admin-documents.tsx"), "utf8");
   assert.match(teamUpload, /admin_reserve_case_document/);
   assert.match(teamUpload, /document\.case_id !== caseId \|\| document\.source !== "team"/);

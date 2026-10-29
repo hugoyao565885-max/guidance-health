@@ -90,7 +90,7 @@ try {
 
   await db.exec(await readFile(new URL("../supabase/migrations/202610290001_team_documents.sql", import.meta.url), "utf8"));
   const legacy = (await asUser(first,"select source,uploaded_by from public.case_documents where id=$1",[doc.id]))[0];
-  assert.deepEqual(legacy, { source: "patient", uploaded_by: first }, "Existing patient uploads remain patient-owned");
+  assert.deepEqual(legacy, { source: "patient", uploaded_by: null }, "Existing patient uploads remain patient-owned without backfilling historical uploader identity");
   const reserveTeam = "select * from public.admin_reserve_case_document($1,'TEST ONLY summary.pdf','other','application/pdf',20)";
   await rejected(first, reserveTeam, [caseOne]);
   await rejected(second, reserveTeam, [caseOne]);
