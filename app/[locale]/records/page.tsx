@@ -22,7 +22,7 @@ export default async function RecordsPage({ params }: PageProps) {
   const guide = ui.guides.records;
   return <div className="site-body"><SiteHeader locale={locale} section="records" /><main id="main-content">
     <section className="page-hero"><div className="container"><Breadcrumbs locale={locale} section="records" title={guide.label} /><p className="eyebrow">{ui.eyebrow}</p><h1>{guide.title}</h1><p>{guide.description}</p></div></section>
-    <section className="section"><div className="container"><PatientGuideBody locale={locale} guideKey="records" /></div></section>
+    <section className="section"><div className="container"><PatientGuideBody locale={locale} section="records" guide={guide} /></div></section>
     <ContactSection locale={locale} />
   </main><SiteFooter locale={locale} /></div>;
 }

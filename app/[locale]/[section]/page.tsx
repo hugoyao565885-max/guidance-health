@@ -5,6 +5,7 @@ import { EnquiryForm } from "../../../components/enquiry-form";
 import { CompanyProfile } from "../../../components/company-profile";
 import { ResearchStudy } from "../../../components/research-study";
 import { Breadcrumbs, PatientGuideBody } from "../../../components/patient-guide";
+import { OncologyGuideLinks } from "../../../components/oncology-guide-links";
 import { ContactSection, ExpertProfiles, Faq, SectionHeading, ServicePlans, SiteFooter, SiteHeader, TextLink } from "../../../components/patient-sections";
 import { content, sectionKeys, type SectionKey } from "../../../lib/content";
 import { carTSource, patientContent } from "../../../lib/patient-content";
@@ -59,9 +60,10 @@ export default async function SectionPage({ params }: PageProps) {
         <section className="section"><div className="container">
           {section === "about" ? <CompanyProfile locale={locale} /> : null}
           {section === "membership" ? <><ServicePlans locale={locale} detailed /><div className="membership-modules"><h2>{copy.sections.membership.modulesTitle}</h2><ServiceList cards={copy.sections.membership.modules} /><p className="service-note">{copy.sections.membership.modulesNote}</p></div><div className="faq-layout section-inner"><SectionHeading {...ui.faq} /><Faq locale={locale} /></div></> : null}
-          {section === "oncology" ? <><ServiceList cards={copy.sections.oncology.cards} /><div className="source-note"><TextLink href={pagePath(locale, "car-t")}>{ui.carT.title}</TextLink><TextLink href={pagePath(locale, "research")}>{copy.sections.research.title}</TextLink><TextLink href={pagePath(locale, "mdt")}>{patientGuides[locale].guides.mdt.label}</TextLink></div><p className="service-note">{copy.sections.oncology.note}</p></> : null}
+          {section === "oncology" ? <><ServiceList cards={copy.sections.oncology.cards} /><OncologyGuideLinks locale={locale} /><div className="source-note"><TextLink href={pagePath(locale, "car-t")}>{ui.carT.title}</TextLink><TextLink href={pagePath(locale, "research")}>{copy.sections.research.title}</TextLink><TextLink href={pagePath(locale, "mdt")}>{patientGuides[locale].guides.mdt.label}</TextLink></div><p className="service-note">{copy.sections.oncology.note}</p></> : null}
           {section === "research" ? <ResearchStudy locale={locale} /> : null}
-          {section === "mdt" || section === "journey" ? <PatientGuideBody locale={locale} guideKey={section} /> : null}
+          {guide ? <PatientGuideBody locale={locale} section={section} guide={guide} /> : null}
+          {section === "mdt" || section === "car-t" ? <OncologyGuideLinks locale={locale} /> : null}
           {section === "experts" ? <><ExpertProfiles locale={locale} /><div className="section-inner"><SectionHeading {...copy.sections.clinicalTeam} /><ServiceList cards={copy.sections.clinicalTeam.cards} /></div><p className="service-note">{copy.sections.experts.note}</p></> : null}
           {section === "hospitals" ? <div className="hospital-layout"><div><ServiceList cards={copy.sections.hospitals.cards} /><p className="service-note">{copy.sections.hospitals.note}</p></div><figure><Image src="/images/patient-room.jpg" alt={ui.roomAlt} width={1800} height={1200} sizes="(max-width: 900px) 100vw, 42vw" /><figcaption>{ui.roomAlt}</figcaption></figure></div> : null}
           {section === "car-t" ? <><ServiceList cards={ui.carT.items} /><div className="source-note"><span>{ui.carT.published}</span><a href={carTSource} target="_blank" rel="noopener noreferrer">{ui.carT.source}</a></div><p className="service-note">{ui.carT.note}</p><div className="cta-row"><TextLink href={pagePath(locale, "records")}>{patientGuides[locale].recordsLink}</TextLink><TextLink href={pagePath(locale, "register")}>{ui.start}</TextLink></div></> : null}

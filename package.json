@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "check:content": "node scripts/check-content.cjs",
+    "check:seo-build": "node scripts/check-seo-build.cjs",
     "check:portal": "node scripts/check-portal.cjs",
     "test:portal-sql": "node scripts/test-portal-sql.mjs",
     "test:portal-components": "node scripts/test-portal-components.cjs"

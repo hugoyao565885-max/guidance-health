@@ -8,7 +8,7 @@ export type PatientGuide = {
   description: string;
   sections: Item[];
   questions: Item[];
-  related: Array<GuideKey | "membership" | "experts" | "car-t">;
+  related: Array<GuideKey | "membership" | "experts" | "car-t" | "oncology" | "research">;
   sources: Array<{ title: string; url: string }>;
 };
 

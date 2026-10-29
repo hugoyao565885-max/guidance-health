@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { content } from "../lib/content";
-import { guidesUpdated, patientGuides, type GuideKey } from "../lib/patient-guides";
+import { guidesUpdated, patientGuides, type PatientGuide } from "../lib/patient-guides";
 import { portalContent } from "../lib/portal-content";
 import { breadcrumbData, guideData } from "../lib/seo";
 import { localeMeta, pagePath, type Locale } from "../lib/site";
@@ -18,13 +18,12 @@ export function Breadcrumbs({ locale, section, title }: { locale: Locale; sectio
   </>;
 }
 
-export function PatientGuideBody({ locale, guideKey }: { locale: Locale; guideKey: GuideKey }) {
+export function PatientGuideBody({ locale, section, guide, updated = guidesUpdated }: { locale: Locale; section: string; guide: PatientGuide; updated?: string }) {
   const ui = patientGuides[locale];
-  const guide = ui.guides[guideKey];
-  const date = new Intl.DateTimeFormat(localeMeta[locale].htmlLang, { dateStyle: "long", timeZone: "UTC" }).format(new Date(`${guidesUpdated}T00:00:00Z`));
+  const date = new Intl.DateTimeFormat(localeMeta[locale].htmlLang, { dateStyle: "long", timeZone: "UTC" }).format(new Date(`${updated}T00:00:00Z`));
   return <article className="patient-guide">
-    <StructuredData data={guideData(locale, guideKey, guide.title, guide.description, guidesUpdated)} />
-    <div className="guide-byline"><span>{ui.publishedBy}</span><span>{ui.updated}: <time dateTime={guidesUpdated}>{date}</time></span></div>
+    <StructuredData data={guideData(locale, section, guide.title, guide.description, updated)} />
+    <div className="guide-byline"><span>{ui.publishedBy}</span><span>{ui.updated}: <time dateTime={updated}>{date}</time></span></div>
     <div className="guide-sections">{guide.sections.map((item, index) => <section key={item.title}>
       <span className="item-number">{String(index + 1).padStart(2, "0")}</span>
       <div><h2>{item.title}</h2><p>{item.text}</p></div>

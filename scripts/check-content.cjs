@@ -25,6 +25,7 @@ function loadDictionary(file) {
 const { locales, localeMeta, contact, brand, siteUrl, alternates, pagePath } = loadDictionary(path.join(root, "lib/site.ts"));
 const { publicMetadata, organizationData, publicPageUpdates } = loadDictionary(path.join(root, "lib/seo.ts"));
 const { patientGuides, guidesUpdated } = loadDictionary(path.join(root, "lib/patient-guides.ts"));
+const { oncologyGuides, oncologyGuideTopics, oncologyGuidesUpdated, isOncologyGuideTopic } = loadDictionary(path.join(root, "lib/oncology-guides.ts"));
 const { researchContent, researchUpdated, lungStudy } = loadDictionary(path.join(root, "lib/research-content.ts"));
 const sitemap = loadDictionary(path.join(root, "app/sitemap.ts")).default();
 const robots = loadDictionary(path.join(root, "app/robots.ts")).default();
@@ -42,13 +43,34 @@ assert.ok(sectionKeys.includes("research"));
 assert.equal(lungStudy.protocol, "IBR854-204");
 assert.equal(new URL(lungStudy.sourceUrl).protocol, "https:");
 assert.equal(publicPageUpdates.research, researchUpdated);
-const publicSections = ["", ...sectionKeys.filter((section) => section !== "register"), "records"];
+const publicSections = ["", ...sectionKeys.filter((section) => section !== "register"), "records", ...oncologyGuideTopics.map((topic) => `guides/${topic}`)];
 assert.deepEqual(Object.keys(publicPageUpdates).sort(), [...publicSections].sort());
 assert.equal(sitemap.length, locales.length * publicSections.length);
 assert.equal(new Set(sitemap.map((item) => item.url)).size, sitemap.length);
 assert.equal(organizationData()["@type"], "Organization");
 assert.equal(organizationData().legalName, brand.legalName);
 for (const locale of locales) {
+  for (const topic of oncologyGuideTopics) {
+    const guide = oncologyGuides[locale][topic];
+    assert.equal(isOncologyGuideTopic(topic), true);
+    assert.equal(publicPageUpdates[`guides/${topic}`], oncologyGuidesUpdated);
+    assert.deepEqual(Object.keys(guide).sort(), Object.keys(oncologyGuides.en[topic]).sort());
+    assert.ok(guide.label && guide.title && guide.description);
+    assert.ok(guide.sections.length >= 5 && guide.questions.length >= 2 && guide.sources.length >= 2);
+    assert.ok(new Set(guide.sections.map((item) => item.title)).size === guide.sections.length);
+    for (const related of guide.related) assert.ok(publicSections.includes(related));
+    for (const source of guide.sources) {
+      assert.equal(new URL(source.url).protocol, "https:");
+      assert.equal(new URL(source.url).hostname, "www.cancer.gov");
+    }
+    const guideCopy = JSON.stringify(guide);
+    if (locale !== "zh-hant") assert.doesNotMatch(guideCopy, /\p{Script=Han}/u, `${locale}/${topic}: untranslated copy`);
+    assert.doesNotMatch(guideCopy, /Hong\s*Kong|香港|Гонкон|هونغ كونغ|Clifford|祈福|Hugo Yao/i);
+    assert.doesNotMatch(guideCopy, /guaranteed cure|100%|包治|保證治癒|保证治愈|best cancer hospital|lowest price/i);
+    if (topic === "cell-therapy") {
+      for (const term of ["CAR-T", "NK", "TCR-T", "TIL", "HLA", "NCI"]) assert.ok(guideCopy.includes(term), `${locale}: cell guide ${term}`);
+    } else assert.doesNotMatch(guideCopy, /\bNK\b/, `${locale}: NK is confined to the educational cell guide`);
+  }
   for (const section of publicSections) {
     const path = pagePath(locale, section);
     assert.equal(pagePath(locale, `/${section}/`), path);
@@ -74,6 +96,8 @@ for (const locale of locales) {
     assert.equal(matches, false, "Private member rule must not block public membership pricing");
   }
 }
+assert.equal(isOncologyGuideTopic("unknown"), false);
+assert.equal(isOncologyGuideTopic("../member"), false);
 assert.deepEqual(serviceBasePrices, { currency: "CNY", quotedOn: "2026-10-10", preArrival: 2880, duringStay: { fiveSeat: 3580, business: 3730 }, afterDischarge: 1180 }, "Keep the original quote unchanged");
 assert.equal(serviceExchangeRate.asOf, "2026-10-23");
 assert.equal(serviceExchangeRate.usdPerEur, 1.1193);
@@ -187,4 +211,14 @@ assert.match(researchComponent, /pagePath\(locale, "member"\)/, "Use the existin
 assert.match(researchComponent, /pagePath\(locale, "records"\)/, "Link to the full record checklist");
 assert.match(researchComponent, /encodeURIComponent/, "Encode study-specific WhatsApp enquiry");
 assert.doesNotMatch(researchComponent, /<form|input.*type="file"|download=/, "No unprotected upload or original protocol download");
+const guideRoute = fs.readFileSync(path.join(root, "app/[locale]/guides/[topic]/page.tsx"), "utf8");
+assert.match(guideRoute, /generateStaticParams/);
+assert.match(guideRoute, /!isOncologyGuideTopic\(topic\).*notFound\(\)/);
+assert.match(guideRoute, /publicMetadata\(locale,/);
+assert.match(guideRoute, /PatientGuideBody/);
+assert.match(guideRoute, /OncologyGuideLinks/);
+assert.doesNotMatch(guideRoute, /<form|input.*type="file"/);
+assert.match(homepage, /guides\/lymphoma/);
+assert.match(homepage, /guides\/immunotherapy/);
+assert.match(homepage, /guides\/cell-therapy/);
 console.log(`Content checks passed for ${locales.length} languages and ${sectionKeys.length} page sections.`);

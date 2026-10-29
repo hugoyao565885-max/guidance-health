@@ -176,8 +176,8 @@ export const content: Record<Locale, SiteContent> = {
       },
       oncology: {
         "eyebrow": "Advanced oncology pathways",
-        "title": "Exploring appropriate treatment and research pathways in China",
-        "body": "For eligible patients, we can help prepare records and coordinate communication around advanced oncology options. Eligibility and treatment direction must always be assessed by licensed physicians and receiving institutions.",
+        "title": "Cancer treatment in China: oncology coordination",
+        "body": "Preparing for cancer care in Guangzhou, China: organize records for lymphoma, immunotherapy, cell therapy and research discussions. Clinicians assess suitability; H&C Care coordinates communication and practical arrangements.",
         "cards": [
           {
             "title": "Immunotherapy and targeted therapy review",
@@ -548,8 +548,8 @@ export const content: Record<Locale, SiteContent> = {
       },
       oncology: {
         "eyebrow": "前沿腫瘤治療路徑",
-        "title": "協助評估中國的合適治療與臨床研究路徑",
-        "body": "對部分符合條件的患者，我們可協助準備資料並圍繞前沿腫瘤路徑進行溝通協調。是否適合及治療方向必須由持牌醫生和接診機構評估。",
+        "title": "中國腫瘤治療：國際患者就醫協調",
+        "body": "準備來中國廣州就醫：整理病歷以溝通淋巴瘤、免疫治療、細胞治療與臨床研究。是否適合由醫生評估；H&C Care 協調溝通及實務安排。",
         "cards": [
           {
             "title": "免疫與靶向治療評估",
@@ -887,8 +887,8 @@ export const content: Record<Locale, SiteContent> = {
       },
       oncology: {
         "eyebrow": "Передовые онкологические маршруты",
-        "title": "Изучение подходящих лечебных и исследовательских возможностей в Китае",
-        "body": "Для подходящих пациентов мы помогаем подготовить документы и координировать коммуникацию по передовым онкологическим опциям. Решения принимают врачи и учреждения.",
+        "title": "Лечение рака в Китае: координация помощи",
+        "body": "Подготовка к обращению в Гуанчжоу: документы для обсуждения лимфомы, иммунотерапии, клеточной терапии и исследований. Пригодность оценивают врачи; H&C Care координирует связь и практические вопросы.",
         "cards": [
           {
             "title": "Иммуно- и таргетная терапия",
@@ -1226,8 +1226,8 @@ export const content: Record<Locale, SiteContent> = {
       },
       oncology: {
         "eyebrow": "مسارات أورام متقدمة",
-        "title": "استكشاف مسارات علاج وبحث مناسبة في الصين",
-        "body": "للمرضى المؤهلين، نساعد في تحضير السجلات وتنسيق التواصل حول خيارات أورام متقدمة. الأهلية والقرار الطبي للطبيب والمؤسسة.",
+        "title": "علاج السرطان في الصين: تنسيق الرعاية",
+        "body": "التحضير للرعاية في غوانغجو بالصين: تنظيم السجلات لمناقشة اللمفوما والعلاج المناعي والخلوي والبحوث. يقيّم الأطباء الملاءمة، وتنسق H&C Care التواصل والترتيبات العملية.",
         "cards": [
           {
             "title": "العلاج المناعي والموجه",
@@ -1565,8 +1565,8 @@ export const content: Record<Locale, SiteContent> = {
       },
       oncology: {
         "eyebrow": "Jalur onkologi lanjutan",
-        "title": "Mengeksplorasi jalur terapi dan riset yang sesuai di China",
-        "body": "Untuk pasien yang memenuhi syarat, kami membantu menyiapkan rekam medis dan koordinasi komunikasi seputar opsi onkologi lanjutan. Kelayakan dan arah terapi ditentukan dokter dan institusi.",
+        "title": "Pengobatan kanker di China: koordinasi onkologi",
+        "body": "Persiapan perawatan di Guangzhou, China: rekam medis untuk diskusi limfoma, imunoterapi, terapi sel dan penelitian. Dokter menilai kelayakan; H&C Care mengoordinasikan komunikasi dan urusan praktis.",
         "cards": [
           {
             "title": "Imunoterapi dan terapi target",
@@ -1904,8 +1904,8 @@ export const content: Record<Locale, SiteContent> = {
       },
       oncology: {
         "eyebrow": "Laluan onkologi lanjutan",
-        "title": "Meneroka laluan rawatan dan penyelidikan sesuai di China",
-        "body": "Untuk pesakit yang layak, kami membantu menyediakan rekod dan koordinasi komunikasi sekitar pilihan onkologi lanjutan. Kelayakan dan arah rawatan ditentukan doktor dan institusi.",
+        "title": "Rawatan kanser di China: penyelarasan onkologi",
+        "body": "Persediaan penjagaan di Guangzhou, China: rekod untuk perbincangan limfoma, imunoterapi, terapi sel dan penyelidikan. Doktor menilai kelayakan; H&C Care menyelaras komunikasi dan urusan praktikal.",
         "cards": [
           {
             "title": "Imunoterapi dan terapi sasaran",
