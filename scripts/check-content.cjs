@@ -157,6 +157,9 @@ for (const locale of locales) {
   assert.equal(page.sections.about.team.items.length, 3, `${locale}: clinical background`);
   assert.ok(page.sections.about.body.includes(brand.legalName) && page.sections.about.body.includes(brand.zhLegalName), `${locale}: company identity`);
   assert.ok(page.sections.about.boundaries.note && page.sections.about.research.note, `${locale}: clinical boundaries`);
+  for (const section of ["about", "experts", "clinicalTeam"]) {
+    assert.doesNotMatch(JSON.stringify(page.sections[section]), /Hong\s*Kong|香港|Гонкон|هونغ كونغ/i, `${locale}/${section}: emphasize coordination, not the company registration location`);
+  }
   for (const section of sectionKeys) {
     assert.ok(page.nav[section] && page.sections[section].title && page.sections[section].body, `${locale}/${section}: missing copy`);
   }
