@@ -1,0 +1,26 @@
+{
+  "createdOn": "2026-10-30",
+  "method": "Built-in image_gen",
+  "purpose": "Original educational illustrations for three existing articles; not clinical photographs, scan results, product packaging or journal figures.",
+  "processing": "Width-only resize and WebP/JPEG encoding with Sharp; no retained EXIF/XMP/IPTC metadata.",
+  "items": [
+    {
+      "slug": "urine-rna-bladder-cancer",
+      "webp": "public/images/education/urine-rna-research.webp",
+      "social": "public/images/education/urine-rna-research.jpg",
+      "prompt": "Use case: scientific-educational. Asset type: original editorial cover illustration for a multilingual cancer education website, first of a cohesive three-image set. Subject: urine cell-free RNA research for bladder cancer. Create one polished landscape 16:9 bitmap illustration: a clean closed urine specimen cup with a very small amount of pale straw-colored liquid on a white laboratory bench, beside an abstract magnified view of several single-stranded RNA ribbons and a restrained laboratory microscope silhouette in the distance. The RNA ribbons are conceptual single strands, not a DNA double helix. Contemporary medical journal editorial illustration, gentle paper texture, crisp intelligible silhouettes, soft dimensional shading, white and very pale cool gray background, balanced forest green, cyan-blue and muted coral accents. Well-composed central grouping that remains intact on small screens, generous quiet margins. Educational and calm, not advertising. NO text, letters, numbers, labels, logos, watermarks, hospital names, patient information, scan images, charts, efficacy claims, before-and-after imagery or decorative floating orbs. Do not depict a real test result or suggest that the test is already clinically validated. Opaque background. Deliver a single cover image, not a collage or a web page."
+    },
+    {
+      "slug": "false-positive-mammography",
+      "webp": "public/images/education/breast-screening-follow-up.webp",
+      "social": "public/images/education/breast-screening-follow-up.jpg",
+      "prompt": "Use case: scientific-educational. Asset type: original editorial cover illustration for a multilingual cancer education article, a cohesive medical illustration set. Subject: breast screening and follow-up after a false-positive mammogram. Create one landscape 16:9 bitmap illustration of a recognizable modern mammography machine standing in a bright calm examination room, with a neatly closed medical-record folder and a plain calendar sheet on a small desk in the foreground. A modest small muted coral awareness ribbon can sit beside the folder. The machine should have the characteristic vertical column, imaging head and breast compression platform, shown as a general editorial concept, not a technical operating diagram. No patient, no body parts and no operator. Contemporary medical journal editorial illustration with soft dimensional shading and subtle paper texture, clear silhouettes, white and very pale cool-gray background, balanced teal/forest-green, cyan-blue and muted coral accents. Spacious, professional, reassuring but not celebratory; no implication that screening guarantees safety. Keep essential objects within central safe area for mobile. NO words, letters, numbers, logos, hospital signage, watermarks, readable medical documents, radiographs, fabricated scans, risk charts, check marks, cancer diagnoses or decorative floating orbs. Opaque background. Single standalone cover image, not a collage, infographic or webpage."
+    },
+    {
+      "slug": "dasatinib-tfh-lymphoma",
+      "webp": "public/images/education/lymphoma-treatment-research.webp",
+      "social": "public/images/education/lymphoma-treatment-research.jpg",
+      "prompt": "Use case: scientific-educational. Asset type: original editorial cover illustration for a multilingual cancer education website, in a cohesive medical illustration set. Subject: research into dasatinib, genetic differences and immune cells in relapsed T follicular helper cell lymphoma. Create one landscape 16:9 bitmap. A clean laboratory desktop with a single unbranded blister strip holding a few plain white tablets in the foreground, beside an open research notebook containing only a few abstract lines, no readable writing. Behind these, an elegant conceptual magnified circular field showing several clearly stylized lymphocytes with visible large nuclei, some teal-blue and some muted coral, and a short subtle DNA double-helix motif. The cells are intact and adjacent, not being killed, shrinking or exploding; no diagrammed mechanism or efficacy arrows. Contemporary medical-journal editorial illustration, gentle dimensional shading and subtle paper texture, bright white and very pale cool-gray background, balanced forest-green, cyan-blue and muted coral accents. Calm, scientifically cautious, not a drug advertisement. Keep important objects within central safe area for mobile. NO drug branding, text, letters, numbers, labels, watermark, hospital names, people, patient data, cancer scans, claims, charts, percentages, glowing magic, before-and-after comparisons or decorative floating orbs. The tablets are a generic research motif, not a depiction of any identifiable medicine packaging. Opaque background. Single standalone cover image, no collage or webpage."
+    }
+  ]
+}

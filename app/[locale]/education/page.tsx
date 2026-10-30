@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowUpRight } from "lucide-react";
 import { Breadcrumbs } from "../../../components/patient-guide";
@@ -27,11 +28,14 @@ export default async function EducationPage({ params }: PageProps) {
     <section className="page-hero"><div className="container"><Breadcrumbs locale={locale} section="education" title={ui.title} /><h1>{ui.title}</h1><p>{ui.description}</p></div></section>
     <section className="section"><div className="container education-library">
       <h2>{ui.articles}</h2>
-      <div className="education-list">{articles.map((article) => <article key={article.slug}>
+      <div className="education-list">{articles.map((article) => <article key={article.slug} className={article.image ? "has-image" : undefined}>
+        {article.image ? <figure className="education-list-image"><Link href={educationArticlePath(article)} aria-label={article.title}><Image src={article.image.src} alt={article.image.alt} width={article.image.width} height={article.image.height} sizes="(max-width: 600px) calc(100vw - 36px), 216px" /></Link><figcaption>{article.image.label}</figcaption></figure> : null}
+        <div className="education-list-copy">
         <div className="education-meta"><span>{article.publishedAt ? educationArticleUi[locale].originalPublished : educationArticleUi[locale].added}: <time dateTime={article.publishedAt ?? article.addedOn}><bdi>{(article.publishedAt ?? article.addedOn).slice(0, 10)}</bdi></time></span><span>{article.category}</span></div>
         <h3 lang={article.language} dir={localeMeta[locale].dir}><Link href={educationArticlePath(article)}>{article.title}</Link></h3>
         <p lang={article.language} dir={localeMeta[locale].dir}>{article.description}</p>
         <Link className="text-link" href={educationArticlePath(article)} hrefLang={article.language}>{ui.read}<ArrowUpRight size={18} aria-hidden="true" /></Link>
+        </div>
       </article>)}</div>
       <nav className="guide-related" aria-label={ui.guides}><h2>{ui.guides}</h2><ul>{oncologyGuideTopics.map((topic) => <li key={topic}><Link href={pagePath(locale, `guides/${topic}`)}>{oncologyGuides[locale][topic].label}<ArrowUpRight size={18} aria-hidden="true" /></Link></li>)}</ul></nav>
     </div></section>

@@ -220,6 +220,12 @@ summary::-webkit-details-marker { display: none; }
 .education-library > h2 { font-size: 26px; }
 .education-list { margin-top: 24px; }
 .education-list article { padding-block: 28px; border-block-start: 1px solid var(--line); }
+.education-list article.has-image { display: grid; grid-template-columns: 216px minmax(0, 1fr); align-items: start; gap: 28px; }
+.education-list-image, .education-cover { margin: 0; }
+.education-list-image a { display: block; }
+.education-list-image img, .education-cover img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: 6px; }
+.education-list-image figcaption, .education-cover figcaption { margin-top: 10px; font-size: var(--font-small); line-height: 1.6; color: var(--muted); overflow-wrap: anywhere; }
+.education-cover { margin-bottom: 32px; }
 .education-meta { display: flex; flex-wrap: wrap; gap: 12px 24px; color: var(--muted); font-size: var(--font-small); }
 .education-list h3 { margin-block: 14px; font-size: 25px; }
 .education-list h3 a { text-decoration: none; }
@@ -245,6 +251,7 @@ summary::-webkit-details-marker { display: none; }
 .guide-related ul { padding: 0; margin: 20px 0 28px; list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 30px; }
 .guide-related a { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding-block: 16px; border-top: 1px solid var(--line); color: var(--green); text-underline-offset: 4px; }
 @media (max-width: 600px) {
+  .education-list article.has-image { grid-template-columns: minmax(0, 1fr); gap: 18px; }
   .guide-related ul { grid-template-columns: 1fr; }
   .guide-sections > section { grid-template-columns: minmax(0, 1fr); gap: 8px; }
   .guide-sections h2, .guide-questions h2, .guide-related h2 { font-size: 22px; }

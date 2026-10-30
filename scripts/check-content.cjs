@@ -60,6 +60,7 @@ assert.equal(educationOriginalArticles.length, 3);
 assert.equal(educationArticles.length, locales.length * educationOriginalArticles.length, "One complete edition of each article per supported language");
 for (const original of educationOriginalArticles) assert.deepEqual(educationArticles.filter((article) => article.slug === original.slug).map((article) => article.locale), [...locales]);
 assert.equal(new Set(educationArticles.map(educationArticlePath)).size, educationArticles.length);
+assert.equal(new Set(educationArticles.map((article) => article.image?.src)).size, 3, "Each article has its own illustration");
 for (const article of educationArticles) {
   const original = educationOriginalArticles.find((item) => item.slug === article.slug);
   assert.ok(original);
@@ -85,7 +86,13 @@ for (const article of educationArticles) {
   assert.ok(sitemap.some((item) => item.url === `${siteUrl}${educationArticlePath(article)}`));
   assert.equal(findEducationArticle(article.locale, article.slug), article);
   for (const locale of locales) assert.ok(findEducationArticle(locale, article.slug), `Missing ${locale} edition`);
-  const localizedCopy = JSON.stringify([article.title, article.category, article.description, article.paragraphs, article.clinicalNote, educationArticleUi[article.locale]]);
+  assert.ok(article.image && article.image.alt && article.image.label && article.image.caption, "Provide localized image text and disclosure");
+  assert.equal(article.image.width, 1600);
+  assert.equal(article.image.height, 900);
+  assert.match(article.image.src, /^\/images\/education\/[a-z-]+\.webp$/);
+  assert.match(article.image.socialSrc, /^\/images\/education\/[a-z-]+\.jpg$/);
+  for (const asset of [article.image.src, article.image.socialSrc]) assert.ok(fs.statSync(path.join(root, "public", asset)).size < 200000, "Keep article assets lightweight");
+  const localizedCopy = JSON.stringify([article.title, article.category, article.description, article.paragraphs, article.clinicalNote, article.image, educationArticleUi[article.locale]]);
   if (article.locale !== "zh-hant") assert.doesNotMatch(localizedCopy, /\p{Script=Han}/u, `${article.locale}: no untranslated Chinese copy`);
   else assert.doesNotMatch(localizedCopy, /肿瘤|治疗|检查|细胞|研究团队|结果显示|发表于/, "Use Traditional Chinese");
   if (article.slug === "urine-rna-bladder-cancer") assert.ok(article.paragraphs.join(" ").includes("uRARE-seq"));

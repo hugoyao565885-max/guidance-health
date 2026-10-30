@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { SiteFooter, SiteHeader } from "../../../../components/patient-sections";
 import { StructuredData } from "../../../../components/structured-data";
@@ -17,7 +18,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const article = findEducationArticle(locale, slug);
   if (!article) return {};
   const metadata = publicMetadata(article.locale, `education/${article.slug}`, article.title, article.description);
-  return { ...metadata, openGraph: { ...metadata.openGraph, type: "article", locale: openGraphLocales[article.locale], publishedTime: article.publishedAt ?? article.addedOn } };
+  const images = article.image ? [{ url: `${siteUrl}${article.image.socialSrc}`, width: 1200, height: 675, alt: `${article.image.label}: ${article.image.alt}` }] : undefined;
+  return {
+    ...metadata,
+    openGraph: { ...metadata.openGraph, type: "article", locale: openGraphLocales[article.locale], publishedTime: article.publishedAt ?? article.addedOn, ...(images ? { images } : {}) },
+    twitter: { ...metadata.twitter, ...(images ? { card: "summary_large_image", images } : {}) },
+  };
 }
 
 export default async function EducationArticlePage({ params }: PageProps) {
@@ -36,7 +42,7 @@ export default async function EducationArticlePage({ params }: PageProps) {
     { name: article.title, item: url },
   ];
   return <div className="site-body"><SiteHeader locale={locale} section={`education/${article.slug}`} /><main id="main-content">
-    <StructuredData data={{ "@context": "https://schema.org", "@type": "Article", headline: article.title, description: article.description, url, mainEntityOfPage: url, inLanguage: article.language, datePublished: displayDate, isBasedOn: article.sourceUrl, citation: article.references.map((reference) => reference.url) }} />
+    <StructuredData data={{ "@context": "https://schema.org", "@type": "Article", headline: article.title, description: article.description, url, mainEntityOfPage: url, inLanguage: article.language, datePublished: displayDate, isBasedOn: article.sourceUrl, citation: article.references.map((reference) => reference.url), image: article.image ? [`${siteUrl}${article.image.src}`] : undefined }} />
     <StructuredData data={{ "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: crumbs.map((crumb, index) => ({ "@type": "ListItem", position: index + 1, ...crumb })) }} />
     <section className="page-hero"><div className="container">
       <nav className="breadcrumbs" aria-label={`${home} / ${library}`}><ol><li><Link href={pagePath(locale)}>{home}</Link></li><li><Link href={pagePath(locale, "education")}>{library}</Link></li><li aria-current="page" lang={article.language}>{article.title}</li></ol></nav>
@@ -44,6 +50,7 @@ export default async function EducationArticlePage({ params }: PageProps) {
     </div></section>
     <section className="section"><div className="container"><article className="education-article" lang={article.language} dir={localeMeta[locale].dir}>
       <div className="guide-byline"><span>{article.publishedAt ? ui.originalPublished : ui.added}: <time dateTime={displayDate}><bdi>{displayDate.slice(0, 10)}</bdi></time></span><span>{ui.edition}</span></div>
+      {article.image ? <figure className="education-cover"><Image src={article.image.src} alt={article.image.alt} width={article.image.width} height={article.image.height} sizes="(max-width: 600px) calc(100vw - 36px), (max-width: 980px) 90vw, 860px" priority /><figcaption>{article.image.caption}</figcaption></figure> : null}
       <div className="education-prose">{article.paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}</div>
       {article.clinicalNote ? <aside className="service-note education-clinical-note">{article.clinicalNote}</aside> : null}
       <section className="guide-sources" aria-labelledby="article-references"><h2 id="article-references">{ui.sources}</h2><ol>{article.references.map((reference) => <li key={reference.url}><cite lang="en" dir="ltr">{reference.citation}</cite><div className="education-reference-links"><a href={reference.url} target="_blank" rel="noopener noreferrer">{ui.paper}</a>{reference.indexUrl ? <a href={reference.indexUrl} target="_blank" rel="noopener noreferrer">{ui.pubmed}</a> : null}</div></li>)}</ol></section>

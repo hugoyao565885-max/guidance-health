@@ -2,6 +2,7 @@ import { localeMeta, locales, pagePath, type Locale } from "./site";
 import { urineRnaCopy } from "./education-copy";
 import { breastScreeningCopy, breastScreeningOriginal } from "./education-breast-screening";
 import { dasatinibCopy, dasatinibOriginal } from "./education-dasatinib";
+import { getEducationArtwork, type EducationArtwork } from "./education-artwork";
 
 export const educationUpdated = "2026-10-30";
 
@@ -64,6 +65,7 @@ export type EducationArticle = {
   sourceUrl?: string;
   paragraphs: string[];
   clinicalNote?: string;
+  image?: EducationArtwork;
   references: { citation: string; url: string; indexUrl?: string }[];
 };
 
@@ -107,6 +109,7 @@ export const educationArticles: EducationArticle[] = [
   ...copy[locale],
   locale,
   language: localeMeta[locale].htmlLang,
+  image: getEducationArtwork(original.slug, locale),
 })));
 
 export function educationArticlePath(article: EducationArticle) {

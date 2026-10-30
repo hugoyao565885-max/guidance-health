@@ -52,29 +52,37 @@ for (const locale of locales) {
 }
 assert.doesNotMatch(sitemap, /<loc>[^<]*\/(?:member|admin|mfa|login|register|reset-password|forgot-password)(?:\/|<)/);
 const educationFixtures = [
-  { slug: "urine-rna-bladder-cancer", paragraphs: 9, doi: "10.1038/s41591-026-04673-3", date: "2026-10-29T11:46:00+08:00", source: "https://mp.weixin.qq.com/s/qqtew6HP2sgvsMGPybNneQ" },
-  { slug: "false-positive-mammography", paragraphs: 10, doi: "10.1038/s41598-026-72246-y", date: "2026-10-30", source: "https://mp.weixin.qq.com/s/5YWeUJCiBmTqCvUpFkTElQ" },
-  { slug: "dasatinib-tfh-lymphoma", paragraphs: 10, doi: "10.1038/s41467-026-78100-z", date: "2026-10-30" },
+  { slug: "urine-rna-bladder-cancer", image: "urine-rna-research", paragraphs: 9, doi: "10.1038/s41591-026-04673-3", date: "2026-10-29T11:46:00+08:00", source: "https://mp.weixin.qq.com/s/qqtew6HP2sgvsMGPybNneQ" },
+  { slug: "false-positive-mammography", image: "breast-screening-follow-up", paragraphs: 10, doi: "10.1038/s41598-026-72246-y", date: "2026-10-30", source: "https://mp.weixin.qq.com/s/5YWeUJCiBmTqCvUpFkTElQ" },
+  { slug: "dasatinib-tfh-lymphoma", image: "lymphoma-treatment-research", paragraphs: 10, doi: "10.1038/s41467-026-78100-z", date: "2026-10-30" },
 ];
 const addedLabels = { en: "Added to this website", "zh-hant": "本站收錄日期", ru: "Добавлено на сайт", ar: "تاريخ الإضافة إلى الموقع", id: "Ditambahkan ke situs ini", ms: "Ditambah ke laman ini" };
+const imageLabels = { en: "AI illustration", "zh-hant": "AI 科普示意圖", ru: "Иллюстрация с ИИ", ar: "رسم بالذكاء الاصطناعي", id: "Ilustrasi AI", ms: "Ilustrasi AI" };
 for (const locale of locales) {
   const html = fs.readFileSync(path.join(output, `${locale}/education.html`), "utf8");
   assert.ok(html.includes(`rel="canonical" href="${origin}/${locale}/education"`));
   const library = html.match(/<div class="education-list">([\s\S]*?)<nav class="guide-related"/)?.[1];
   assert.ok(library);
-  assert.equal((library.match(/<article>/g) || []).length, educationFixtures.length, `${locale}: list only matching editions`);
+  assert.equal((library.match(/<article(?:\s|>)/g) || []).length, educationFixtures.length, `${locale}: list only matching editions`);
+  assert.equal((library.match(/<img\s/g) || []).length, educationFixtures.length, `${locale}: each listing has an image`);
+  assert.equal((library.match(/<figcaption>/g) || []).length, educationFixtures.length);
+  assert.ok(library.includes(imageLabels[locale]), "Disclose generated thumbnails");
   assert.ok(sitemap.includes(`<loc>${origin}/${locale}/education</loc>`));
   assert.ok(fs.readFileSync(path.join(output, `${locale}.html`), "utf8").includes(`href="/${locale}/education"`));
 
   for (const fixture of educationFixtures) {
   const articlePath = `/${locale}/education/${fixture.slug}`;
   assert.ok(library.includes(`href="${articlePath}"`));
+  const imagePath = `/images/education/${fixture.image}.webp`;
+  assert.ok(library.includes(encodeURIComponent(imagePath)), "Thumbnail belongs to the article");
   for (const other of locales.filter((item) => item !== locale)) assert.ok(!library.includes(`href="/${other}/education/${fixture.slug}"`));
   const articleHtml = fs.readFileSync(path.join(output, `${articlePath}.html`), "utf8");
   const articleLinks = articleHtml.match(/<a\b[^>]*>/g) || [];
   const articleHead = articleHtml.split("</head>")[0];
   assert.ok(articleHead.includes(`rel="canonical" href="${origin}${articlePath}"`));
   assert.doesNotMatch(articleHead, /noindex/);
+  assert.ok(articleHead.includes(`property="og:image" content="${origin}/images/education/${fixture.image}.jpg"`));
+  assert.ok(articleHead.includes('name="twitter:card" content="summary_large_image"'));
   for (const alternate of locales) {
     const lang = alternate === "zh-hant" ? "zh-Hant" : alternate;
     const path = `/${alternate}/education/${fixture.slug}`;
@@ -85,7 +93,15 @@ for (const locale of locales) {
   const articleBody = articleHtml.match(/<article class="education-article"[\s\S]*?<\/article>/)?.[0];
   const lang = locale === "zh-hant" ? "zh-Hant" : locale;
   assert.ok(articleBody && articleBody.includes(`lang="${lang}" dir="${locale === "ar" ? "rtl" : "ltr"}"`));
-  assert.doesNotMatch(articleBody, /<img|<iframe|cgi-bin|token=|祈福/);
+  assert.doesNotMatch(articleBody, /<iframe|cgi-bin|token=|祈福/);
+  const cover = articleBody.match(/<figure class="education-cover">([\s\S]*?)<\/figure>/)?.[1];
+  assert.ok(cover && cover.includes(encodeURIComponent(imagePath)));
+  const image = cover.match(/<img\b[^>]*>/)?.[0];
+  assert.ok(image && /alt="[^"]+"/.test(image));
+  assert.ok(image.includes('width="1600"') && image.includes('height="900"'));
+  assert.ok(image.includes("srcSet=") && image.includes("sizes="), "Responsive optimized image");
+  assert.match(cover, /<figcaption>[^<]+<\/figcaption>/, "Disclose AI-generated artwork in every language");
+  assert.equal((articleBody.match(/<img\s/g) || []).length, 1);
   assert.equal((articleBody.match(/<div class="education-prose">([\s\S]*?)<\/div>/)?.[1].match(/<p>/g) || []).length, fixture.paragraphs);
   assert.ok(articleBody.includes(fixture.doi));
   if (fixture.source) assert.ok(articleBody.includes(`href="${fixture.source}"`));
@@ -106,6 +122,7 @@ for (const locale of locales) {
   assert.equal(articleData.url, `${origin}${articlePath}`);
   assert.equal(articleData.isBasedOn, fixture.source);
   assert.equal(articleData.datePublished, fixture.date);
+  assert.deepEqual(articleData.image, [`${origin}${imagePath}`]);
   assert.ok(!articleData.author && !articleData.reviewedBy, "Do not invent authors or medical reviewers");
   assert.ok(articleLinks.some((link) => link.includes(`href="/${locale}/education"`) && link.includes('aria-current="page"')), `${locale}: parent navigation stays active`);
   }
