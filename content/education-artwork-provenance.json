@@ -5,6 +5,12 @@
   "processing": "Width-only resize and WebP/JPEG encoding with Sharp; no retained EXIF/XMP/IPTC metadata.",
   "items": [
     {
+      "slug": "cervical-cancer-keynote-826-five-year-follow-up",
+      "webp": "public/images/education/cervical-cancer-immunotherapy-follow-up.webp",
+      "social": "public/images/education/cervical-cancer-immunotherapy-follow-up.jpg",
+      "prompt": "Use case: scientific-educational. Asset type: original editorial cover for a multilingual patient-education article on long-term follow-up of immunotherapy plus chemotherapy for cervical cancer. Create one landscape 16:9 bitmap illustration. On a bright calm consultation desk, show a small anatomically recognizable teaching model of the uterus: pear-shaped uterine body above, two fallopian tubes curving toward ovaries at either side, and the narrow cervix clearly below the uterine body. The model is a smooth, restrained coral-and-off-white educational object on a simple stand, not exposed human tissue and not a scan. Beside it, place a closed teal follow-up folder and a small plain calendar with a completely blank grid, suggesting ongoing follow-up without any dosing schedule. Soft-focus laboratory shelves may appear in the background. Contemporary medical-journal editorial illustration with gentle dimensional shading and subtle paper texture, crisp readable forms, white and pale cool-gray background, balanced forest-green, cyan-blue and muted coral accents. Spacious central composition that remains legible on mobile. No people, patient data, body photographs, blood, lesions, needles, medication branding, pills, product promotion, efficacy charts, tumor shrinkage, before-and-after imagery, guarantees, text, letters, numbers, labels, logos, watermarks or decorative floating orbs. Do not imply cure or depict a clinical result. Opaque background. One standalone illustration, not a webpage or collage."
+    },
+    {
       "slug": "car-t-lymphoma-ten-year-outcomes",
       "webp": "public/images/education/car-t-long-term-follow-up.webp",
       "social": "public/images/education/car-t-long-term-follow-up.jpg",

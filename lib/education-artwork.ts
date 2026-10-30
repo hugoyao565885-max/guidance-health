@@ -20,6 +20,17 @@ const disclosure: Record<Locale, { label: string; caption: string }> = {
 };
 
 const artwork: Record<string, { file: string; alt: Record<Locale, string> }> = {
+  "cervical-cancer-keynote-826-five-year-follow-up": {
+    file: "cervical-cancer-immunotherapy-follow-up",
+    alt: {
+      en: "Educational illustration of a uterine anatomy model, a follow-up folder and a blank calendar.",
+      "zh-hant": "子宮解剖教學模型、隨訪檔案夾與空白日曆的科普示意圖。",
+      ru: "Образовательная иллюстрация анатомической модели матки, папки наблюдения и пустого календаря.",
+      ar: "رسم تثقيفي لنموذج تشريحي للرحم وملف متابعة وتقويم فارغ.",
+      id: "Ilustrasi edukatif model anatomi rahim, map tindak lanjut dan kalender kosong.",
+      ms: "Ilustrasi pendidikan model anatomi rahim, fail susulan dan kalendar kosong.",
+    },
+  },
   "car-t-lymphoma-ten-year-outcomes": {
     file: "car-t-long-term-follow-up",
     alt: {

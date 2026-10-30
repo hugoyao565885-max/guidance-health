@@ -56,7 +56,7 @@ for (const locale of locales) {
   assert.deepEqual(Object.keys(educationArticleUi[locale]).sort(), Object.keys(educationArticleUi.en).sort());
   assert.ok(Object.values(educationArticleUi[locale]).every((value) => typeof value === "string" && value.length > 0));
 }
-assert.equal(educationOriginalArticles.length, 5);
+assert.equal(educationOriginalArticles.length, 6);
 assert.equal(educationArticles.length, locales.length * educationOriginalArticles.length, "One complete edition of each article per supported language");
 for (const original of educationOriginalArticles) assert.deepEqual(educationArticles.filter((article) => article.slug === original.slug).map((article) => article.locale), [...locales]);
 assert.equal(new Set(educationArticles.map(educationArticlePath)).size, educationArticles.length);
@@ -72,8 +72,8 @@ for (const article of educationArticles) {
   assert.equal(article.publishedAt, original.publishedAt);
   assert.equal(article.addedOn, original.addedOn);
   for (let index = 0; index < article.paragraphs.length; index++) {
-    // Normalize Chinese ten-thousands and decimal commas before comparing translations.
-    const numbers = (text) => (text.replace(/2025年10月1日|1 October 2025|1 октября 2025 года|1 أكتوبر 2025|1 Oktober 2025/g, "2025-10-1").replace(/488[万萬]/g, "4.88 million").replace(/(\d),(\d)/g, "$1.$2").match(/\d+(?:\.\d+)?/g) || []).sort();
+    // Normalize localized dates, Chinese ten-thousands and decimal commas.
+    const numbers = (text) => (text.replace(/2025年10月1日|1 October 2025|1 октября 2025 года|1 أكتوبر 2025|1 Oktober 2025/g, "2025-10-1").replace(/2026年9月10日|10 September 2026|10 сентября 2026 года|10 سبتمبر 2026/g, "2026-9-10").replace(/488[万萬]/g, "4.88 million").replace(/(\d),(\d)/g, "$1.$2").match(/\d+(?:\.\d+)?/g) || []).sort();
     assert.deepEqual(numbers(article.paragraphs[index]), numbers(original.paragraphs[index]), `${article.slug}/${article.locale} paragraph ${index + 1}: preserve the study figures`);
   }
   assert.ok(article.paragraphs.every((text) => typeof text === "string" && text.length > 0));
@@ -140,6 +140,18 @@ for (const article of educationArticles) {
     assert.equal(article.references[1].indexUrl, "https://pubmed.ncbi.nlm.nih.gov/37055515/");
     assert.equal(article.references[2].kind, "report");
     assert.equal(new URL(article.references[2].url).hostname, "www.chop.edu");
+  }
+  if (article.slug === "cervical-cancer-keynote-826-five-year-follow-up") {
+    assert.equal(article.sourceUrl, undefined, "No unprovided WeChat source");
+    assert.equal(article.publishedAt, undefined, "The paper date is not the source article date");
+    assert.equal(article.paragraphs.length, 7);
+    assert.ok(article.paragraphs[1].includes("KEYNOTE-826"));
+    assert.match(article.paragraphs[5], /CPS\s*≥\s*1/);
+    assert.ok(article.clinicalNote && article.clinicalNote.length > 100);
+    assert.match(article.clinicalNote, /CPS\s*<\s*1/, "Explain the PD-L1 population boundary");
+    assert.equal(article.references.length, 1);
+    assert.equal(article.references[0].url, "https://doi.org/10.1001/jamaoncol.2026.3547");
+    assert.equal(article.references[0].indexUrl, "https://pubmed.ncbi.nlm.nih.gov/42720936/");
   }
   for (const reference of article.references) assert.equal(new URL(reference.url).protocol, "https:");
 }

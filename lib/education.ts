@@ -4,6 +4,7 @@ import { breastScreeningCopy, breastScreeningOriginal } from "./education-breast
 import { dasatinibCopy, dasatinibOriginal } from "./education-dasatinib";
 import { chemoVaccineCopy, chemoVaccineOriginal } from "./education-chemo-vaccine";
 import { carTLongTermCopy, carTLongTermOriginal } from "./education-car-t-long-term";
+import { cervicalImmunotherapyCopy, cervicalImmunotherapyOriginal } from "./education-cervical-immunotherapy";
 import { getEducationArtwork, type EducationArtwork } from "./education-artwork";
 
 export const educationUpdated = "2026-10-30";
@@ -106,7 +107,7 @@ export const educationOriginalArticle: EducationArticle = {
     }],
 };
 
-export const educationOriginalArticles = [educationOriginalArticle, breastScreeningOriginal, dasatinibOriginal, chemoVaccineOriginal, carTLongTermOriginal];
+export const educationOriginalArticles = [educationOriginalArticle, breastScreeningOriginal, dasatinibOriginal, chemoVaccineOriginal, carTLongTermOriginal, cervicalImmunotherapyOriginal];
 
 export const educationArticles: EducationArticle[] = [
   { original: educationOriginalArticle, copy: urineRnaCopy },
@@ -114,6 +115,7 @@ export const educationArticles: EducationArticle[] = [
   { original: dasatinibOriginal, copy: dasatinibCopy },
   { original: chemoVaccineOriginal, copy: chemoVaccineCopy },
   { original: carTLongTermOriginal, copy: carTLongTermCopy },
+  { original: cervicalImmunotherapyOriginal, copy: cervicalImmunotherapyCopy },
 ].flatMap(({ original, copy }) => locales.map((locale) => ({
   ...original,
   ...copy[locale],

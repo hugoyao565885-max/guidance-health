@@ -3,7 +3,7 @@ import { stat } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 
-const names = ["urine-rna-research", "breast-screening-follow-up", "lymphoma-treatment-research", "chemotherapy-vaccine-timing", "car-t-long-term-follow-up"];
+const names = ["urine-rna-research", "breast-screening-follow-up", "lymphoma-treatment-research", "chemotherapy-vaccine-timing", "car-t-long-term-follow-up", "cervical-cancer-immunotherapy-follow-up"];
 for (const name of names) {
   for (const [extension, format, width, height] of [["webp", "webp", 1600, 900], ["jpg", "jpeg", 1200, 675]]) {
     const file = fileURLToPath(new URL(`../public/images/education/${name}.${extension}`, import.meta.url));

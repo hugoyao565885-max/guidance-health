@@ -57,6 +57,7 @@ const educationFixtures = [
   { slug: "dasatinib-tfh-lymphoma", image: "lymphoma-treatment-research", paragraphs: 10, doi: "10.1038/s41467-026-78100-z", date: "2026-10-30" },
   { slug: "chemotherapy-cancer-vaccine-timing", image: "chemotherapy-vaccine-timing", paragraphs: 9, doi: "10.1016/j.ccell.2026.09.006", date: "2026-10-30", pubmed: "42826713" },
   { slug: "car-t-lymphoma-ten-year-outcomes", image: "car-t-long-term-follow-up", paragraphs: 9, doi: "10.1056/NEJMoa2518035", date: "2026-10-30", pubmed: "42341302" },
+  { slug: "cervical-cancer-keynote-826-five-year-follow-up", image: "cervical-cancer-immunotherapy-follow-up", paragraphs: 7, doi: "10.1001/jamaoncol.2026.3547", date: "2026-10-30", pubmed: "42720936" },
 ];
 const addedLabels = { en: "Added to this website", "zh-hant": "本站收錄日期", ru: "Добавлено на сайт", ar: "تاريخ الإضافة إلى الموقع", id: "Ditambahkan ke situs ini", ms: "Ditambah ke laman ini" };
 const imageLabels = { en: "AI illustration", "zh-hant": "AI 科普示意圖", ru: "Иллюстрация с ИИ", ar: "رسم بالذكاء الاصطناعي", id: "Ilustrasi AI", ms: "Ilustrasi AI" };
