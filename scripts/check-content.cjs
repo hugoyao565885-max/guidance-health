@@ -56,7 +56,7 @@ for (const locale of locales) {
   assert.deepEqual(Object.keys(educationArticleUi[locale]).sort(), Object.keys(educationArticleUi.en).sort());
   assert.ok(Object.values(educationArticleUi[locale]).every((value) => typeof value === "string" && value.length > 0));
 }
-assert.equal(educationOriginalArticles.length, 2);
+assert.equal(educationOriginalArticles.length, 3);
 assert.equal(educationArticles.length, locales.length * educationOriginalArticles.length, "One complete edition of each article per supported language");
 for (const original of educationOriginalArticles) assert.deepEqual(educationArticles.filter((article) => article.slug === original.slug).map((article) => article.locale), [...locales]);
 assert.equal(new Set(educationArticles.map(educationArticlePath)).size, educationArticles.length);
@@ -76,14 +76,16 @@ for (const article of educationArticles) {
     assert.deepEqual(numbers(article.paragraphs[index]), numbers(original.paragraphs[index]), `${article.slug}/${article.locale} paragraph ${index + 1}: preserve the study figures`);
   }
   assert.ok(article.paragraphs.every((text) => typeof text === "string" && text.length > 0));
-  const source = new URL(article.sourceUrl);
-  assert.equal(source.hostname, "mp.weixin.qq.com");
-  assert.ok(source.pathname.startsWith("/s/") && !source.search);
+  if (article.sourceUrl) {
+    const source = new URL(article.sourceUrl);
+    assert.equal(source.hostname, "mp.weixin.qq.com");
+    assert.ok(source.pathname.startsWith("/s/") && !source.search);
+  }
   assert.doesNotMatch(JSON.stringify(article), /cgi-bin|token=|<img|<script|医院肿瘤中心|祈福/);
   assert.ok(sitemap.some((item) => item.url === `${siteUrl}${educationArticlePath(article)}`));
   assert.equal(findEducationArticle(article.locale, article.slug), article);
   for (const locale of locales) assert.ok(findEducationArticle(locale, article.slug), `Missing ${locale} edition`);
-  const localizedCopy = JSON.stringify([article.title, article.category, article.description, article.paragraphs, educationArticleUi[article.locale]]);
+  const localizedCopy = JSON.stringify([article.title, article.category, article.description, article.paragraphs, article.clinicalNote, educationArticleUi[article.locale]]);
   if (article.locale !== "zh-hant") assert.doesNotMatch(localizedCopy, /\p{Script=Han}/u, `${article.locale}: no untranslated Chinese copy`);
   else assert.doesNotMatch(localizedCopy, /肿瘤|治疗|检查|细胞|研究团队|结果显示|发表于/, "Use Traditional Chinese");
   if (article.slug === "urine-rna-bladder-cancer") assert.ok(article.paragraphs.join(" ").includes("uRARE-seq"));
@@ -93,6 +95,15 @@ for (const article of educationArticles) {
     const hazardTerms = { en: "adjusted hazard ratio", "zh-hant": "調整後危險比", ru: "скорректированное отношение рисков", ar: "نسبة المخاطر المعدّلة", id: "rasio hazard tersesuaikan", ms: "nisbah hazard terlaras" };
     assert.ok(article.paragraphs[2].includes(hazardTerms[article.locale]), "Use the study's adjusted hazard ratio terminology");
     assert.equal(article.references[0].url, "https://doi.org/10.1038/s41598-026-72246-y");
+  }
+  if (article.slug === "dasatinib-tfh-lymphoma") {
+    assert.equal(article.sourceUrl, undefined, "Do not guess which WeChat URL belongs to supplied text");
+    assert.equal(article.publishedAt, undefined, "The paper date is not the source article date");
+    assert.equal(article.paragraphs.length, 10);
+    assert.ok(article.clinicalNote && article.clinicalNote.length > 100, "Localize the treatment caution");
+    assert.ok(article.paragraphs[4].includes("RHOA-G17V"));
+    assert.ok(article.paragraphs[6].includes("TET2") && article.paragraphs[7].includes("TET2"));
+    assert.equal(article.references[0].url, "https://doi.org/10.1038/s41467-026-78100-z");
   }
   for (const reference of article.references) assert.equal(new URL(reference.url).protocol, "https:");
 }

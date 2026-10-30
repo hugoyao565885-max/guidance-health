@@ -54,6 +54,7 @@ assert.doesNotMatch(sitemap, /<loc>[^<]*\/(?:member|admin|mfa|login|register|res
 const educationFixtures = [
   { slug: "urine-rna-bladder-cancer", paragraphs: 9, doi: "10.1038/s41591-026-04673-3", date: "2026-10-29T11:46:00+08:00", source: "https://mp.weixin.qq.com/s/qqtew6HP2sgvsMGPybNneQ" },
   { slug: "false-positive-mammography", paragraphs: 10, doi: "10.1038/s41598-026-72246-y", date: "2026-10-30", source: "https://mp.weixin.qq.com/s/5YWeUJCiBmTqCvUpFkTElQ" },
+  { slug: "dasatinib-tfh-lymphoma", paragraphs: 10, doi: "10.1038/s41467-026-78100-z", date: "2026-10-30" },
 ];
 const addedLabels = { en: "Added to this website", "zh-hant": "本站收錄日期", ru: "Добавлено на сайт", ar: "تاريخ الإضافة إلى الموقع", id: "Ditambahkan ke situs ini", ms: "Ditambah ke laman ini" };
 for (const locale of locales) {
@@ -87,6 +88,11 @@ for (const locale of locales) {
   assert.doesNotMatch(articleBody, /<img|<iframe|cgi-bin|token=|祈福/);
   assert.equal((articleBody.match(/<div class="education-prose">([\s\S]*?)<\/div>/)?.[1].match(/<p>/g) || []).length, fixture.paragraphs);
   assert.ok(articleBody.includes(fixture.doi));
+  if (fixture.source) assert.ok(articleBody.includes(`href="${fixture.source}"`));
+  else {
+    assert.doesNotMatch(articleBody, /education-source|mp\.weixin\.qq\.com/, "No invented source link");
+    assert.match(articleBody, /class="service-note education-clinical-note">[^<]+<\/aside>/, "Show the article-specific treatment caution");
+  }
   if (fixture.slug === "urine-rna-bladder-cancer") assert.ok(articleBody.includes("42827132"));
   else {
     assert.ok(articleBody.includes(addedLabels[locale]) && library.includes(addedLabels[locale]), "Label the website date, not an unknown original date");

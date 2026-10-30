@@ -45,8 +45,9 @@ export default async function EducationArticlePage({ params }: PageProps) {
     <section className="section"><div className="container"><article className="education-article" lang={article.language} dir={localeMeta[locale].dir}>
       <div className="guide-byline"><span>{article.publishedAt ? ui.originalPublished : ui.added}: <time dateTime={displayDate}><bdi>{displayDate.slice(0, 10)}</bdi></time></span><span>{ui.edition}</span></div>
       <div className="education-prose">{article.paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}</div>
+      {article.clinicalNote ? <aside className="service-note education-clinical-note">{article.clinicalNote}</aside> : null}
       <section className="guide-sources" aria-labelledby="article-references"><h2 id="article-references">{ui.sources}</h2><ol>{article.references.map((reference) => <li key={reference.url}><cite lang="en" dir="ltr">{reference.citation}</cite><div className="education-reference-links"><a href={reference.url} target="_blank" rel="noopener noreferrer">{ui.paper}</a>{reference.indexUrl ? <a href={reference.indexUrl} target="_blank" rel="noopener noreferrer">{ui.pubmed}</a> : null}</div></li>)}</ol></section>
-      <p className="education-source">{ui.sourceLabel}: <a href={article.sourceUrl} target="_blank" rel="noopener noreferrer">{ui.sourceLink}</a></p>
+      {article.sourceUrl ? <p className="education-source">{ui.sourceLabel}: <a href={article.sourceUrl} target="_blank" rel="noopener noreferrer">{ui.sourceLink}</a></p> : null}
       <aside className="service-note">{ui.disclaimer}</aside>
       <nav className="guide-related" aria-label={guideUi.related}><ul><li><Link href={pagePath(locale, "education")}>{ui.back}</Link></li><li><Link href={pagePath(locale, "records")}>{guideUi.recordsLink}</Link></li></ul></nav>
     </article></div></section>

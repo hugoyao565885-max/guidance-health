@@ -1,6 +1,7 @@
 import { localeMeta, locales, pagePath, type Locale } from "./site";
 import { urineRnaCopy } from "./education-copy";
 import { breastScreeningCopy, breastScreeningOriginal } from "./education-breast-screening";
+import { dasatinibCopy, dasatinibOriginal } from "./education-dasatinib";
 
 export const educationUpdated = "2026-10-30";
 
@@ -60,8 +61,9 @@ export type EducationArticle = {
   category: string;
   publishedAt?: string;
   addedOn: string;
-  sourceUrl: string;
+  sourceUrl?: string;
   paragraphs: string[];
+  clinicalNote?: string;
   references: { citation: string; url: string; indexUrl?: string }[];
 };
 
@@ -94,11 +96,12 @@ export const educationOriginalArticle: EducationArticle = {
     }],
 };
 
-export const educationOriginalArticles = [educationOriginalArticle, breastScreeningOriginal];
+export const educationOriginalArticles = [educationOriginalArticle, breastScreeningOriginal, dasatinibOriginal];
 
 export const educationArticles: EducationArticle[] = [
   { original: educationOriginalArticle, copy: urineRnaCopy },
   { original: breastScreeningOriginal, copy: breastScreeningCopy },
+  { original: dasatinibOriginal, copy: dasatinibCopy },
 ].flatMap(({ original, copy }) => locales.map((locale) => ({
   ...original,
   ...copy[locale],
