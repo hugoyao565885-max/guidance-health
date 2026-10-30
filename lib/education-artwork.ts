@@ -20,6 +20,17 @@ const disclosure: Record<Locale, { label: string; caption: string }> = {
 };
 
 const artwork: Record<string, { file: string; alt: Record<Locale, string> }> = {
+  "chemotherapy-cancer-vaccine-timing": {
+    file: "chemotherapy-vaccine-timing",
+    alt: {
+      en: "Conceptual illustration of unlabelled research vials, a blank calendar, a microscope and immune cells.",
+      "zh-hant": "無標籤研究藥瓶、空白日曆、顯微鏡與免疫細胞的概念示意圖。",
+      ru: "Концептуальная иллюстрация исследовательских флаконов без маркировки, пустого календаря, микроскопа и иммунных клеток.",
+      ar: "رسم تصوري لقوارير بحثية بلا ملصقات وتقويم فارغ ومجهر وخلايا مناعية.",
+      id: "Ilustrasi konseptual vial penelitian tanpa label, kalender kosong, mikroskop dan sel imun.",
+      ms: "Ilustrasi konsep vial penyelidikan tanpa label, kalendar kosong, mikroskop dan sel imun.",
+    },
+  },
   "urine-rna-bladder-cancer": {
     file: "urine-rna-research",
     alt: {

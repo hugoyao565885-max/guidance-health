@@ -56,11 +56,11 @@ for (const locale of locales) {
   assert.deepEqual(Object.keys(educationArticleUi[locale]).sort(), Object.keys(educationArticleUi.en).sort());
   assert.ok(Object.values(educationArticleUi[locale]).every((value) => typeof value === "string" && value.length > 0));
 }
-assert.equal(educationOriginalArticles.length, 3);
+assert.equal(educationOriginalArticles.length, 4);
 assert.equal(educationArticles.length, locales.length * educationOriginalArticles.length, "One complete edition of each article per supported language");
 for (const original of educationOriginalArticles) assert.deepEqual(educationArticles.filter((article) => article.slug === original.slug).map((article) => article.locale), [...locales]);
 assert.equal(new Set(educationArticles.map(educationArticlePath)).size, educationArticles.length);
-assert.equal(new Set(educationArticles.map((article) => article.image?.src)).size, 3, "Each article has its own illustration");
+assert.equal(new Set(educationArticles.map((article) => article.image?.src)).size, educationOriginalArticles.length, "Each article has its own illustration");
 for (const article of educationArticles) {
   const original = educationOriginalArticles.find((item) => item.slug === article.slug);
   assert.ok(original);
@@ -111,6 +111,20 @@ for (const article of educationArticles) {
     assert.ok(article.paragraphs[4].includes("RHOA-G17V"));
     assert.ok(article.paragraphs[6].includes("TET2") && article.paragraphs[7].includes("TET2"));
     assert.equal(article.references[0].url, "https://doi.org/10.1038/s41467-026-78100-z");
+  }
+  if (article.slug === "chemotherapy-cancer-vaccine-timing") {
+    assert.equal(article.sourceUrl, undefined, "No unprovided WeChat source");
+    assert.equal(article.publishedAt, undefined, "Do not reuse the paper date as the article date");
+    assert.equal(article.paragraphs.length, 9);
+    const preclinicalTerms = { en: "preclinical", "zh-hant": "臨床前研究", ru: "доклиническое", ar: "قبل سريري", id: "praklinis", ms: "praklinikal" };
+    assert.ok(article.clinicalNote?.includes(preclinicalTerms[article.locale]), "Explain the preclinical evidence boundary in every language");
+    assert.ok(article.paragraphs[4].includes("TCF1") && article.paragraphs[4].includes("CD8"));
+    assert.ok(article.paragraphs[6].includes("PD-1"));
+    assert.ok(article.paragraphs[7].includes("TCF7"));
+    const animalTerms = { en: "mice", "zh-hant": "小鼠", ru: "мышей", ar: "الفئران", id: "mencit", ms: "mencit" };
+    assert.ok(article.paragraphs[6].includes(animalTerms[article.locale]), "Keep survival findings tied to animals");
+    assert.equal(article.references[0].url, "https://doi.org/10.1016/j.ccell.2026.09.006");
+    assert.equal(article.references[0].indexUrl, "https://pubmed.ncbi.nlm.nih.gov/42826713/");
   }
   for (const reference of article.references) assert.equal(new URL(reference.url).protocol, "https:");
 }

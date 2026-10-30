@@ -1,9 +1,15 @@
 {
   "createdOn": "2026-10-30",
   "method": "Built-in image_gen",
-  "purpose": "Original educational illustrations for three existing articles; not clinical photographs, scan results, product packaging or journal figures.",
+  "purpose": "Original educational illustrations for the article collection; not clinical photographs, scan results, product packaging or journal figures.",
   "processing": "Width-only resize and WebP/JPEG encoding with Sharp; no retained EXIF/XMP/IPTC metadata.",
   "items": [
+    {
+      "slug": "chemotherapy-cancer-vaccine-timing",
+      "webp": "public/images/education/chemotherapy-vaccine-timing.webp",
+      "social": "public/images/education/chemotherapy-vaccine-timing.jpg",
+      "prompt": "Use case: scientific-educational. Asset type: original editorial cover for a multilingual cancer education article. Subject: research into timing chemotherapy with therapeutic cancer vaccines and immune responses. Create one landscape 16:9 bitmap illustration: a clean bright laboratory bench with two generic small sealed medicine vials without labels, a plain tabletop calendar showing only a blank grid without dates or markings, and a laboratory microscope. Include a single subtle conceptual magnified circular field with a few intact stylized T lymphocytes with visible nuclei, not a true microscopy image. Contemporary medical-journal editorial illustration, soft dimensional shading, subtle paper texture, crisp intelligible objects, white and very pale cool-gray background, balanced forest-green, cyan-blue and muted coral accents, matching a restrained professional patient-education series. Calm, exploratory research mood. Keep important objects inside the central safe area for mobile display. NO text, letters, numbers, logos, readable documents, hospital signage, patient information, animals, people, needles entering bodies, dosing schedules, marked dates, arrows suggesting a proven sequence, shrinking or destroyed cancer cells, efficacy charts, before-and-after images, guarantees or decorative floating orbs. Do not suggest an approved combination treatment or depict research results. Opaque background. A single standalone illustration, not a collage or webpage."
+    },
     {
       "slug": "urine-rna-bladder-cancer",
       "webp": "public/images/education/urine-rna-research.webp",

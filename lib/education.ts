@@ -2,6 +2,7 @@ import { localeMeta, locales, pagePath, type Locale } from "./site";
 import { urineRnaCopy } from "./education-copy";
 import { breastScreeningCopy, breastScreeningOriginal } from "./education-breast-screening";
 import { dasatinibCopy, dasatinibOriginal } from "./education-dasatinib";
+import { chemoVaccineCopy, chemoVaccineOriginal } from "./education-chemo-vaccine";
 import { getEducationArtwork, type EducationArtwork } from "./education-artwork";
 
 export const educationUpdated = "2026-10-30";
@@ -98,12 +99,13 @@ export const educationOriginalArticle: EducationArticle = {
     }],
 };
 
-export const educationOriginalArticles = [educationOriginalArticle, breastScreeningOriginal, dasatinibOriginal];
+export const educationOriginalArticles = [educationOriginalArticle, breastScreeningOriginal, dasatinibOriginal, chemoVaccineOriginal];
 
 export const educationArticles: EducationArticle[] = [
   { original: educationOriginalArticle, copy: urineRnaCopy },
   { original: breastScreeningOriginal, copy: breastScreeningCopy },
   { original: dasatinibOriginal, copy: dasatinibCopy },
+  { original: chemoVaccineOriginal, copy: chemoVaccineCopy },
 ].flatMap(({ original, copy }) => locales.map((locale) => ({
   ...original,
   ...copy[locale],

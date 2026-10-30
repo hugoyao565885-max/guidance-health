@@ -3,7 +3,7 @@ import { stat } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 
-const names = ["urine-rna-research", "breast-screening-follow-up", "lymphoma-treatment-research"];
+const names = ["urine-rna-research", "breast-screening-follow-up", "lymphoma-treatment-research", "chemotherapy-vaccine-timing"];
 for (const name of names) {
   for (const [extension, format, width, height] of [["webp", "webp", 1600, 900], ["jpg", "jpeg", 1200, 675]]) {
     const file = fileURLToPath(new URL(`../public/images/education/${name}.${extension}`, import.meta.url));
@@ -15,4 +15,4 @@ for (const name of names) {
     assert.ok((await stat(file)).size < 200000, "Compressed asset budget");
   }
 }
-console.log("Education image checks passed: three responsive covers and three social images, correct dimensions, under 200 KB each, no EXIF/XMP/IPTC.");
+console.log(`Education image checks passed: ${names.length} responsive covers and ${names.length} social images, correct dimensions, under 200 KB each, no EXIF/XMP/IPTC.`);

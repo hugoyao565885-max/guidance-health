@@ -52,9 +52,10 @@ for (const locale of locales) {
 }
 assert.doesNotMatch(sitemap, /<loc>[^<]*\/(?:member|admin|mfa|login|register|reset-password|forgot-password)(?:\/|<)/);
 const educationFixtures = [
-  { slug: "urine-rna-bladder-cancer", image: "urine-rna-research", paragraphs: 9, doi: "10.1038/s41591-026-04673-3", date: "2026-10-29T11:46:00+08:00", source: "https://mp.weixin.qq.com/s/qqtew6HP2sgvsMGPybNneQ" },
+  { slug: "urine-rna-bladder-cancer", image: "urine-rna-research", paragraphs: 9, doi: "10.1038/s41591-026-04673-3", date: "2026-10-29T11:46:00+08:00", source: "https://mp.weixin.qq.com/s/qqtew6HP2sgvsMGPybNneQ", pubmed: "42827132" },
   { slug: "false-positive-mammography", image: "breast-screening-follow-up", paragraphs: 10, doi: "10.1038/s41598-026-72246-y", date: "2026-10-30", source: "https://mp.weixin.qq.com/s/5YWeUJCiBmTqCvUpFkTElQ" },
   { slug: "dasatinib-tfh-lymphoma", image: "lymphoma-treatment-research", paragraphs: 10, doi: "10.1038/s41467-026-78100-z", date: "2026-10-30" },
+  { slug: "chemotherapy-cancer-vaccine-timing", image: "chemotherapy-vaccine-timing", paragraphs: 9, doi: "10.1016/j.ccell.2026.09.006", date: "2026-10-30", pubmed: "42826713" },
 ];
 const addedLabels = { en: "Added to this website", "zh-hant": "本站收錄日期", ru: "Добавлено на сайт", ar: "تاريخ الإضافة إلى الموقع", id: "Ditambahkan ke situs ini", ms: "Ditambah ke laman ini" };
 const imageLabels = { en: "AI illustration", "zh-hant": "AI 科普示意圖", ru: "Иллюстрация с ИИ", ar: "رسم بالذكاء الاصطناعي", id: "Ilustrasi AI", ms: "Ilustrasi AI" };
@@ -109,11 +110,11 @@ for (const locale of locales) {
     assert.doesNotMatch(articleBody, /education-source|mp\.weixin\.qq\.com/, "No invented source link");
     assert.match(articleBody, /class="service-note education-clinical-note">[^<]+<\/aside>/, "Show the article-specific treatment caution");
   }
-  if (fixture.slug === "urine-rna-bladder-cancer") assert.ok(articleBody.includes("42827132"));
-  else {
+  if (fixture.slug !== "urine-rna-bladder-cancer") {
     assert.ok(articleBody.includes(addedLabels[locale]) && library.includes(addedLabels[locale]), "Label the website date, not an unknown original date");
-    assert.doesNotMatch(articleBody, /pubmed\.ncbi\.nlm\.nih\.gov/, "Do not invent a PubMed record");
   }
+  if (fixture.pubmed) assert.ok(articleBody.includes(`https://pubmed.ncbi.nlm.nih.gov/${fixture.pubmed}/`));
+  else assert.doesNotMatch(articleBody, /pubmed\.ncbi\.nlm\.nih\.gov/, "Do not invent a PubMed record");
   assert.ok(articleBody.includes('<cite lang="en" dir="ltr">'), `${locale}: preserve the original scholarly citation`);
   assert.ok(articleBody.includes(`dateTime="${fixture.date}"`));
   assert.ok(sitemap.includes(`<loc>${origin}${articlePath}</loc>`));
