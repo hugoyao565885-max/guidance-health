@@ -11,7 +11,7 @@
     "publishUnverifiedOrEmptyArticles": false
   },
   "articles": [
-    { "sourceUrl": "https://mp.weixin.qq.com/s/5YWeUJCiBmTqCvUpFkTElQ" },
+    { "sourceUrl": "https://mp.weixin.qq.com/s/5YWeUJCiBmTqCvUpFkTElQ", "slug": "false-positive-mammography", "status": "content-prepared", "sourceMethod": "user-provided-text", "locales": ["en", "zh-hant", "ru", "ar", "id", "ms"], "imagesProvided": false },
     { "sourceUrl": "https://mp.weixin.qq.com/s/Bd4F2peyEVeHwEP6F5TkkQ" },
     { "sourceUrl": "https://mp.weixin.qq.com/s/evrOyUBmv7LK5u7v22JT3g" },
     { "sourceUrl": "https://mp.weixin.qq.com/s/GBvtVxMiCzPxioSH2E-SBQ" },

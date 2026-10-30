@@ -1,6 +1,6 @@
 import type { Locale } from "./site";
 
-type ArticleCopy = { title: string; description: string; category: string; paragraphs: string[] };
+export type ArticleCopy = { title: string; description: string; category: string; paragraphs: string[] };
 
 // Full translations of the authorized Chinese article, preserving its study limitations.
 export const urineRnaCopy: Record<Locale, ArticleCopy> = {

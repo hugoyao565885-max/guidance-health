@@ -26,7 +26,7 @@ const { locales, localeMeta, contact, brand, siteUrl, alternates, pagePath } = l
 const { publicMetadata, organizationData, publicPageUpdates } = loadDictionary(path.join(root, "lib/seo.ts"));
 const { patientGuides, guidesUpdated } = loadDictionary(path.join(root, "lib/patient-guides.ts"));
 const { oncologyGuides, oncologyGuideTopics, oncologyGuidesUpdated, isOncologyGuideTopic } = loadDictionary(path.join(root, "lib/oncology-guides.ts"));
-const { educationUi, educationArticleUi, educationArticles, educationOriginalArticle, educationUpdated, educationArticlePath, findEducationArticle } = loadDictionary(path.join(root, "lib/education.ts"));
+const { educationUi, educationArticleUi, educationArticles, educationOriginalArticles, educationUpdated, educationArticlePath, findEducationArticle } = loadDictionary(path.join(root, "lib/education.ts"));
 const { researchContent, researchUpdated, lungStudy } = loadDictionary(path.join(root, "lib/research-content.ts"));
 const sitemap = loadDictionary(path.join(root, "app/sitemap.ts")).default();
 const robots = loadDictionary(path.join(root, "app/robots.ts")).default();
@@ -56,18 +56,24 @@ for (const locale of locales) {
   assert.deepEqual(Object.keys(educationArticleUi[locale]).sort(), Object.keys(educationArticleUi.en).sort());
   assert.ok(Object.values(educationArticleUi[locale]).every((value) => typeof value === "string" && value.length > 0));
 }
-assert.equal(educationArticles.length, locales.length, "One complete edition per supported language");
-assert.deepEqual(educationArticles.map((article) => article.locale), [...locales]);
+assert.equal(educationOriginalArticles.length, 2);
+assert.equal(educationArticles.length, locales.length * educationOriginalArticles.length, "One complete edition of each article per supported language");
+for (const original of educationOriginalArticles) assert.deepEqual(educationArticles.filter((article) => article.slug === original.slug).map((article) => article.locale), [...locales]);
 assert.equal(new Set(educationArticles.map(educationArticlePath)).size, educationArticles.length);
 for (const article of educationArticles) {
+  const original = educationOriginalArticles.find((item) => item.slug === article.slug);
+  assert.ok(original);
   assert.ok(/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(article.slug));
   assert.equal(article.language, localeMeta[article.locale].htmlLang);
-  assert.equal(article.paragraphs.length, educationOriginalArticle.paragraphs.length, "Translate every paragraph");
-  assert.deepEqual(article.references, educationOriginalArticle.references);
-  assert.equal(article.publishedAt, educationOriginalArticle.publishedAt);
+  assert.equal(article.paragraphs.length, original.paragraphs.length, "Translate every paragraph");
+  assert.deepEqual(article.references, original.references);
+  assert.equal(article.sourceUrl, original.sourceUrl);
+  assert.equal(article.publishedAt, original.publishedAt);
+  assert.equal(article.addedOn, original.addedOn);
   for (let index = 0; index < article.paragraphs.length; index++) {
-    const numbers = (text) => (text.match(/\d+(?:\.\d+)?/g) || []).sort();
-    assert.deepEqual(numbers(article.paragraphs[index]), numbers(educationOriginalArticle.paragraphs[index]), `${article.locale} paragraph ${index + 1}: preserve the study figures`);
+    // Normalize Chinese ten-thousands and decimal commas before comparing translations.
+    const numbers = (text) => (text.replace(/488[万萬]/g, "4.88 million").replace(/(\d),(\d)/g, "$1.$2").match(/\d+(?:\.\d+)?/g) || []).sort();
+    assert.deepEqual(numbers(article.paragraphs[index]), numbers(original.paragraphs[index]), `${article.slug}/${article.locale} paragraph ${index + 1}: preserve the study figures`);
   }
   assert.ok(article.paragraphs.every((text) => typeof text === "string" && text.length > 0));
   const source = new URL(article.sourceUrl);
@@ -80,11 +86,18 @@ for (const article of educationArticles) {
   const localizedCopy = JSON.stringify([article.title, article.category, article.description, article.paragraphs, educationArticleUi[article.locale]]);
   if (article.locale !== "zh-hant") assert.doesNotMatch(localizedCopy, /\p{Script=Han}/u, `${article.locale}: no untranslated Chinese copy`);
   else assert.doesNotMatch(localizedCopy, /肿瘤|治疗|检查|细胞|研究团队|结果显示|发表于/, "Use Traditional Chinese");
-  assert.ok(article.paragraphs.join(" ").includes("uRARE-seq"));
+  if (article.slug === "urine-rna-bladder-cancer") assert.ok(article.paragraphs.join(" ").includes("uRARE-seq"));
+  if (article.slug === "false-positive-mammography") {
+    assert.equal(article.publishedAt, undefined, "Do not invent the source article's publication date");
+    assert.equal(article.paragraphs.length, 10);
+    const hazardTerms = { en: "adjusted hazard ratio", "zh-hant": "調整後危險比", ru: "скорректированное отношение рисков", ar: "نسبة المخاطر المعدّلة", id: "rasio hazard tersesuaikan", ms: "nisbah hazard terlaras" };
+    assert.ok(article.paragraphs[2].includes(hazardTerms[article.locale]), "Use the study's adjusted hazard ratio terminology");
+    assert.equal(article.references[0].url, "https://doi.org/10.1038/s41598-026-72246-y");
+  }
   for (const reference of article.references) assert.equal(new URL(reference.url).protocol, "https:");
 }
 assert.equal(findEducationArticle("zh-hant", "not-an-article"), undefined);
-assert.equal(findEducationArticle("fr", educationOriginalArticle.slug), undefined);
+assert.equal(findEducationArticle("fr", educationOriginalArticles[0].slug), undefined);
 for (const locale of locales) {
   for (const topic of oncologyGuideTopics) {
     const guide = oncologyGuides[locale][topic];
