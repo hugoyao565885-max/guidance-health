@@ -51,4 +51,28 @@ for (const locale of locales) {
   }
 }
 assert.doesNotMatch(sitemap, /<loc>[^<]*\/(?:member|admin|mfa|login|register|reset-password|forgot-password)(?:\/|<)/);
+for (const locale of locales) {
+  const html = fs.readFileSync(path.join(output, `${locale}/education.html`), "utf8");
+  assert.ok(html.includes(`rel="canonical" href="${origin}/${locale}/education"`));
+  assert.ok(html.includes('href="/zh-hant/education/urine-rna-bladder-cancer"'));
+  assert.ok(sitemap.includes(`<loc>${origin}/${locale}/education</loc>`));
+  assert.ok(fs.readFileSync(path.join(output, `${locale}.html`), "utf8").includes(`href="/${locale}/education"`));
+}
+const articlePath = "/zh-hant/education/urine-rna-bladder-cancer";
+const articleHtml = fs.readFileSync(path.join(output, `${articlePath}.html`), "utf8");
+const articleHead = articleHtml.split("</head>")[0];
+assert.ok(articleHead.includes(`rel="canonical" href="${origin}${articlePath}"`));
+assert.doesNotMatch(articleHead, /noindex|hrefLang=/);
+const articleBody = articleHtml.match(/<article class="education-article"[\s\S]*?<\/article>/)?.[0];
+assert.ok(articleBody && articleBody.includes('lang="zh-Hans"'));
+assert.doesNotMatch(articleBody, /<img|<iframe|cgi-bin|token=|祈福/);
+assert.equal((articleBody.match(/<div class="education-prose">([\s\S]*?)<\/div>/)?.[1].match(/<p>/g) || []).length, 9);
+assert.ok(articleBody.includes("10.1038/s41591-026-04673-3") && articleBody.includes("42827132"));
+assert.ok(articleBody.includes('dateTime="2026-10-29T11:46:00+08:00"'));
+assert.ok(sitemap.includes(`<loc>${origin}${articlePath}</loc>`));
+const articleData = [...articleHtml.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g)].map((m) => JSON.parse(m[1])).find((item) => item["@type"] === "Article");
+assert.equal(articleData.inLanguage, "zh-Hans");
+assert.equal(articleData.isBasedOn, "https://mp.weixin.qq.com/s/qqtew6HP2sgvsMGPybNneQ");
+assert.ok(!articleData.author && !articleData.reviewedBy, "Do not invent authors or medical reviewers");
+console.log("Education checks passed: six index pages, one Chinese original, source attribution, references, text-only article and no fictitious translations.");
 console.log("Built SEO checks passed: 18 new multilingual guides, reciprocal alternates, internal links, structured data, sitemap and existing-guide regression checks.");

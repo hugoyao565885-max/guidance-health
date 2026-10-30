@@ -1,0 +1,30 @@
+{
+  "updatedAt": "2026-10-30",
+  "status": "awaiting-accessible-source-content",
+  "publicationRules": {
+    "authorization": "User confirms original work or permission to republish text and images.",
+    "sourceLabel": "公众号原文",
+    "showHospitalName": false,
+    "includeArticleIllustrations": true,
+    "excludeImage": "The team group-photo banner with the slogan 一站式 整体免疫治疗, including repeated copies in other articles.",
+    "retainOriginalReferences": true,
+    "publishUnverifiedOrEmptyArticles": false
+  },
+  "articles": [
+    { "sourceUrl": "https://mp.weixin.qq.com/s/5YWeUJCiBmTqCvUpFkTElQ" },
+    { "sourceUrl": "https://mp.weixin.qq.com/s/Bd4F2peyEVeHwEP6F5TkkQ" },
+    { "sourceUrl": "https://mp.weixin.qq.com/s/evrOyUBmv7LK5u7v22JT3g" },
+    { "sourceUrl": "https://mp.weixin.qq.com/s/GBvtVxMiCzPxioSH2E-SBQ" },
+    { "sourceUrl": "https://mp.weixin.qq.com/s/mdISIbRsYmld_Aj_xRL3Yg" },
+    { "sourceUrl": "https://mp.weixin.qq.com/s/n3OYwIx2CLNwGdH1FknzlA" },
+    { "sourceUrl": "https://mp.weixin.qq.com/s/2qB0aJC5haVxxFjDo3nGHQ" },
+    { "sourceUrl": "https://mp.weixin.qq.com/s/QTGWxFssbleMd9LZlzQOAw" },
+    { "sourceUrl": "https://mp.weixin.qq.com/s/8RgJC6PWSlqNbe31qQQqTA" },
+    { "sourceUrl": "https://mp.weixin.qq.com/s/6y47OFU8IH2UsbO9pJocoQ" },
+    { "sourceUrl": "https://mp.weixin.qq.com/s/evJMCXrBHiwIUqpZa85pRA" },
+    { "sourceUrl": "https://mp.weixin.qq.com/s/vTTwRvEq57VFQ-faxT8AfQ" },
+    { "sourceUrl": "https://mp.weixin.qq.com/s/_OL1tQqYlZCtslin9c81JQ" },
+    { "sourceUrl": "https://mp.weixin.qq.com/s/sMG3WO597K46D7RXIknT5g" },
+    { "sourceUrl": "https://mp.weixin.qq.com/s/C9yiLquIn0n1HKnh9WHtPw" }
+  ]
+}

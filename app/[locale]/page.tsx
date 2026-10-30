@@ -10,6 +10,7 @@ import { organizationData, publicMetadata } from "../../lib/seo";
 import { content } from "../../lib/content";
 import { patientContent } from "../../lib/patient-content";
 import { oncologyGuides } from "../../lib/oncology-guides";
+import { educationUi } from "../../lib/education";
 import { contact, isLocale, locales, pagePath } from "../../lib/site";
 
 type PageProps = { params: Promise<{ locale: string }> };
@@ -52,7 +53,7 @@ export default async function LocalePage({ params }: PageProps) {
         <section className="section light-band" id="oncology"><div className="container">
           <SectionHeading {...ui.focus} />
           <div className="focus-grid">{ui.focus.items.map((item, index) => <article key={item.title}><span className="item-number">0{index + 1}</span><h3>{item.title}</h3><p>{item.text}</p><TextLink href={pagePath(locale, index === 0 ? "guides/lymphoma" : "guides/immunotherapy")}>{oncologyGuides[locale][index === 0 ? "lymphoma" : "immunotherapy"].label}</TextLink></article>)}</div>
-          <div className="source-note"><TextLink href={pagePath(locale, "guides/cell-therapy")}>{oncologyGuides[locale]["cell-therapy"].label}</TextLink></div>
+          <div className="source-note"><TextLink href={pagePath(locale, "guides/cell-therapy")}>{oncologyGuides[locale]["cell-therapy"].label}</TextLink><TextLink href={pagePath(locale, "education")}>{educationUi[locale].nav}</TextLink></div>
         </div></section>
 
         <section className="section" id="experts"><div className="container">

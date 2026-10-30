@@ -7,13 +7,16 @@ import { patientContent } from "../lib/patient-content";
 import { serviceCombinationTotal, formatServiceAmount, servicePrices, serviceExchangeRate, serviceCnyPerUsd } from "../lib/service-pricing";
 import { brand, contact, pagePath, type Locale } from "../lib/site";
 import { patientGuides } from "../lib/patient-guides";
+import { educationUi } from "../lib/education";
 import { SiteNavigation } from "./site-navigation";
 
 export function SiteHeader({ locale, section }: { locale: Locale; section?: string }) {
   const copy = content[locale];
   const ui = patientContent[locale];
   const sections: SectionKey[] = ["about", "oncology", "experts", "membership", "journey", "contact"];
-  return <SiteNavigation locale={locale} section={section} labels={ui} links={sections.map((item) => ({ section: item, label: copy.nav[item] }))} />;
+  const links = sections.map((item) => ({ section: item as string, label: copy.nav[item] }));
+  links.splice(4, 0, { section: "education", label: educationUi[locale].nav });
+  return <SiteNavigation locale={locale} section={section} labels={ui} links={links} />;
 }
 
 export function SectionHeading({ eyebrow, title, body }: { eyebrow: string; title: string; body: string }) {

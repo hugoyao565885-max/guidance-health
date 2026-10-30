@@ -26,6 +26,7 @@ const { locales, localeMeta, contact, brand, siteUrl, alternates, pagePath } = l
 const { publicMetadata, organizationData, publicPageUpdates } = loadDictionary(path.join(root, "lib/seo.ts"));
 const { patientGuides, guidesUpdated } = loadDictionary(path.join(root, "lib/patient-guides.ts"));
 const { oncologyGuides, oncologyGuideTopics, oncologyGuidesUpdated, isOncologyGuideTopic } = loadDictionary(path.join(root, "lib/oncology-guides.ts"));
+const { educationUi, educationArticles, educationUpdated, educationArticlePath, findEducationArticle } = loadDictionary(path.join(root, "lib/education.ts"));
 const { researchContent, researchUpdated, lungStudy } = loadDictionary(path.join(root, "lib/research-content.ts"));
 const sitemap = loadDictionary(path.join(root, "app/sitemap.ts")).default();
 const robots = loadDictionary(path.join(root, "app/robots.ts")).default();
@@ -43,12 +44,31 @@ assert.ok(sectionKeys.includes("research"));
 assert.equal(lungStudy.protocol, "IBR854-204");
 assert.equal(new URL(lungStudy.sourceUrl).protocol, "https:");
 assert.equal(publicPageUpdates.research, researchUpdated);
-const publicSections = ["", ...sectionKeys.filter((section) => section !== "register"), "records", ...oncologyGuideTopics.map((topic) => `guides/${topic}`)];
+const publicSections = ["", ...sectionKeys.filter((section) => section !== "register"), "records", "education", ...oncologyGuideTopics.map((topic) => `guides/${topic}`)];
 assert.deepEqual(Object.keys(publicPageUpdates).sort(), [...publicSections].sort());
-assert.equal(sitemap.length, locales.length * publicSections.length);
+assert.equal(sitemap.length, locales.length * publicSections.length + educationArticles.length);
 assert.equal(new Set(sitemap.map((item) => item.url)).size, sitemap.length);
 assert.equal(organizationData()["@type"], "Organization");
 assert.equal(organizationData().legalName, brand.legalName);
+assert.equal(publicPageUpdates.education, educationUpdated);
+for (const locale of locales) assert.ok(educationUi[locale].nav && educationUi[locale].description && educationUi[locale].originalLanguage);
+assert.equal(new Set(educationArticles.map(educationArticlePath)).size, educationArticles.length);
+for (const article of educationArticles) {
+  assert.ok(/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(article.slug));
+  assert.equal(article.language, "zh-Hans");
+  assert.equal(article.locale, "zh-hant");
+  assert.ok(article.paragraphs.length > 0 && article.references.length > 0);
+  assert.ok(article.paragraphs.every((text) => typeof text === "string" && text.length > 0));
+  const source = new URL(article.sourceUrl);
+  assert.equal(source.hostname, "mp.weixin.qq.com");
+  assert.ok(source.pathname.startsWith("/s/") && !source.search);
+  assert.doesNotMatch(JSON.stringify(article), /cgi-bin|token=|<img|<script|医院肿瘤中心|祈福/);
+  assert.ok(sitemap.some((item) => item.url === `${siteUrl}${educationArticlePath(article)}`));
+  assert.equal(findEducationArticle(article.locale, article.slug), article);
+  assert.equal(findEducationArticle("en", article.slug), undefined, "Do not invent translated editions");
+  for (const reference of article.references) assert.equal(new URL(reference.url).protocol, "https:");
+}
+assert.equal(findEducationArticle("zh-hant", "not-an-article"), undefined);
 for (const locale of locales) {
   for (const topic of oncologyGuideTopics) {
     const guide = oncologyGuides[locale][topic];

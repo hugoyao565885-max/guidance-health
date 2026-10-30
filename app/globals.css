@@ -216,6 +216,21 @@ summary::-webkit-details-marker { display: none; }
 .breadcrumbs li + li::before { content: "/"; margin-inline-end: 12px; color: var(--muted); }
 .breadcrumbs a { color: var(--green); text-underline-offset: 3px; }
 .patient-guide { max-width: 860px; }
+.education-library, .education-article { max-width: 860px; }
+.education-library > h2 { font-size: 26px; }
+.education-list { margin-top: 24px; }
+.education-list article { padding-block: 28px; border-block-start: 1px solid var(--line); }
+.education-meta { display: flex; flex-wrap: wrap; gap: 12px 24px; color: var(--muted); font-size: var(--font-small); }
+.education-list h3 { margin-block: 14px; font-size: 25px; }
+.education-list h3 a { text-decoration: none; }
+.education-list h3 a:hover { text-decoration: underline; text-underline-offset: 5px; }
+.education-list p { margin-bottom: 20px; }
+.education-prose { font-size: 19px; line-height: 1.95; overflow-wrap: anywhere; }
+.education-prose p + p { margin-top: 26px; }
+.education-reference-links { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 12px; }
+.education-article cite { font-style: normal; overflow-wrap: anywhere; }
+.education-source { font-size: var(--font-small); margin-bottom: 24px; }
+.education-source a { color: var(--green); text-underline-offset: 4px; }
 .guide-byline { display: flex; flex-wrap: wrap; gap: 8px 28px; color: var(--muted); font-size: var(--font-small); margin-bottom: 36px; }
 .guide-sections { display: grid; gap: 30px; }
 .guide-sections > section { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 18px; padding-top: 24px; border-top: 1px solid var(--line); }
