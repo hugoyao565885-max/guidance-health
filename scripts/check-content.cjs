@@ -56,7 +56,7 @@ for (const locale of locales) {
   assert.deepEqual(Object.keys(educationArticleUi[locale]).sort(), Object.keys(educationArticleUi.en).sort());
   assert.ok(Object.values(educationArticleUi[locale]).every((value) => typeof value === "string" && value.length > 0));
 }
-assert.equal(educationOriginalArticles.length, 4);
+assert.equal(educationOriginalArticles.length, 5);
 assert.equal(educationArticles.length, locales.length * educationOriginalArticles.length, "One complete edition of each article per supported language");
 for (const original of educationOriginalArticles) assert.deepEqual(educationArticles.filter((article) => article.slug === original.slug).map((article) => article.locale), [...locales]);
 assert.equal(new Set(educationArticles.map(educationArticlePath)).size, educationArticles.length);
@@ -73,7 +73,7 @@ for (const article of educationArticles) {
   assert.equal(article.addedOn, original.addedOn);
   for (let index = 0; index < article.paragraphs.length; index++) {
     // Normalize Chinese ten-thousands and decimal commas before comparing translations.
-    const numbers = (text) => (text.replace(/488[万萬]/g, "4.88 million").replace(/(\d),(\d)/g, "$1.$2").match(/\d+(?:\.\d+)?/g) || []).sort();
+    const numbers = (text) => (text.replace(/2025年10月1日|1 October 2025|1 октября 2025 года|1 أكتوبر 2025|1 Oktober 2025/g, "2025-10-1").replace(/488[万萬]/g, "4.88 million").replace(/(\d),(\d)/g, "$1.$2").match(/\d+(?:\.\d+)?/g) || []).sort();
     assert.deepEqual(numbers(article.paragraphs[index]), numbers(original.paragraphs[index]), `${article.slug}/${article.locale} paragraph ${index + 1}: preserve the study figures`);
   }
   assert.ok(article.paragraphs.every((text) => typeof text === "string" && text.length > 0));
@@ -125,6 +125,21 @@ for (const article of educationArticles) {
     assert.ok(article.paragraphs[6].includes(animalTerms[article.locale]), "Keep survival findings tied to animals");
     assert.equal(article.references[0].url, "https://doi.org/10.1016/j.ccell.2026.09.006");
     assert.equal(article.references[0].indexUrl, "https://pubmed.ncbi.nlm.nih.gov/42826713/");
+  }
+  if (article.slug === "car-t-lymphoma-ten-year-outcomes") {
+    assert.equal(article.sourceUrl, undefined, "No guessed WeChat source");
+    assert.equal(article.publishedAt, undefined, "Do not invent the source article date");
+    assert.equal(article.paragraphs.length, 9);
+    const endpointTerms = { en: "lymphoma-free survival", "zh-hant": "淋巴瘤無病生存", ru: "выживаемости без лимфомы", ar: "بقاء دون لمفوما", id: "kelangsungan hidup bebas limfoma", ms: "kelangsungan hidup bebas limfoma" };
+    assert.ok(article.paragraphs[5].includes(endpointTerms[article.locale]), `${article.locale}: use the study-specific endpoint, not overall survival`);
+    assert.ok(article.clinicalNote && article.clinicalNote.length > 100);
+    assert.equal(article.references.length, 3);
+    assert.equal(article.references[0].url, "https://doi.org/10.1056/NEJMoa2518035");
+    assert.equal(article.references[0].indexUrl, "https://pubmed.ncbi.nlm.nih.gov/42341302/");
+    assert.equal(article.references[1].url, "https://doi.org/10.1038/s41571-023-00754-1");
+    assert.equal(article.references[1].indexUrl, "https://pubmed.ncbi.nlm.nih.gov/37055515/");
+    assert.equal(article.references[2].kind, "report");
+    assert.equal(new URL(article.references[2].url).hostname, "www.chop.edu");
   }
   for (const reference of article.references) assert.equal(new URL(reference.url).protocol, "https:");
 }

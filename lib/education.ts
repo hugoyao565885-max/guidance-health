@@ -3,6 +3,7 @@ import { urineRnaCopy } from "./education-copy";
 import { breastScreeningCopy, breastScreeningOriginal } from "./education-breast-screening";
 import { dasatinibCopy, dasatinibOriginal } from "./education-dasatinib";
 import { chemoVaccineCopy, chemoVaccineOriginal } from "./education-chemo-vaccine";
+import { carTLongTermCopy, carTLongTermOriginal } from "./education-car-t-long-term";
 import { getEducationArtwork, type EducationArtwork } from "./education-artwork";
 
 export const educationUpdated = "2026-10-30";
@@ -18,36 +19,42 @@ export const educationUi: Record<Locale, { nav: string; title: string; descripti
 
 type ArticleUi = {
   originalPublished: string; added: string; edition: string; sources: string; paper: string;
-  pubmed: string; sourceLabel: string; sourceLink: string; disclaimer: string; back: string;
+  pubmed: string; report: string; sourceLabel: string; sourceLink: string; disclaimer: string; back: string;
 };
 
 export const educationArticleUi: Record<Locale, ArticleUi> = {
   en: {
+    report: "Original report",
     originalPublished: "Original publication", added: "Added to this website", edition: "Authorized translation of the Chinese original",
     sources: "References and sources", paper: "DOI · Journal article", pubmed: "PubMed record", sourceLabel: "Article source", sourceLink: "Original WeChat article",
     disclaimer: "This article is for education only and does not replace a doctor's advice on diagnosis, tests or treatment. Research findings do not guarantee an individual outcome. Do not stop medicines or change follow-up arrangements on this basis.", back: "Back to cancer education",
   },
   "zh-hant": {
+    report: "原始報道",
     originalPublished: "原文發表日期", added: "本站收錄日期", edition: "授權轉載 · 繁體中文版本",
     sources: "參考文獻與引文來源", paper: "DOI · 期刊論文", pubmed: "PubMed 文獻紀錄", sourceLabel: "文章出處", sourceLink: "公眾號原文",
     disclaimer: "本文用於科普教育，不代替醫生的診斷、檢查或治療建議。研究結果不等於個體療效保證，請勿據此自行停藥或更改覆查安排。", back: "返回科普宣教",
   },
   ru: {
+    report: "Исходное сообщение",
     originalPublished: "Дата оригинальной публикации", added: "Добавлено на сайт", edition: "Разрешённый перевод китайского оригинала",
     sources: "Литература и источники", paper: "DOI · Статья в журнале", pubmed: "Запись PubMed", sourceLabel: "Источник статьи", sourceLink: "Оригинальная статья в WeChat",
     disclaimer: "Статья предназначена для просвещения и не заменяет рекомендации врача по диагностике, обследованиям или лечению. Результаты исследований не гарантируют индивидуального эффекта. Не прекращайте приём лекарств и не меняйте план наблюдения на основании этой статьи.", back: "Назад к статьям о раке",
   },
   ar: {
+    report: "التقرير الأصلي",
     originalPublished: "تاريخ النشر الأصلي", added: "تاريخ الإضافة إلى الموقع", edition: "ترجمة مأذون بها للنص الصيني الأصلي",
     sources: "المراجع والمصادر", paper: "DOI · المقالة العلمية", pubmed: "سجل PubMed", sourceLabel: "مصدر المقال", sourceLink: "المقال الأصلي على WeChat",
     disclaimer: "هذا المقال للتثقيف فقط، ولا يحل محل نصيحة الطبيب بشأن التشخيص أو الفحوص أو العلاج. نتائج الأبحاث لا تضمن نتيجة علاجية لأي فرد. لا توقف الأدوية أو تغير ترتيبات المتابعة بناءً على هذا المقال.", back: "العودة إلى التثقيف حول السرطان",
   },
   id: {
+    report: "Laporan asli",
     originalPublished: "Tanggal publikasi asli", added: "Ditambahkan ke situs ini", edition: "Terjemahan berizin dari naskah asli bahasa Mandarin",
     sources: "Referensi dan sumber", paper: "DOI · Artikel jurnal", pubmed: "Catatan PubMed", sourceLabel: "Sumber artikel", sourceLink: "Artikel asli di WeChat",
     disclaimer: "Artikel ini hanya untuk edukasi dan tidak menggantikan saran dokter mengenai diagnosis, pemeriksaan atau terapi. Temuan penelitian tidak menjamin hasil bagi individu. Jangan menghentikan obat atau mengubah jadwal tindak lanjut berdasarkan artikel ini.", back: "Kembali ke edukasi kanker",
   },
   ms: {
+    report: "Laporan asal",
     originalPublished: "Tarikh penerbitan asal", added: "Ditambah ke laman ini", edition: "Terjemahan dengan kebenaran daripada teks asal bahasa Cina",
     sources: "Rujukan dan sumber", paper: "DOI · Artikel jurnal", pubmed: "Rekod PubMed", sourceLabel: "Sumber artikel", sourceLink: "Artikel asal di WeChat",
     disclaimer: "Artikel ini untuk pendidikan sahaja dan tidak menggantikan nasihat doktor tentang diagnosis, pemeriksaan atau rawatan. Dapatan kajian tidak menjamin hasil bagi seseorang individu. Jangan hentikan ubat atau ubah aturan susulan berdasarkan artikel ini.", back: "Kembali ke pendidikan kanser",
@@ -67,7 +74,7 @@ export type EducationArticle = {
   paragraphs: string[];
   clinicalNote?: string;
   image?: EducationArtwork;
-  references: { citation: string; url: string; indexUrl?: string }[];
+  references: { citation: string; url: string; indexUrl?: string; kind?: "report" }[];
 };
 
 // Only source-checked, authorized articles belong here. Never store backend URLs or session tokens.
@@ -99,13 +106,14 @@ export const educationOriginalArticle: EducationArticle = {
     }],
 };
 
-export const educationOriginalArticles = [educationOriginalArticle, breastScreeningOriginal, dasatinibOriginal, chemoVaccineOriginal];
+export const educationOriginalArticles = [educationOriginalArticle, breastScreeningOriginal, dasatinibOriginal, chemoVaccineOriginal, carTLongTermOriginal];
 
 export const educationArticles: EducationArticle[] = [
   { original: educationOriginalArticle, copy: urineRnaCopy },
   { original: breastScreeningOriginal, copy: breastScreeningCopy },
   { original: dasatinibOriginal, copy: dasatinibCopy },
   { original: chemoVaccineOriginal, copy: chemoVaccineCopy },
+  { original: carTLongTermOriginal, copy: carTLongTermCopy },
 ].flatMap(({ original, copy }) => locales.map((locale) => ({
   ...original,
   ...copy[locale],

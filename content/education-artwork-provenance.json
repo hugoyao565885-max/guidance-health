@@ -5,6 +5,13 @@
   "processing": "Width-only resize and WebP/JPEG encoding with Sharp; no retained EXIF/XMP/IPTC metadata.",
   "items": [
     {
+      "slug": "car-t-lymphoma-ten-year-outcomes",
+      "webp": "public/images/education/car-t-long-term-follow-up.webp",
+      "social": "public/images/education/car-t-long-term-follow-up.jpg",
+      "prompt": "Use case: scientific-educational. Asset type: original editorial cover illustration for a multilingual cancer education article about ten-year follow-up after CAR T-cell therapy for B-cell lymphomas. Create one landscape 16:9 bitmap: a bright, orderly clinical research desk with a closed unlabelled follow-up folder, a short stack of blank-spined archival folders and a subtle calendar with an empty grid. Beside these, one restrained circular magnified conceptual illustration of intact stylized T cells, including a few small membrane receptor motifs, conveying cell-therapy research rather than a true microscopy image. Crisp contemporary medical-journal editorial illustration, gentle dimensional shading and subtle paper texture, white and very pale cool-gray background, balanced forest-green, cyan-blue and muted coral accents. Spacious central composition safe for mobile. The image should convey long-term observation, careful records and ongoing health follow-up, not a cure or treatment success. No real people, no portraits or likeness of Emily Whitehead, no families, animals, hospital branding, drug branding, text, letters, numbers, marked dates, clocks, efficacy charts, survival curves, shrinking or exploding cancer cells, before-and-after comparisons, victory symbols, promotional claims, watermarks or decorative floating orbs. Do not reproduce any photograph or journal figure. Opaque background. One standalone educational illustration, not a webpage or collage.",
+      "sourcePhoto": "Not used. User chose an original illustration because the third-party family photograph's republication rights were uncertain."
+    },
+    {
       "slug": "chemotherapy-cancer-vaccine-timing",
       "webp": "public/images/education/chemotherapy-vaccine-timing.webp",
       "social": "public/images/education/chemotherapy-vaccine-timing.jpg",

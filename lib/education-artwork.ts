@@ -20,6 +20,17 @@ const disclosure: Record<Locale, { label: string; caption: string }> = {
 };
 
 const artwork: Record<string, { file: string; alt: Record<Locale, string> }> = {
+  "car-t-lymphoma-ten-year-outcomes": {
+    file: "car-t-long-term-follow-up",
+    alt: {
+      en: "Conceptual illustration of follow-up records, a blank calendar and engineered T cells for long-term CAR-T research.",
+      "zh-hant": "隨訪檔案、空白日曆與改造T細胞的CAR-T長期研究概念示意圖。",
+      ru: "Концептуальная иллюстрация записей наблюдения, пустого календаря и модифицированных Т-клеток для длительных исследований CAR-T.",
+      ar: "رسم تصوري لسجلات المتابعة وتقويم فارغ وخلايا تائية معدلة في أبحاث CAR-T الطويلة الأمد.",
+      id: "Ilustrasi konseptual catatan tindak lanjut, kalender kosong dan sel T rekayasa untuk penelitian CAR-T jangka panjang.",
+      ms: "Ilustrasi konsep rekod susulan, kalendar kosong dan sel T yang diubah suai bagi penyelidikan CAR-T jangka panjang.",
+    },
+  },
   "chemotherapy-cancer-vaccine-timing": {
     file: "chemotherapy-vaccine-timing",
     alt: {

@@ -56,6 +56,7 @@ const educationFixtures = [
   { slug: "false-positive-mammography", image: "breast-screening-follow-up", paragraphs: 10, doi: "10.1038/s41598-026-72246-y", date: "2026-10-30", source: "https://mp.weixin.qq.com/s/5YWeUJCiBmTqCvUpFkTElQ" },
   { slug: "dasatinib-tfh-lymphoma", image: "lymphoma-treatment-research", paragraphs: 10, doi: "10.1038/s41467-026-78100-z", date: "2026-10-30" },
   { slug: "chemotherapy-cancer-vaccine-timing", image: "chemotherapy-vaccine-timing", paragraphs: 9, doi: "10.1016/j.ccell.2026.09.006", date: "2026-10-30", pubmed: "42826713" },
+  { slug: "car-t-lymphoma-ten-year-outcomes", image: "car-t-long-term-follow-up", paragraphs: 9, doi: "10.1056/NEJMoa2518035", date: "2026-10-30", pubmed: "42341302" },
 ];
 const addedLabels = { en: "Added to this website", "zh-hant": "本站收錄日期", ru: "Добавлено на сайт", ar: "تاريخ الإضافة إلى الموقع", id: "Ditambahkan ke situs ini", ms: "Ditambah ke laman ini" };
 const imageLabels = { en: "AI illustration", "zh-hant": "AI 科普示意圖", ru: "Иллюстрация с ИИ", ar: "رسم بالذكاء الاصطناعي", id: "Ilustrasi AI", ms: "Ilustrasi AI" };
@@ -105,6 +106,12 @@ for (const locale of locales) {
   assert.equal((articleBody.match(/<img\s/g) || []).length, 1);
   assert.equal((articleBody.match(/<div class="education-prose">([\s\S]*?)<\/div>/)?.[1].match(/<p>/g) || []).length, fixture.paragraphs);
   assert.ok(articleBody.includes(fixture.doi));
+  if (fixture.slug === "car-t-lymphoma-ten-year-outcomes") {
+    assert.ok(articleBody.includes("10.1038/s41571-023-00754-1") && articleBody.includes("https://pubmed.ncbi.nlm.nih.gov/37055515/"));
+    const reportLink = articleBody.match(/<a href="https:\/\/www\.chop\.edu\/news\/first-child-receive-revolutionary-car-t-therapy-celebrates-10-years-cancer-free"[^>]*>([^<]+)<\/a>/);
+    assert.ok(reportLink && !reportLink[1].includes("DOI"), "Label a hospital report separately from journal papers");
+    assert.equal((articleBody.match(/<cite /g) || []).length, 3);
+  }
   if (fixture.source) assert.ok(articleBody.includes(`href="${fixture.source}"`));
   else {
     assert.doesNotMatch(articleBody, /education-source|mp\.weixin\.qq\.com/, "No invented source link");
