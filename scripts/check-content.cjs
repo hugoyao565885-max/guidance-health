@@ -26,7 +26,7 @@ const { locales, localeMeta, contact, brand, siteUrl, alternates, pagePath } = l
 const { publicMetadata, organizationData, publicPageUpdates } = loadDictionary(path.join(root, "lib/seo.ts"));
 const { patientGuides, guidesUpdated } = loadDictionary(path.join(root, "lib/patient-guides.ts"));
 const { oncologyGuides, oncologyGuideTopics, oncologyGuidesUpdated, isOncologyGuideTopic } = loadDictionary(path.join(root, "lib/oncology-guides.ts"));
-const { educationUi, educationArticles, educationUpdated, educationArticlePath, findEducationArticle } = loadDictionary(path.join(root, "lib/education.ts"));
+const { educationUi, educationArticleUi, educationArticles, educationOriginalArticle, educationUpdated, educationArticlePath, findEducationArticle } = loadDictionary(path.join(root, "lib/education.ts"));
 const { researchContent, researchUpdated, lungStudy } = loadDictionary(path.join(root, "lib/research-content.ts"));
 const sitemap = loadDictionary(path.join(root, "app/sitemap.ts")).default();
 const robots = loadDictionary(path.join(root, "app/robots.ts")).default();
@@ -51,13 +51,24 @@ assert.equal(new Set(sitemap.map((item) => item.url)).size, sitemap.length);
 assert.equal(organizationData()["@type"], "Organization");
 assert.equal(organizationData().legalName, brand.legalName);
 assert.equal(publicPageUpdates.education, educationUpdated);
-for (const locale of locales) assert.ok(educationUi[locale].nav && educationUi[locale].description && educationUi[locale].originalLanguage);
+for (const locale of locales) {
+  assert.ok(educationUi[locale].nav && educationUi[locale].description);
+  assert.deepEqual(Object.keys(educationArticleUi[locale]).sort(), Object.keys(educationArticleUi.en).sort());
+  assert.ok(Object.values(educationArticleUi[locale]).every((value) => typeof value === "string" && value.length > 0));
+}
+assert.equal(educationArticles.length, locales.length, "One complete edition per supported language");
+assert.deepEqual(educationArticles.map((article) => article.locale), [...locales]);
 assert.equal(new Set(educationArticles.map(educationArticlePath)).size, educationArticles.length);
 for (const article of educationArticles) {
   assert.ok(/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(article.slug));
-  assert.equal(article.language, "zh-Hans");
-  assert.equal(article.locale, "zh-hant");
-  assert.ok(article.paragraphs.length > 0 && article.references.length > 0);
+  assert.equal(article.language, localeMeta[article.locale].htmlLang);
+  assert.equal(article.paragraphs.length, educationOriginalArticle.paragraphs.length, "Translate every paragraph");
+  assert.deepEqual(article.references, educationOriginalArticle.references);
+  assert.equal(article.publishedAt, educationOriginalArticle.publishedAt);
+  for (let index = 0; index < article.paragraphs.length; index++) {
+    const numbers = (text) => (text.match(/\d+(?:\.\d+)?/g) || []).sort();
+    assert.deepEqual(numbers(article.paragraphs[index]), numbers(educationOriginalArticle.paragraphs[index]), `${article.locale} paragraph ${index + 1}: preserve the study figures`);
+  }
   assert.ok(article.paragraphs.every((text) => typeof text === "string" && text.length > 0));
   const source = new URL(article.sourceUrl);
   assert.equal(source.hostname, "mp.weixin.qq.com");
@@ -65,10 +76,15 @@ for (const article of educationArticles) {
   assert.doesNotMatch(JSON.stringify(article), /cgi-bin|token=|<img|<script|医院肿瘤中心|祈福/);
   assert.ok(sitemap.some((item) => item.url === `${siteUrl}${educationArticlePath(article)}`));
   assert.equal(findEducationArticle(article.locale, article.slug), article);
-  assert.equal(findEducationArticle("en", article.slug), undefined, "Do not invent translated editions");
+  for (const locale of locales) assert.ok(findEducationArticle(locale, article.slug), `Missing ${locale} edition`);
+  const localizedCopy = JSON.stringify([article.title, article.category, article.description, article.paragraphs, educationArticleUi[article.locale]]);
+  if (article.locale !== "zh-hant") assert.doesNotMatch(localizedCopy, /\p{Script=Han}/u, `${article.locale}: no untranslated Chinese copy`);
+  else assert.doesNotMatch(localizedCopy, /肿瘤|治疗|检查|细胞|研究团队|结果显示|发表于/, "Use Traditional Chinese");
+  assert.ok(article.paragraphs.join(" ").includes("uRARE-seq"));
   for (const reference of article.references) assert.equal(new URL(reference.url).protocol, "https:");
 }
 assert.equal(findEducationArticle("zh-hant", "not-an-article"), undefined);
+assert.equal(findEducationArticle("fr", educationOriginalArticle.slug), undefined);
 for (const locale of locales) {
   for (const topic of oncologyGuideTopics) {
     const guide = oncologyGuides[locale][topic];

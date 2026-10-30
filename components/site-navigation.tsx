@@ -18,6 +18,7 @@ export function SiteNavigation({ locale, section = "", labels, links }: Navigati
   const languageMenu = useRef<HTMLDetailsElement>(null);
   const mobileMenu = useRef<HTMLDetailsElement>(null);
   const portal = portalContent[locale];
+  const isActive = (linkSection: string) => section === linkSection || section.startsWith(`${linkSection}/`);
   const closeMenus = () => {
     if (languageMenu.current) languageMenu.current.open = false;
     if (mobileMenu.current) mobileMenu.current.open = false;
@@ -37,7 +38,7 @@ export function SiteNavigation({ locale, section = "", labels, links }: Navigati
         </Link>
         <nav className="desktop-nav" aria-label={labels.menu}>
           {links.map((link) => (
-            <Link href={pagePath(locale, link.section)} key={link.section} aria-current={section === link.section ? "page" : undefined}>
+            <Link href={pagePath(locale, link.section)} key={link.section} aria-current={isActive(link.section) ? "page" : undefined}>
               {link.label}
             </Link>
           ))}
@@ -65,7 +66,7 @@ export function SiteNavigation({ locale, section = "", labels, links }: Navigati
             </summary>
             <nav className="mobile-nav" aria-label={labels.menu}>
               {links.map((link) => (
-                <Link href={pagePath(locale, link.section)} key={link.section} onClick={closeMenus} aria-current={section === link.section ? "page" : undefined}>
+                <Link href={pagePath(locale, link.section)} key={link.section} onClick={closeMenus} aria-current={isActive(link.section) ? "page" : undefined}>
                   {link.label}<ArrowUpRight size={16} aria-hidden="true" />
                 </Link>
               ))}

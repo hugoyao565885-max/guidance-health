@@ -54,25 +54,42 @@ assert.doesNotMatch(sitemap, /<loc>[^<]*\/(?:member|admin|mfa|login|register|res
 for (const locale of locales) {
   const html = fs.readFileSync(path.join(output, `${locale}/education.html`), "utf8");
   assert.ok(html.includes(`rel="canonical" href="${origin}/${locale}/education"`));
-  assert.ok(html.includes('href="/zh-hant/education/urine-rna-bladder-cancer"'));
+  const articlePath = `/${locale}/education/urine-rna-bladder-cancer`;
+  assert.ok(html.includes(`href="${articlePath}"`));
+  const library = html.match(/<div class="education-list">([\s\S]*?)<nav class="guide-related"/)?.[1];
+  assert.ok(library);
+  assert.equal((library.match(/<article>/g) || []).length, 1, `${locale}: list only the matching edition`);
+  for (const other of locales.filter((item) => item !== locale)) assert.ok(!library.includes(`href="/${other}/education/urine-rna-bladder-cancer"`));
   assert.ok(sitemap.includes(`<loc>${origin}/${locale}/education</loc>`));
   assert.ok(fs.readFileSync(path.join(output, `${locale}.html`), "utf8").includes(`href="/${locale}/education"`));
+
+  const articleHtml = fs.readFileSync(path.join(output, `${articlePath}.html`), "utf8");
+  const articleLinks = articleHtml.match(/<a\b[^>]*>/g) || [];
+  const articleHead = articleHtml.split("</head>")[0];
+  assert.ok(articleHead.includes(`rel="canonical" href="${origin}${articlePath}"`));
+  assert.doesNotMatch(articleHead, /noindex/);
+  for (const alternate of locales) {
+    const lang = alternate === "zh-hant" ? "zh-Hant" : alternate;
+    const path = `/${alternate}/education/urine-rna-bladder-cancer`;
+    assert.ok(articleHead.includes(`hrefLang="${lang}" href="${origin}${path}"`), `${locale}: reciprocal ${lang} alternate`);
+    assert.ok(articleLinks.some((link) => link.includes(`href="${path}"`) && link.includes(`hrefLang="${lang}"`)), `${locale}: language switch retains the article`);
+  }
+  assert.ok(articleHead.includes(`hrefLang="x-default" href="${origin}/en/education/urine-rna-bladder-cancer"`));
+  const articleBody = articleHtml.match(/<article class="education-article"[\s\S]*?<\/article>/)?.[0];
+  const lang = locale === "zh-hant" ? "zh-Hant" : locale;
+  assert.ok(articleBody && articleBody.includes(`lang="${lang}" dir="${locale === "ar" ? "rtl" : "ltr"}"`));
+  assert.doesNotMatch(articleBody, /<img|<iframe|cgi-bin|token=|祈福/);
+  assert.equal((articleBody.match(/<div class="education-prose">([\s\S]*?)<\/div>/)?.[1].match(/<p>/g) || []).length, 9);
+  assert.ok(articleBody.includes("10.1038/s41591-026-04673-3") && articleBody.includes("42827132"));
+  assert.ok(articleBody.includes('<cite lang="en" dir="ltr">'), `${locale}: preserve the original scholarly citation`);
+  assert.ok(articleBody.includes('dateTime="2026-10-29T11:46:00+08:00"'));
+  assert.ok(sitemap.includes(`<loc>${origin}${articlePath}</loc>`));
+  const articleData = [...articleHtml.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g)].map((m) => JSON.parse(m[1])).find((item) => item["@type"] === "Article");
+  assert.equal(articleData.inLanguage, lang);
+  assert.equal(articleData.url, `${origin}${articlePath}`);
+  assert.equal(articleData.isBasedOn, "https://mp.weixin.qq.com/s/qqtew6HP2sgvsMGPybNneQ");
+  assert.ok(!articleData.author && !articleData.reviewedBy, "Do not invent authors or medical reviewers");
+  assert.ok(articleLinks.some((link) => link.includes(`href="/${locale}/education"`) && link.includes('aria-current="page"')), `${locale}: parent navigation stays active`);
 }
-const articlePath = "/zh-hant/education/urine-rna-bladder-cancer";
-const articleHtml = fs.readFileSync(path.join(output, `${articlePath}.html`), "utf8");
-const articleHead = articleHtml.split("</head>")[0];
-assert.ok(articleHead.includes(`rel="canonical" href="${origin}${articlePath}"`));
-assert.doesNotMatch(articleHead, /noindex|hrefLang=/);
-const articleBody = articleHtml.match(/<article class="education-article"[\s\S]*?<\/article>/)?.[0];
-assert.ok(articleBody && articleBody.includes('lang="zh-Hans"'));
-assert.doesNotMatch(articleBody, /<img|<iframe|cgi-bin|token=|祈福/);
-assert.equal((articleBody.match(/<div class="education-prose">([\s\S]*?)<\/div>/)?.[1].match(/<p>/g) || []).length, 9);
-assert.ok(articleBody.includes("10.1038/s41591-026-04673-3") && articleBody.includes("42827132"));
-assert.ok(articleBody.includes('dateTime="2026-10-29T11:46:00+08:00"'));
-assert.ok(sitemap.includes(`<loc>${origin}${articlePath}</loc>`));
-const articleData = [...articleHtml.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g)].map((m) => JSON.parse(m[1])).find((item) => item["@type"] === "Article");
-assert.equal(articleData.inLanguage, "zh-Hans");
-assert.equal(articleData.isBasedOn, "https://mp.weixin.qq.com/s/qqtew6HP2sgvsMGPybNneQ");
-assert.ok(!articleData.author && !articleData.reviewedBy, "Do not invent authors or medical reviewers");
-console.log("Education checks passed: six index pages, one Chinese original, source attribution, references, text-only article and no fictitious translations.");
+console.log("Education checks passed: six localized indexes and full article editions, reciprocal alternates, language navigation, source attribution, references and Arabic RTL.");
 console.log("Built SEO checks passed: 18 new multilingual guides, reciprocal alternates, internal links, structured data, sitemap and existing-guide regression checks.");

@@ -1,14 +1,53 @@
-import { pagePath, type Locale } from "./site";
+import { localeMeta, locales, pagePath, type Locale } from "./site";
+import { urineRnaCopy } from "./education-copy";
 
 export const educationUpdated = "2026-10-30";
 
-export const educationUi: Record<Locale, { nav: string; title: string; description: string; articles: string; originalLanguage: string; read: string; guides: string }> = {
-  en: { nav: "Education", title: "Cancer education", description: "Articles on cancer research, tests and patient care, with references to the original literature.", articles: "Articles", originalLanguage: "Chinese original", read: "Read article", guides: "Preparing for care in China" },
-  "zh-hant": { nav: "科普宣教", title: "科普宣教", description: "認識腫瘤研究、檢查與患者照護，查閱文章所引用的文獻來源。", articles: "科普文章", originalLanguage: "簡體中文原文", read: "閱讀全文", guides: "來華就醫準備" },
-  ru: { nav: "О раке", title: "Информация о раке", description: "Статьи об исследованиях рака, обследованиях и уходе за пациентами со ссылками на научные источники.", articles: "Статьи", originalLanguage: "Оригинал на китайском", read: "Читать статью", guides: "Подготовка к лечению в Китае" },
-  ar: { nav: "التثقيف", title: "التثقيف حول السرطان", description: "مقالات عن أبحاث السرطان والفحوص ورعاية المرضى، مع مراجع إلى المصادر العلمية الأصلية.", articles: "المقالات", originalLanguage: "النص الأصلي بالصينية", read: "قراءة المقال", guides: "الاستعداد للرعاية في الصين" },
-  id: { nav: "Edukasi", title: "Edukasi kanker", description: "Artikel tentang penelitian kanker, pemeriksaan dan perawatan pasien, disertai referensi ilmiah asli.", articles: "Artikel", originalLanguage: "Naskah asli bahasa Mandarin", read: "Baca artikel", guides: "Persiapan perawatan di Tiongkok" },
-  ms: { nav: "Pendidikan", title: "Pendidikan kanser", description: "Artikel tentang penyelidikan kanser, pemeriksaan dan penjagaan pesakit, berserta rujukan ilmiah asal.", articles: "Artikel", originalLanguage: "Teks asal bahasa Cina", read: "Baca artikel", guides: "Persediaan penjagaan di China" },
+export const educationUi: Record<Locale, { nav: string; title: string; description: string; articles: string; read: string; guides: string }> = {
+  en: { nav: "Education", title: "Cancer education", description: "Articles on cancer research, tests and patient care, with references to the original literature.", articles: "Articles", read: "Read article", guides: "Preparing for care in China" },
+  "zh-hant": { nav: "科普宣教", title: "科普宣教", description: "認識腫瘤研究、檢查與患者照護，查閱文章所引用的文獻來源。", articles: "科普文章", read: "閱讀全文", guides: "來華就醫準備" },
+  ru: { nav: "О раке", title: "Информация о раке", description: "Статьи об исследованиях рака, обследованиях и уходе за пациентами со ссылками на научные источники.", articles: "Статьи", read: "Читать статью", guides: "Подготовка к лечению в Китае" },
+  ar: { nav: "التثقيف", title: "التثقيف حول السرطان", description: "مقالات عن أبحاث السرطان والفحوص ورعاية المرضى، مع مراجع إلى المصادر العلمية الأصلية.", articles: "المقالات", read: "قراءة المقال", guides: "الاستعداد للرعاية في الصين" },
+  id: { nav: "Edukasi", title: "Edukasi kanker", description: "Artikel tentang penelitian kanker, pemeriksaan dan perawatan pasien, disertai referensi ilmiah asli.", articles: "Artikel", read: "Baca artikel", guides: "Persiapan perawatan di Tiongkok" },
+  ms: { nav: "Pendidikan", title: "Pendidikan kanser", description: "Artikel tentang penyelidikan kanser, pemeriksaan dan penjagaan pesakit, berserta rujukan ilmiah asal.", articles: "Artikel", read: "Baca artikel", guides: "Persediaan penjagaan di China" },
+};
+
+type ArticleUi = {
+  originalPublished: string; edition: string; sources: string; paper: string;
+  pubmed: string; sourceLabel: string; sourceLink: string; disclaimer: string; back: string;
+};
+
+export const educationArticleUi: Record<Locale, ArticleUi> = {
+  en: {
+    originalPublished: "Original publication", edition: "Authorized translation of the Chinese original",
+    sources: "References and sources", paper: "DOI · Journal article", pubmed: "PubMed record", sourceLabel: "Article source", sourceLink: "Original WeChat article",
+    disclaimer: "This article is for education only and does not replace a doctor's advice on diagnosis, tests or treatment. Research findings do not guarantee an individual outcome. Do not stop medicines or change follow-up arrangements on this basis.", back: "Back to cancer education",
+  },
+  "zh-hant": {
+    originalPublished: "原文發表日期", edition: "授權轉載 · 繁體中文版本",
+    sources: "參考文獻與引文來源", paper: "DOI · 期刊論文", pubmed: "PubMed 文獻紀錄", sourceLabel: "文章出處", sourceLink: "公眾號原文",
+    disclaimer: "本文用於科普教育，不代替醫生的診斷、檢查或治療建議。研究結果不等於個體療效保證，請勿據此自行停藥或更改覆查安排。", back: "返回科普宣教",
+  },
+  ru: {
+    originalPublished: "Дата оригинальной публикации", edition: "Разрешённый перевод китайского оригинала",
+    sources: "Литература и источники", paper: "DOI · Статья в журнале", pubmed: "Запись PubMed", sourceLabel: "Источник статьи", sourceLink: "Оригинальная статья в WeChat",
+    disclaimer: "Статья предназначена для просвещения и не заменяет рекомендации врача по диагностике, обследованиям или лечению. Результаты исследований не гарантируют индивидуального эффекта. Не прекращайте приём лекарств и не меняйте план наблюдения на основании этой статьи.", back: "Назад к статьям о раке",
+  },
+  ar: {
+    originalPublished: "تاريخ النشر الأصلي", edition: "ترجمة مأذون بها للنص الصيني الأصلي",
+    sources: "المراجع والمصادر", paper: "DOI · المقالة العلمية", pubmed: "سجل PubMed", sourceLabel: "مصدر المقال", sourceLink: "المقال الأصلي على WeChat",
+    disclaimer: "هذا المقال للتثقيف فقط، ولا يحل محل نصيحة الطبيب بشأن التشخيص أو الفحوص أو العلاج. نتائج الأبحاث لا تضمن نتيجة علاجية لأي فرد. لا توقف الأدوية أو تغير ترتيبات المتابعة بناءً على هذا المقال.", back: "العودة إلى التثقيف حول السرطان",
+  },
+  id: {
+    originalPublished: "Tanggal publikasi asli", edition: "Terjemahan berizin dari naskah asli bahasa Mandarin",
+    sources: "Referensi dan sumber", paper: "DOI · Artikel jurnal", pubmed: "Catatan PubMed", sourceLabel: "Sumber artikel", sourceLink: "Artikel asli di WeChat",
+    disclaimer: "Artikel ini hanya untuk edukasi dan tidak menggantikan saran dokter mengenai diagnosis, pemeriksaan atau terapi. Temuan penelitian tidak menjamin hasil bagi individu. Jangan menghentikan obat atau mengubah jadwal tindak lanjut berdasarkan artikel ini.", back: "Kembali ke edukasi kanker",
+  },
+  ms: {
+    originalPublished: "Tarikh penerbitan asal", edition: "Terjemahan dengan kebenaran daripada teks asal bahasa Cina",
+    sources: "Rujukan dan sumber", paper: "DOI · Artikel jurnal", pubmed: "Rekod PubMed", sourceLabel: "Sumber artikel", sourceLink: "Artikel asal di WeChat",
+    disclaimer: "Artikel ini untuk pendidikan sahaja dan tidak menggantikan nasihat doktor tentang diagnosis, pemeriksaan atau rawatan. Dapatan kajian tidak menjamin hasil bagi seseorang individu. Jangan hentikan ubat atau ubah aturan susulan berdasarkan artikel ini.", back: "Kembali ke pendidikan kanser",
+  },
 };
 
 export type EducationArticle = {
@@ -26,8 +65,7 @@ export type EducationArticle = {
 };
 
 // Only source-checked, authorized articles belong here. Never store backend URLs or session tokens.
-export const educationArticles: EducationArticle[] = [
-  {
+export const educationOriginalArticle: EducationArticle = {
     slug: "urine-rna-bladder-cancer",
     locale: "zh-hant",
     language: "zh-Hans",
@@ -53,8 +91,14 @@ export const educationArticles: EducationArticle[] = [
       url: "https://doi.org/10.1038/s41591-026-04673-3",
       indexUrl: "https://pubmed.ncbi.nlm.nih.gov/42827132/",
     }],
-  },
-];
+};
+
+export const educationArticles: EducationArticle[] = locales.map((locale) => ({
+  ...educationOriginalArticle,
+  ...urineRnaCopy[locale],
+  locale,
+  language: localeMeta[locale].htmlLang,
+}));
 
 export function educationArticlePath(article: EducationArticle) {
   return pagePath(article.locale, `education/${article.slug}`);
