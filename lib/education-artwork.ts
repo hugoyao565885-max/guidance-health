@@ -20,6 +20,17 @@ const disclosure: Record<Locale, { label: string; caption: string }> = {
 };
 
 const artwork: Record<string, { file: string; alt: Record<Locale, string> }> = {
+  "adaptive-therapy-prostate-cancer-mathematical-biomarkers": {
+    file: "adaptive-therapy-cell-competition",
+    alt: {
+      en: "Conceptual model of two cell populations in a laboratory dish beside a blank research notebook and folder.",
+      "zh-hant": "實驗皿中兩類細胞群的概念模型，旁有空白研究筆記與檔案夾。",
+      ru: "Концептуальная модель двух клеточных популяций в лабораторной чашке рядом с чистой исследовательской тетрадью и папкой.",
+      ar: "نموذج تصوري لمجموعتين من الخلايا في طبق مختبري بجانب دفتر بحث فارغ وملف.",
+      id: "Model konseptual dua populasi sel di cawan laboratorium, di samping buku catatan penelitian kosong dan map.",
+      ms: "Model konsep dua populasi sel dalam piring makmal di sebelah buku nota penyelidikan kosong dan fail.",
+    },
+  },
   "englumafusp-glofitamab-relapsed-lymphoma": {
     file: "lymphoma-antibody-combination-research",
     alt: {

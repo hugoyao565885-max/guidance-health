@@ -6,6 +6,7 @@ import { chemoVaccineCopy, chemoVaccineOriginal } from "./education-chemo-vaccin
 import { carTLongTermCopy, carTLongTermOriginal } from "./education-car-t-long-term";
 import { cervicalImmunotherapyCopy, cervicalImmunotherapyOriginal } from "./education-cervical-immunotherapy";
 import { englumafuspCopy, englumafuspOriginal } from "./education-englumafusp";
+import { adaptiveTherapyCopy, adaptiveTherapyOriginal } from "./education-adaptive-therapy";
 import { getEducationArtwork, type EducationArtwork } from "./education-artwork";
 
 export const educationUpdated = "2026-10-31";
@@ -108,7 +109,7 @@ export const educationOriginalArticle: EducationArticle = {
     }],
 };
 
-export const educationOriginalArticles = [educationOriginalArticle, breastScreeningOriginal, dasatinibOriginal, chemoVaccineOriginal, carTLongTermOriginal, cervicalImmunotherapyOriginal, englumafuspOriginal];
+export const educationOriginalArticles = [educationOriginalArticle, breastScreeningOriginal, dasatinibOriginal, chemoVaccineOriginal, carTLongTermOriginal, cervicalImmunotherapyOriginal, englumafuspOriginal, adaptiveTherapyOriginal];
 
 export const educationArticles: EducationArticle[] = [
   { original: educationOriginalArticle, copy: urineRnaCopy },
@@ -118,6 +119,7 @@ export const educationArticles: EducationArticle[] = [
   { original: carTLongTermOriginal, copy: carTLongTermCopy },
   { original: cervicalImmunotherapyOriginal, copy: cervicalImmunotherapyCopy },
   { original: englumafuspOriginal, copy: englumafuspCopy },
+  { original: adaptiveTherapyOriginal, copy: adaptiveTherapyCopy },
 ].flatMap(({ original, copy }) => locales.map((locale) => ({
   ...original,
   ...copy[locale],

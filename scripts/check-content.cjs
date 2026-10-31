@@ -56,7 +56,7 @@ for (const locale of locales) {
   assert.deepEqual(Object.keys(educationArticleUi[locale]).sort(), Object.keys(educationArticleUi.en).sort());
   assert.ok(Object.values(educationArticleUi[locale]).every((value) => typeof value === "string" && value.length > 0));
 }
-assert.equal(educationOriginalArticles.length, 7);
+assert.equal(educationOriginalArticles.length, 8);
 assert.equal(educationArticles.length, locales.length * educationOriginalArticles.length, "One complete edition of each article per supported language");
 for (const original of educationOriginalArticles) assert.deepEqual(educationArticles.filter((article) => article.slug === original.slug).map((article) => article.locale), [...locales]);
 assert.equal(new Set(educationArticles.map(educationArticlePath)).size, educationArticles.length);
@@ -73,7 +73,7 @@ for (const article of educationArticles) {
   assert.equal(article.addedOn, original.addedOn);
   for (let index = 0; index < article.paragraphs.length; index++) {
     // Normalize localized dates, Chinese ten-thousands and decimal commas.
-    const numbers = (text) => (text.replace(/2025年10月1日|1 October 2025|1 октября 2025 года|1 أكتوبر 2025|1 Oktober 2025/g, "2025-10-1").replace(/2026年9月10日|10 September 2026|10 сентября 2026 года|10 سبتمبر 2026/g, "2026-9-10").replace(/488[万萬]/g, "4.88 million").replace(/(\d),(\d)/g, "$1.$2").match(/\d+(?:\.\d+)?/g) || []).sort();
+    const numbers = (text) => (text.replace(/2025年10月1日|1 October 2025|1 октября 2025 года|1 أكتوبر 2025|1 Oktober 2025/g, "2025-10-1").replace(/2026年9月10日|10 September 2026|10 сентября 2026 года|10 سبتمبر 2026/g, "2026-9-10").replace(/2026年8月|August 2026|августе 2026 года|أغسطس 2026|Agustus 2026|Ogos 2026/g, "2026-8").replace(/488[万萬]/g, "4.88 million").replace(/(\d),(\d)/g, "$1.$2").match(/\d+(?:\.\d+)?/g) || []).sort();
     assert.deepEqual(numbers(article.paragraphs[index]), numbers(original.paragraphs[index]), `${article.slug}/${article.locale} paragraph ${index + 1}: preserve the study figures`);
   }
   assert.ok(article.paragraphs.every((text) => typeof text === "string" && text.length > 0));
@@ -166,6 +166,20 @@ for (const article of educationArticles) {
     assert.equal(article.references.length, 1);
     assert.equal(article.references[0].url, "https://doi.org/10.1038/s41591-026-04533-0");
     assert.equal(article.references[0].indexUrl, "https://pubmed.ncbi.nlm.nih.gov/42463852/");
+  }
+  if (article.slug === "adaptive-therapy-prostate-cancer-mathematical-biomarkers") {
+    assert.equal(article.sourceUrl, undefined, "Do not invent a WeChat source");
+    assert.equal(article.publishedAt, undefined, "Do not use the paper date as the source article date");
+    assert.equal(article.paragraphs.length, 11);
+    assert.equal(article.addedOn, "2026-10-31");
+    const retrospectiveTerms = { en: "retrospective", "zh-hant": "回顧性", ru: "Ретроспективное", ar: "استعادية", id: "retrospektif", ms: "retrospektif" };
+    assert.ok(article.paragraphs[4].includes(retrospectiveTerms[article.locale]), "Describe the actual retrospective study design");
+    assert.ok(article.clinicalNote && article.clinicalNote.length > 150);
+    const cautionTerms = { en: "Never stop", "zh-hant": "請勿自行停藥", ru: "Не прекращайте", ar: "لا توقف", id: "Jangan menghentikan", ms: "Jangan hentikan" };
+    assert.ok(article.clinicalNote.includes(cautionTerms[article.locale]), "Keep a clear localized warning against self-directed treatment changes");
+    assert.equal(article.references.length, 1);
+    assert.equal(article.references[0].url, "https://doi.org/10.1001/jamaoncol.2026.2781");
+    assert.equal(article.references[0].indexUrl, "https://pubmed.ncbi.nlm.nih.gov/42560686/");
   }
   for (const reference of article.references) assert.equal(new URL(reference.url).protocol, "https:");
 }

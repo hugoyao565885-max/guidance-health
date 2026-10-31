@@ -5,6 +5,13 @@
   "processing": "Width-only resize and WebP/JPEG encoding with Sharp; no retained EXIF/XMP/IPTC metadata.",
   "items": [
     {
+      "slug": "adaptive-therapy-prostate-cancer-mathematical-biomarkers",
+      "createdOn": "2026-10-31",
+      "webp": "public/images/education/adaptive-therapy-cell-competition.webp",
+      "social": "public/images/education/adaptive-therapy-cell-competition.jpg",
+      "prompt": "Use case: scientific-educational. Asset type: original landscape 16:9 editorial illustration for a multilingual patient-education article about mathematical modelling of adaptive therapy in prostate cancer. Show a bright uncluttered research desk with a clear shallow laboratory dish containing a conceptual miniature model of two intermingled populations of intact cells, one muted coral and one cyan blue. Beside the dish are an open plain squared-paper notebook with NO writing, a pencil, and a closed forest-green clinical research folder. Soft-focus laboratory equipment in the distance. The cells are an obvious educational model, not a real microscopy image, diagnostic test, patient tissue or study result. Quiet scientific inquiry and careful observation, not treatment success. Contemporary medical-journal editorial bitmap illustration, subtle paper texture, gentle dimensional shading, crisp intelligible forms, white and light cool-gray background, balanced cyan-blue, forest-green and muted coral colors. Central composition safe for mobile. No real people, body photographs, medicine, pills, dosing or treatment schedules, stop or pause symbols, marked calendar dates, graphs, numerical results, survival curves, arrows depicting a proven clinical pathway, shrinking or killed cells, cures, guarantees, text, letters, numbers, logos, hospital branding, watermarks or decorative floating orbs. Do not imply that leaving a tumour untreated is safe. Opaque background. One standalone illustration, not a collage or a webpage."
+    },
+    {
       "slug": "englumafusp-glofitamab-relapsed-lymphoma",
       "createdOn": "2026-10-31",
       "webp": "public/images/education/lymphoma-antibody-combination-research.webp",

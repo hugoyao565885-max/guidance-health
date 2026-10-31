@@ -59,6 +59,7 @@ const educationFixtures = [
   { slug: "car-t-lymphoma-ten-year-outcomes", image: "car-t-long-term-follow-up", paragraphs: 9, doi: "10.1056/NEJMoa2518035", date: "2026-10-30", pubmed: "42341302" },
   { slug: "cervical-cancer-keynote-826-five-year-follow-up", image: "cervical-cancer-immunotherapy-follow-up", paragraphs: 7, doi: "10.1001/jamaoncol.2026.3547", date: "2026-10-30", pubmed: "42720936" },
   { slug: "englumafusp-glofitamab-relapsed-lymphoma", image: "lymphoma-antibody-combination-research", paragraphs: 10, doi: "10.1038/s41591-026-04533-0", date: "2026-10-31", pubmed: "42463852" },
+  { slug: "adaptive-therapy-prostate-cancer-mathematical-biomarkers", image: "adaptive-therapy-cell-competition", paragraphs: 11, doi: "10.1001/jamaoncol.2026.2781", date: "2026-10-31", pubmed: "42560686" },
 ];
 const addedLabels = { en: "Added to this website", "zh-hant": "本站收錄日期", ru: "Добавлено на сайт", ar: "تاريخ الإضافة إلى الموقع", id: "Ditambahkan ke situs ini", ms: "Ditambah ke laman ini" };
 const imageLabels = { en: "AI illustration", "zh-hant": "AI 科普示意圖", ru: "Иллюстрация с ИИ", ar: "رسم بالذكاء الاصطناعي", id: "Ilustrasi AI", ms: "Ilustrasi AI" };
