@@ -3,7 +3,7 @@ import { alternates, brand, contact, localeMeta, pagePath, siteUrl, type Locale 
 
 // Record substantive page or structured-data changes, not build times.
 export const publicPageUpdates = {
-  "": "2026-10-29", about: "2026-10-29", membership: "2026-10-26", education: "2026-10-30",
+  "": "2026-10-29", about: "2026-10-29", membership: "2026-10-26", education: "2026-10-31",
   oncology: "2026-10-29", research: "2026-10-26", mdt: "2026-10-19", experts: "2026-10-29",
   hospitals: "2026-10-19", journey: "2026-10-19", contact: "2026-10-19",
   "car-t": "2026-10-19", privacy: "2026-10-19", terms: "2026-10-19", records: "2026-10-19",

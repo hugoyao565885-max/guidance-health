@@ -5,9 +5,10 @@ import { dasatinibCopy, dasatinibOriginal } from "./education-dasatinib";
 import { chemoVaccineCopy, chemoVaccineOriginal } from "./education-chemo-vaccine";
 import { carTLongTermCopy, carTLongTermOriginal } from "./education-car-t-long-term";
 import { cervicalImmunotherapyCopy, cervicalImmunotherapyOriginal } from "./education-cervical-immunotherapy";
+import { englumafuspCopy, englumafuspOriginal } from "./education-englumafusp";
 import { getEducationArtwork, type EducationArtwork } from "./education-artwork";
 
-export const educationUpdated = "2026-10-30";
+export const educationUpdated = "2026-10-31";
 
 export const educationUi: Record<Locale, { nav: string; title: string; description: string; articles: string; read: string; guides: string }> = {
   en: { nav: "Education", title: "Cancer education", description: "Articles on cancer research, tests and patient care, with references to the original literature.", articles: "Articles", read: "Read article", guides: "Preparing for care in China" },
@@ -107,7 +108,7 @@ export const educationOriginalArticle: EducationArticle = {
     }],
 };
 
-export const educationOriginalArticles = [educationOriginalArticle, breastScreeningOriginal, dasatinibOriginal, chemoVaccineOriginal, carTLongTermOriginal, cervicalImmunotherapyOriginal];
+export const educationOriginalArticles = [educationOriginalArticle, breastScreeningOriginal, dasatinibOriginal, chemoVaccineOriginal, carTLongTermOriginal, cervicalImmunotherapyOriginal, englumafuspOriginal];
 
 export const educationArticles: EducationArticle[] = [
   { original: educationOriginalArticle, copy: urineRnaCopy },
@@ -116,6 +117,7 @@ export const educationArticles: EducationArticle[] = [
   { original: chemoVaccineOriginal, copy: chemoVaccineCopy },
   { original: carTLongTermOriginal, copy: carTLongTermCopy },
   { original: cervicalImmunotherapyOriginal, copy: cervicalImmunotherapyCopy },
+  { original: englumafuspOriginal, copy: englumafuspCopy },
 ].flatMap(({ original, copy }) => locales.map((locale) => ({
   ...original,
   ...copy[locale],

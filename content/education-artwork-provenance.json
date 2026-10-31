@@ -5,6 +5,13 @@
   "processing": "Width-only resize and WebP/JPEG encoding with Sharp; no retained EXIF/XMP/IPTC metadata.",
   "items": [
     {
+      "slug": "englumafusp-glofitamab-relapsed-lymphoma",
+      "createdOn": "2026-10-31",
+      "webp": "public/images/education/lymphoma-antibody-combination-research.webp",
+      "social": "public/images/education/lymphoma-antibody-combination-research.jpg",
+      "prompt": "Use case: scientific-educational. Asset type: original editorial cover for a multilingual patient-education article about an early phase trial of an antibody combination for relapsed or refractory B-cell lymphoma. Create one standalone landscape 16:9 bitmap illustration. A bright orderly laboratory workbench with an unbranded microscope, two small sealed unlabelled research vials and a closed teal research folder. A single modest circular conceptual inset shows two intact lymphocytes with visible nuclei and a few small antibody-like connector shapes between them, conveying cell communication research, not a molecularly exact mechanism or real microscopy. Contemporary medical-journal editorial illustration, gentle dimensional shading and subtle paper texture, crisp forms, white and pale cool-gray surroundings with balanced forest-green, cyan-blue and muted coral accents. Keep subject forms centrally composed and legible on mobile. Calm exploratory mood. Do not imply proven efficacy or an available treatment package. No people, patient data, photographs, hospital signs, text, letters, numbers, logos, branded packaging, recognizable products, marked doses or schedules, charts, tumor destruction or shrinkage, before-and-after imagery, victory symbols, cures, guarantees, watermarks or decorative floating orbs. Opaque background. Not a webpage or collage."
+    },
+    {
       "slug": "cervical-cancer-keynote-826-five-year-follow-up",
       "webp": "public/images/education/cervical-cancer-immunotherapy-follow-up.webp",
       "social": "public/images/education/cervical-cancer-immunotherapy-follow-up.jpg",

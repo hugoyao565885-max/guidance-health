@@ -20,6 +20,17 @@ const disclosure: Record<Locale, { label: string; caption: string }> = {
 };
 
 const artwork: Record<string, { file: string; alt: Record<Locale, string> }> = {
+  "englumafusp-glofitamab-relapsed-lymphoma": {
+    file: "lymphoma-antibody-combination-research",
+    alt: {
+      en: "Conceptual illustration of a microscope, unlabelled research vials and lymphocytes connected by antibody-like shapes.",
+      "zh-hant": "顯微鏡、無標籤研究藥瓶與抗體樣結構連接淋巴細胞的概念示意圖。",
+      ru: "Концептуальная иллюстрация микроскопа, исследовательских флаконов без маркировки и лимфоцитов с антителоподобными связями.",
+      ar: "رسم تصوري لمجهر وقوارير بحثية بلا ملصقات وخلايا لمفاوية تربط بينها أشكال شبيهة بالأجسام المضادة.",
+      id: "Ilustrasi konseptual mikroskop, vial penelitian tanpa label dan limfosit yang dihubungkan bentuk mirip antibodi.",
+      ms: "Ilustrasi konsep mikroskop, vial penyelidikan tanpa label dan limfosit yang dihubungkan bentuk seperti antibodi.",
+    },
+  },
   "cervical-cancer-keynote-826-five-year-follow-up": {
     file: "cervical-cancer-immunotherapy-follow-up",
     alt: {

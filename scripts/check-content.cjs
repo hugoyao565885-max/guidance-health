@@ -56,7 +56,7 @@ for (const locale of locales) {
   assert.deepEqual(Object.keys(educationArticleUi[locale]).sort(), Object.keys(educationArticleUi.en).sort());
   assert.ok(Object.values(educationArticleUi[locale]).every((value) => typeof value === "string" && value.length > 0));
 }
-assert.equal(educationOriginalArticles.length, 6);
+assert.equal(educationOriginalArticles.length, 7);
 assert.equal(educationArticles.length, locales.length * educationOriginalArticles.length, "One complete edition of each article per supported language");
 for (const original of educationOriginalArticles) assert.deepEqual(educationArticles.filter((article) => article.slug === original.slug).map((article) => article.locale), [...locales]);
 assert.equal(new Set(educationArticles.map(educationArticlePath)).size, educationArticles.length);
@@ -152,6 +152,20 @@ for (const article of educationArticles) {
     assert.equal(article.references.length, 1);
     assert.equal(article.references[0].url, "https://doi.org/10.1001/jamaoncol.2026.3547");
     assert.equal(article.references[0].indexUrl, "https://pubmed.ncbi.nlm.nih.gov/42720936/");
+  }
+  if (article.slug === "englumafusp-glofitamab-relapsed-lymphoma") {
+    assert.equal(article.sourceUrl, undefined, "Do not invent a WeChat source");
+    assert.equal(article.publishedAt, undefined, "The journal date is not the supplied article date");
+    assert.equal(article.addedOn, "2026-10-31");
+    assert.equal(article.paragraphs.length, 10);
+    assert.ok(article.paragraphs[1].includes("CD20") && article.paragraphs[1].includes("CD3"));
+    assert.ok(article.paragraphs[2].includes("CD19") && article.paragraphs[2].includes("4-1BB"));
+    assert.ok(article.clinicalNote && article.clinicalNote.length > 100 && article.clinicalNote.includes("CAR-T"));
+    const earlyPhaseTerms = { en: "nonrandomised phase I", "zh-hant": "非隨機的Ⅰ期", ru: "нерандомизированное исследование I фазы", ar: "غير عشوائية من المرحلة الأولى", id: "fase I awal tanpa pengacakan", ms: "fasa I awal tanpa pengagihan rawak" };
+    assert.ok(article.clinicalNote.includes(earlyPhaseTerms[article.locale]), "Keep the early-phase evidence boundary in every language");
+    assert.equal(article.references.length, 1);
+    assert.equal(article.references[0].url, "https://doi.org/10.1038/s41591-026-04533-0");
+    assert.equal(article.references[0].indexUrl, "https://pubmed.ncbi.nlm.nih.gov/42463852/");
   }
   for (const reference of article.references) assert.equal(new URL(reference.url).protocol, "https:");
 }
