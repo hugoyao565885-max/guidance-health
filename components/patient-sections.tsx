@@ -5,7 +5,7 @@ import { ArrowRight, ArrowUpRight, Check, ChevronDown, Mail, MessageCircle } fro
 import { content, type SectionKey } from "../lib/content";
 import { patientContent } from "../lib/patient-content";
 import { serviceCombinationTotal, formatServiceAmount, servicePrices, serviceExchangeRate, serviceCnyPerUsd } from "../lib/service-pricing";
-import { brand, contact, pagePath, type Locale } from "../lib/site";
+import { brand, contact, pagePath, social, type Locale } from "../lib/site";
 import { patientGuides } from "../lib/patient-guides";
 import { educationUi } from "../lib/education";
 import { SiteNavigation } from "./site-navigation";
@@ -105,6 +105,15 @@ export function Faq({ locale }: { locale: Locale }) {
   );
 }
 
+function FacebookLink() {
+  if (!social.facebookUrl) return null;
+  // Facebook brand mark from Simple Icons (CC0); Lucide has no brand icons.
+  return <a className="social-profile-link" href={social.facebookUrl} target="_blank" rel="noopener noreferrer" aria-label={`${brand.name} Facebook`}>
+    <svg width={20} height={20} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z" /></svg>
+    <bdi>Facebook</bdi><ArrowUpRight size={17} aria-hidden="true" />
+  </a>;
+}
+
 export function ContactSection({ locale }: { locale: Locale }) {
   const ui = patientContent[locale];
   return (
@@ -114,6 +123,8 @@ export function ContactSection({ locale }: { locale: Locale }) {
         <address className="contact-details">
           {contact.emails.map((email, index) => <div key={email}><span>{ui.contact.labels[index]}</span><a href={`mailto:${email}`}><Mail size={17} aria-hidden="true" />{email}</a></div>)}
           <a className="contact-phone" href={contact.whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={17} aria-hidden="true" /><bdi>{contact.whatsapp}</bdi></a>
+          <FacebookLink />
+          {social.instagramUrl ? <a href={social.instagramUrl} target="_blank" rel="noopener noreferrer" aria-label={`${brand.name} Instagram`}>Instagram<ArrowUpRight size={17} aria-hidden="true" /></a> : null}
           <p>{ui.contact.note}</p>
         </address>
       </div>
@@ -127,7 +138,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
   const links: SectionKey[] = ["about", "research", "mdt", "hospitals", "journey", "contact", "privacy", "terms"];
   return (
     <>
-      <footer className="site-footer"><div className="container footer-grid"><div><Link className="footer-brand" href={pagePath(locale)}><Image src="/brand/hccare-logo.webp" alt={brand.legalName} width={1280} height={405} sizes="(max-width: 400px) 248px, 296px" /></Link><p>{locale === "zh-hant" ? brand.zhLegalName : brand.legalName}</p><p>{copy.sections.disclaimer.body}</p></div><nav aria-label={ui.menu}>{links.map((section) => <Link key={section} href={pagePath(locale, section)}>{copy.nav[section]}</Link>)}<Link href={pagePath(locale, "records")}>{patientGuides[locale].recordsLink}</Link></nav></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} {brand.name}</span><a href={`mailto:${contact.email}`}>{contact.email}</a></div></footer>
+      <footer className="site-footer"><div className="container footer-grid"><div><Link className="footer-brand" href={pagePath(locale)}><Image src="/brand/hccare-logo.webp" alt={brand.legalName} width={1280} height={405} sizes="(max-width: 400px) 248px, 296px" /></Link><p>{locale === "zh-hant" ? brand.zhLegalName : brand.legalName}</p><p>{copy.sections.disclaimer.body}</p></div><nav aria-label={ui.menu}>{links.map((section) => <Link key={section} href={pagePath(locale, section)}>{copy.nav[section]}</Link>)}<Link href={pagePath(locale, "records")}>{patientGuides[locale].recordsLink}</Link><FacebookLink />{social.instagramUrl ? <a href={social.instagramUrl} target="_blank" rel="noopener noreferrer" aria-label={`${brand.name} Instagram`}>Instagram ↗</a> : null}</nav></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} {brand.name}</span><a href={`mailto:${contact.email}`}>{contact.email}</a></div></footer>
       <div className="mobile-contact-bar"><Link href={pagePath(locale, "register")}><ArrowUpRight size={18} aria-hidden="true" />{ui.start}</Link><a href={contact.whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={19} aria-hidden="true" />{ui.whatsapp}</a></div>
     </>
   );

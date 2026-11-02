@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { alternates, brand, contact, localeMeta, pagePath, siteUrl, type Locale } from "./site";
+import { alternates, brand, contact, localeMeta, pagePath, siteUrl, social, type Locale } from "./site";
 
 // Record substantive page or structured-data changes, not build times.
 export const publicPageUpdates = {
   "": "2026-10-29", about: "2026-10-29", membership: "2026-10-26", education: "2026-10-31",
   oncology: "2026-10-29", research: "2026-10-26", mdt: "2026-10-19", experts: "2026-10-29",
-  hospitals: "2026-10-19", journey: "2026-10-19", contact: "2026-10-19",
+  hospitals: "2026-10-19", journey: "2026-10-19", contact: "2026-11-02",
   "car-t": "2026-10-19", privacy: "2026-10-19", terms: "2026-10-19", records: "2026-10-19",
   "guides/lymphoma": "2026-10-29", "guides/immunotherapy": "2026-10-29", "guides/cell-therapy": "2026-10-29",
 };
@@ -27,6 +27,7 @@ export function publicMetadata(locale: Locale, section: string, title: string, d
 }
 
 export function organizationData() {
+  const profiles = [social.facebookUrl, social.instagramUrl].filter(Boolean);
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -38,6 +39,7 @@ export function organizationData() {
     logo: { "@type": "ImageObject", url: `${siteUrl}/brand/hccare-logo.webp`, width: 1280, height: 405 },
     email: contact.email,
     telephone: contact.whatsapp,
+    ...(profiles.length ? { sameAs: profiles } : {}),
     contactPoint: contact.emails.map((email, index) => ({
       "@type": "ContactPoint", email,
       contactType: ["New patient enquiries", "Service coordination", "Existing patient support"][index],

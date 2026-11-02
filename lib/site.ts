@@ -15,6 +15,13 @@ export const contact = {
   whatsappUrl: "https://wa.me/85295813961",
 };
 
+export const social = {
+  facebookUrl: "https://www.facebook.com/profile.php?id=61596178258915",
+  // Set the company-owned profile URL after Instagram registration is verified.
+  // An empty value keeps the links and organization sameAs entry unpublished.
+  instagramUrl: "",
+};
+
 export const locales = ["en", "zh-hant", "ru", "ar", "id", "ms"] as const;
 export type Locale = (typeof locales)[number];
 

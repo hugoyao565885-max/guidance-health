@@ -43,6 +43,14 @@ On 12 October 2026 the owner authorised connecting both custom hostnames to the 
 
 Publication review on 12 October 2026 confirmed the Vercel team's active plan is Hobby. The owner explicitly chose to retain Hobby after being informed that Vercel's [fair-use rules](https://vercel.com/docs/limits/fair-use-guidelines) restrict it to non-commercial personal use and that this company site may be suspended. This choice does not make the site's commercial use compliant with those rules. Do not upgrade, start a trial, add payment details, or incur charges. DNS and security-sensitive configuration changes still require confirmation. The owner also requested activation of member registration and private medical uploads; activation remains pending verified domain routing, custom SMTP delivery, auth callbacks and live isolation tests. Do not describe the member system as open until its backend settings and deployed portal flag are both enabled and checked.
 
+## Social profiles
+
+The owner supplied `https://www.facebook.com/profile.php?id=61596178258915` on 2 November 2026. `social.facebookUrl` in `lib/site.ts` enables this profile in the shared contact section and footer for all six languages and in `Organization.sameAs`. Links open in a new tab with `noopener noreferrer`; no social SDK or tracking pixel is embedded. The Facebook mark is from [Simple Icons](https://github.com/simple-icons/simple-icons/blob/develop/icons/facebook.svg), distributed under CC0.
+
+Company Instagram registration is pending. Set `social.instagramUrl` in `lib/site.ts` only after the owner has registered and verified the exact company profile. The empty default hides the Instagram links and omits Instagram from `Organization.sameAs`; it must not be replaced with a proposed or unclaimed username. A verified URL enables the link in the shared contact section and footer for all six languages and in organization structured data. Rebuild and deploy to publish the change.
+
+On Instagram, use the company logo and add `https://hccareadvisory.com` to the profile's website links. Suggested username (availability unverified): `hccareadvisory`. Suggested display name: `H&C Care | 康誠健康顧問`. Suggested bio: `Oncology care coordination in China for international patients. Records, specialist communication & practical support. Learn more below.` Registration, profile editing and the reciprocal link still need to be completed on Instagram; these source changes do not create an account or publish that profile.
+
 ## Content and verification
 
 - `lib/content.ts`: page dictionaries and specialist profiles.

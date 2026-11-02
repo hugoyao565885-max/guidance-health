@@ -13,6 +13,20 @@ for (const locale of locales) {
   const titles = new Set();
   const home = fs.readFileSync(path.join(output, `${locale}.html`), "utf8");
   const oncology = fs.readFileSync(path.join(output, `${locale}/oncology.html`), "utf8");
+  for (const [page, html] of [["home", home], ["contact", fs.readFileSync(path.join(output, `${locale}/contact.html`), "utf8")]]) {
+    const facebookUrl = "https://www.facebook.com/profile.php?id=61596178258915";
+    for (const section of [html.match(/<section[^>]*id="contact"[\s\S]*?<\/section>/)?.[0], html.match(/<footer[\s\S]*?<\/footer>/)?.[0]]) {
+      assert.ok(section, `${locale}/${page}: shared contact section and footer`);
+      const links = (section.match(/<a\b[^>]*>/g) || []).filter((link) => link.includes(`href="${facebookUrl}"`));
+      assert.equal(links.length, 1, `${locale}/${page}: exact Facebook profile, once per section`);
+      assert.ok(links[0].includes('target="_blank"') && links[0].includes('rel="noopener noreferrer"'));
+      assert.ok(links[0].includes('aria-label="H&amp;C Care Facebook"'));
+    }
+    const structured = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/g)].map((match) => JSON.parse(match[1]));
+    if (page === "home") assert.deepEqual(structured.find((item) => item["@type"] === "Organization")?.sameAs, [facebookUrl]);
+    assert.doesNotMatch(html, /href="https:\/\/(?:www\.)?instagram\.com/i, "Do not publish an unconfirmed Instagram account");
+    assert.doesNotMatch(html, /connect\.facebook\.net|facebook\.com\/tr\?/, "Plain profile links only, no Facebook tracking scripts");
+  }
   for (const topic of topics) {
     const route = `/${locale}/guides/${topic}`;
     const html = fs.readFileSync(path.join(output, `${route}.html`), "utf8");
