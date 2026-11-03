@@ -17,9 +17,8 @@ export const contact = {
 
 export const social = {
   facebookUrl: "https://www.facebook.com/profile.php?id=61596178258915",
-  // Set the company-owned profile URL after Instagram registration is verified.
-  // An empty value keeps the links and organization sameAs entry unpublished.
-  instagramUrl: "",
+  // Owner-designated existing account for H&C Care content, verified 2026-11-03.
+  instagramUrl: "https://www.instagram.com/yaohugoyao/",
 };
 
 export const locales = ["en", "zh-hant", "ru", "ar", "id", "ms"] as const;
