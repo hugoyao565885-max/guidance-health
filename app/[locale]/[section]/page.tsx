@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { EnquiryForm } from "../../../components/enquiry-form";
 import { CompanyProfile } from "../../../components/company-profile";
+import { TopicHero } from "../../../components/topic-hero";
 import { ResearchStudy } from "../../../components/research-study";
 import { Breadcrumbs, PatientGuideBody } from "../../../components/patient-guide";
 import { OncologyGuideLinks } from "../../../components/oncology-guide-links";
@@ -56,7 +56,7 @@ export default async function SectionPage({ params }: PageProps) {
     <div className="site-body">
       <SiteHeader locale={locale} section={section} />
       <main id="main-content">
-        <section className="page-hero"><div className="container"><Breadcrumbs locale={locale} section={section} title={guide?.label ?? copy.nav[section]} /><p className="eyebrow">{guide ? patientGuides[locale].eyebrow : page.eyebrow}</p><h1>{guide?.title ?? page.title}</h1><p>{guide?.description ?? page.body}</p></div></section>
+        <section className="page-hero"><TopicHero locale={locale} section={section}><Breadcrumbs locale={locale} section={section} title={guide?.label ?? copy.nav[section]} /><p className="eyebrow">{guide ? patientGuides[locale].eyebrow : page.eyebrow}</p><h1>{guide?.title ?? page.title}</h1><p>{guide?.description ?? page.body}</p></TopicHero></section>
         <section className="section"><div className="container">
           {section === "about" ? <CompanyProfile locale={locale} /> : null}
           {section === "membership" ? <><ServicePlans locale={locale} detailed /><div className="membership-modules"><h2>{copy.sections.membership.modulesTitle}</h2><ServiceList cards={copy.sections.membership.modules} /><p className="service-note">{copy.sections.membership.modulesNote}</p></div><div className="faq-layout section-inner"><SectionHeading {...ui.faq} /><Faq locale={locale} /></div></> : null}
@@ -65,7 +65,7 @@ export default async function SectionPage({ params }: PageProps) {
           {guide ? <PatientGuideBody locale={locale} section={section} guide={guide} /> : null}
           {section === "mdt" || section === "car-t" ? <OncologyGuideLinks locale={locale} /> : null}
           {section === "experts" ? <><ExpertProfiles locale={locale} /><div className="section-inner"><SectionHeading {...copy.sections.clinicalTeam} /><ServiceList cards={copy.sections.clinicalTeam.cards} /></div><p className="service-note">{copy.sections.experts.note}</p></> : null}
-          {section === "hospitals" ? <div className="hospital-layout"><div><ServiceList cards={copy.sections.hospitals.cards} /><p className="service-note">{copy.sections.hospitals.note}</p></div><figure><Image src="/images/patient-room.jpg" alt={ui.roomAlt} width={1800} height={1200} sizes="(max-width: 900px) 100vw, 42vw" /><figcaption>{ui.roomAlt}</figcaption></figure></div> : null}
+          {section === "hospitals" ? <><ServiceList cards={copy.sections.hospitals.cards} /><p className="service-note">{copy.sections.hospitals.note}</p></> : null}
           {section === "car-t" ? <><ServiceList cards={ui.carT.items} /><div className="source-note"><span>{ui.carT.published}</span><a href={carTSource} target="_blank" rel="noopener noreferrer">{ui.carT.source}</a></div><p className="service-note">{ui.carT.note}</p><div className="cta-row"><TextLink href={pagePath(locale, "records")}>{patientGuides[locale].recordsLink}</TextLink><TextLink href={pagePath(locale, "register")}>{ui.start}</TextLink></div></> : null}
           {isLegal ? <><ServiceList cards={copy.sections[section].cards} /><p className="service-note">{copy.sections[section].note}</p></> : null}
           {section === "privacy" ? <section className="section-inner"><h2>{portalContent[locale].account}</h2><p className="service-note">{portalContent[locale].dataNotice}</p><p>{portalContent[locale].healthConsent}</p></section> : null}

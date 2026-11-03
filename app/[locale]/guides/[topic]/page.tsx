@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Breadcrumbs, PatientGuideBody } from "../../../../components/patient-guide";
 import { OncologyGuideLinks } from "../../../../components/oncology-guide-links";
+import { TopicHero } from "../../../../components/topic-hero";
 import { ContactSection, SiteFooter, SiteHeader } from "../../../../components/patient-sections";
 import { isOncologyGuideTopic, oncologyGuides, oncologyGuidesUpdated, oncologyGuideTopics } from "../../../../lib/oncology-guides";
 import { patientGuides } from "../../../../lib/patient-guides";
@@ -29,11 +30,11 @@ export default async function OncologyGuidePage({ params }: PageProps) {
   return <div className="site-body">
     <SiteHeader locale={locale} section={section} />
     <main id="main-content">
-      <section className="page-hero"><div className="container">
+      <section className="page-hero"><TopicHero locale={locale} section={section}>
         <Breadcrumbs locale={locale} section={section} title={guide.label} />
         <p className="eyebrow">{patientGuides[locale].eyebrow}</p>
         <h1>{guide.title}</h1><p>{guide.description}</p>
-      </div></section>
+      </TopicHero></section>
       <section className="section"><div className="container">
         <PatientGuideBody locale={locale} section={section} guide={guide} updated={oncologyGuidesUpdated} />
         <OncologyGuideLinks locale={locale} current={topic} />

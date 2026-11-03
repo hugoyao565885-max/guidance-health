@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { alternates, brand, contact, localeMeta, pagePath, siteUrl, social, type Locale } from "./site";
+import { topicImages } from "./topic-images";
 
 // Record substantive page or structured-data changes, not build times.
 export const publicPageUpdates = {
@@ -13,6 +14,7 @@ export const publicPageUpdates = {
 export function publicMetadata(locale: Locale, section: string, title: string, description: string): Metadata {
   const url = `${siteUrl}${pagePath(locale, section)}`;
   const fullTitle = `${title} | ${brand.name}`;
+  const image = topicImages[section];
   return {
     title: fullTitle,
     description,
@@ -20,9 +22,11 @@ export function publicMetadata(locale: Locale, section: string, title: string, d
     alternates: { canonical: url, languages: alternates(section) },
     openGraph: {
       title: fullTitle, description, url, siteName: brand.name, type: "website",
-      images: [{ url: `${siteUrl}/brand/hccare-logo.webp`, width: 1280, height: 405, alt: brand.legalName }],
+      images: [image
+        ? { url: `${siteUrl}${image.src}`, width: image.width, height: image.height, alt: title }
+        : { url: `${siteUrl}/brand/hccare-logo.webp`, width: 1280, height: 405, alt: brand.legalName }],
     },
-    twitter: { card: "summary", title: fullTitle, description, images: [`${siteUrl}/brand/apple-touch-icon.png`] },
+    twitter: { card: image ? "summary_large_image" : "summary", title: fullTitle, description, images: [`${siteUrl}${image?.src ?? "/brand/apple-touch-icon.png"}`] },
   };
 }
 

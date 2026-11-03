@@ -212,6 +212,13 @@ summary::-webkit-details-marker { display: none; }
 .page-hero { background: var(--paper); padding-block: 48px; border-bottom: 1px solid var(--line); }
 .page-hero h1 { font-size: 40px; max-width: 900px; margin-top: 14px; }
 .page-hero p:last-child { max-width: 800px; font-size: var(--font-body); margin-top: 20px; }
+.topic-hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); align-items: center; gap: 42px; }
+.topic-hero-image { margin: 0; min-width: 0; }
+.topic-hero-image img { display: block; width: 100%; height: auto; border-radius: 8px; }
+.topic-hero-image figcaption { margin-top: 8px; font-size: var(--font-small); color: var(--muted); }
+@media (max-width: 900px) {
+  .topic-hero-grid { grid-template-columns: 1fr; gap: 28px; }
+}
 .breadcrumbs { margin-bottom: 22px; font-size: var(--font-small); color: var(--muted); }
 .breadcrumbs ol { display: flex; flex-wrap: wrap; gap: 6px 12px; list-style: none; padding: 0; margin: 0; }
 .breadcrumbs li + li::before { content: "/"; margin-inline-end: 12px; color: var(--muted); }
